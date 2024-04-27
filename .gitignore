@@ -1,4 +1,18 @@
-_site/
+__pycache__
+.ipynb_checkpoints/
+.vscode
+.venv
+.VSCodeCounter/*
+*.csv
+*.log
+# *.ipynb
+data/*
+data/episodes
+historical/
+log.txt
+models/
+runs/
+wandb/
 .sass-cache/
 .jekyll-cache/
 .jekyll-metadata

@@ -1,0 +1,12 @@
+jupyter-book
+matplotlib
+mplfinance
+numpy
+pandas
+seaborn
+tensorflow
+tqdm
+autopep8
+ipywidgets
+numpy
+pandarallel
