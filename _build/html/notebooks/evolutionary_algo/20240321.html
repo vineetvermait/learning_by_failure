@@ -1,0 +1,3086 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Reattempt for GA with Options Strategy &#8212; Learning By Failure - DS/ML/AI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/evolutionary_algo/20240321';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Dynamic Time Warping (DTW) for similarity measure in Stock Patterns" href="../experiments/20231219.html" />
+    <link rel="prev" title="GP for Options Strategy" href="20240131.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Learning By Failure: Data Science/ML/AI
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Concepts</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../problem_definition.html">[Not Started] Problem Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../holy_grail.html">[Not Started] Holy grail: Trading Epitome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../eda.html">[Not Started] Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scaling_techniques.html">[Not Started] Scaling Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../temporal_vectors.html">[In Progress] Temporal Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../statistics.html">[Not Started] Statistics</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Algo Trading</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../algo_trading/sma_crossover.html">[Not Started] Basic SMA Crossover</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo_trading/20231227_1.html">[Rework] Bollinger Bands Strategy with Threshold Crossover</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo_trading/20231228.html">Experiment: Bollinger Bands Scaling Strategy (BBSS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo_trading/20240101.html">Experiment: BBSS + RSI: Doesn’t work</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo_trading/20240116.html">[Rework] Clustering Approach</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo_trading/20240428-01.html">Bollinger Bands Strategy with Threshold Crossover</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ml/regression.html">[Not Started] Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reinforcement Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../rl/finrl.html">[Not Started] FinRL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Evolutionary Algorithms</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="ga.html">[Not Started] Genetic Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gp.html">[Not Started] Genetic Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20240107.html">GP for AT Strategy Discovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20240130.html">Genetic Algorithms for Options Strategy Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20240131.html">GP for Options Strategy</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Reattempt for GA with Options Strategy</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../experiments/20231219.html">Dynamic Time Warping (DTW) for similarity measure in Stock Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/20240428-0.html">[Not Started] Relative Scaling | Temporal Window Vector Clustering | Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/20240428-1.html">[Not Started] Relative Scaling | Multi-Feature Temporal Window Vector Clustering | Time Series Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/20240428-2.html">[Not Started] Relative Scaling | Temporal Window Vector Clustering | Probability Model</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/vineetvermait/learning_by_failure_ai/issues/new?title=Issue%20on%20page%20%2Fnotebooks/evolutionary_algo/20240321.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button"
+   title="Open an issue"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/evolutionary_algo/20240321.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Reattempt for GA with Options Strategy</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="reattempt-for-ga-with-options-strategy">
+<h1>Reattempt for GA with Options Strategy<a class="headerlink" href="#reattempt-for-ga-with-options-strategy" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">get</span>
+<span class="kn">from</span> <span class="nn">retry</span> <span class="kn">import</span> <span class="n">retry</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">BROKER_URL</span> <span class="o">=</span> <span class="s1">&#39;http://localhost:4003/&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">black_scholes_greeks</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">option_type</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates option Greeks using the Black-Scholes model.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        S: Current underlying asset price</span>
+<span class="sd">        K: Strike price</span>
+<span class="sd">        T: Time to expiration (in years)</span>
+<span class="sd">        r: Risk-free interest rate</span>
+<span class="sd">        sigma: Volatility of the underlying asset</span>
+<span class="sd">        option_type: &#39;Call&#39; or &#39;Put&#39;</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary containing the following Greeks:</span>
+<span class="sd">            delta: Change in option price w.r.t. underlying price</span>
+<span class="sd">            gamma: Change in delta w.r.t. underlying price</span>
+<span class="sd">            vega: Change in option price w.r.t. volatility</span>
+<span class="sd">            theta: Change in option price w.r.t. time</span>
+<span class="sd">            rho: Change in option price w.r.t. interest rate</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">d1</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">S</span> <span class="o">/</span> <span class="n">K</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">))</span>
+    <span class="n">d2</span> <span class="o">=</span> <span class="n">d1</span> <span class="o">-</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">&#39;Call&#39;</span><span class="p">:</span>
+        <span class="n">N_d1</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span>
+        <span class="n">N_d2</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">d2</span><span class="p">)</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">N_d1</span>
+        <span class="n">gamma</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">))</span>
+        <span class="n">vega</span> <span class="o">=</span> <span class="n">S</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">/</span> \
+            <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">))</span> <span class="o">-</span> <span class="n">r</span> <span class="o">*</span> <span class="n">K</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">N_d2</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">K</span> <span class="o">*</span> <span class="n">T</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">N_d2</span>
+    <span class="k">elif</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">&#39;Put&#39;</span><span class="p">:</span>
+        <span class="n">N_d1</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="o">-</span><span class="n">d1</span><span class="p">)</span>
+        <span class="n">N_d2</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="o">-</span><span class="n">d2</span><span class="p">)</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="o">-</span><span class="n">N_d1</span>
+        <span class="n">gamma</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">))</span>
+        <span class="n">vega</span> <span class="o">=</span> <span class="n">S</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">/</span> \
+            <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">))</span> <span class="o">+</span> <span class="n">r</span> <span class="o">*</span> <span class="n">K</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">N_d2</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="o">-</span><span class="n">K</span> <span class="o">*</span> <span class="n">T</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">N_d2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Invalid option type. Please specify &#39;Call&#39; or &#39;Put&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;delta&#39;</span><span class="p">:</span> <span class="n">delta</span><span class="p">,</span>
+        <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="n">gamma</span><span class="p">,</span>
+        <span class="s1">&#39;vega&#39;</span><span class="p">:</span> <span class="n">vega</span><span class="p">,</span>
+        <span class="s1">&#39;theta&#39;</span><span class="p">:</span> <span class="n">theta</span><span class="p">,</span>
+        <span class="s1">&#39;rho&#39;</span><span class="p">:</span> <span class="n">rho</span>
+    <span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">black_scholes_price</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">option_type</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the Black-Scholes option price.&quot;&quot;&quot;</span>
+    <span class="n">d1</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">S</span> <span class="o">/</span> <span class="n">K</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">))</span>
+    <span class="n">d2</span> <span class="o">=</span> <span class="n">d1</span> <span class="o">-</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">&#39;Call&#39;</span><span class="p">:</span>
+        <span class="n">price</span> <span class="o">=</span> <span class="n">S</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">-</span> <span class="n">K</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">d2</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">&#39;Put&#39;</span><span class="p">:</span>
+        <span class="n">price</span> <span class="o">=</span> <span class="n">K</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="o">-</span><span class="n">d2</span><span class="p">)</span> <span class="o">-</span> \
+            <span class="n">S</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="o">-</span><span class="n">d1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Invalid option type. Please specify &#39;Call&#39; or &#39;Put&#39;.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">price</span>
+
+
+<span class="k">def</span> <span class="nf">implied_volatility</span><span class="p">(</span>
+    <span class="n">S</span><span class="p">,</span>
+    <span class="n">K</span><span class="p">,</span>
+    <span class="n">T</span><span class="p">,</span>
+    <span class="n">r</span><span class="p">,</span>
+    <span class="n">market_price</span><span class="p">,</span>
+    <span class="n">option_type</span><span class="p">,</span>
+    <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates implied volatility using the Newton-Raphson method.&quot;&quot;&quot;</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.2</span>  <span class="c1"># Initial guess for volatility</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
+        <span class="n">price</span> <span class="o">=</span> <span class="n">black_scholes_price</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">option_type</span><span class="p">)</span>
+        <span class="n">vega</span> <span class="o">=</span> <span class="n">black_scholes_greeks</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">option_type</span><span class="p">)[</span><span class="s1">&#39;vega&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">vega</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">sigma_new</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">-</span> <span class="n">market_price</span><span class="p">)</span> <span class="o">/</span> <span class="n">vega</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sigma_new</span> <span class="o">-</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma_new</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Failed to converge within tolerance., </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sigma_new</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">sigma</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">tol</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">sigma_new</span>
+
+
+<span class="k">def</span> <span class="nf">get_option_chain</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">wte</span><span class="p">):</span>
+    <span class="n">sub_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;option_chain/</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">right</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">wte</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">BROKER_URL</span> <span class="o">+</span> <span class="n">sub_url</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+
+<span class="nd">@retry</span><span class="p">(</span><span class="n">tries</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">backoff</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_option_history</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">wte</span><span class="p">,</span> <span class="n">strike_price</span><span class="p">,</span> <span class="n">hist_date</span><span class="p">):</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="n">right</span><span class="p">,</span>
+        <span class="s1">&#39;wte&#39;</span><span class="p">:</span> <span class="n">wte</span><span class="p">,</span>
+        <span class="s1">&#39;strike_price&#39;</span><span class="p">:</span> <span class="n">strike_price</span><span class="p">,</span>
+        <span class="s1">&#39;product_type&#39;</span><span class="p">:</span> <span class="s1">&#39;options&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;exchange_code&#39;</span><span class="p">:</span> <span class="s1">&#39;NFO&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">options_str</span> <span class="o">=</span> <span class="s1">&#39;&amp;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+    <span class="n">sub_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;history/</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">hist_date</span><span class="si">}</span><span class="s2">?</span><span class="si">{</span><span class="n">options_str</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">BROKER_URL</span> <span class="o">+</span> <span class="n">sub_url</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rcall</span> <span class="o">=</span> <span class="n">get_option_chain</span><span class="p">(</span><span class="s1">&#39;NIFTY&#39;</span><span class="p">,</span> <span class="s1">&#39;Call&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">rput</span> <span class="o">=</span> <span class="n">get_option_chain</span><span class="p">(</span><span class="s1">&#39;NIFTY&#39;</span><span class="p">,</span> <span class="s1">&#39;Put&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">oc_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rcall</span><span class="p">[</span><span class="s1">&#39;Success&#39;</span><span class="p">]),</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rput</span><span class="p">[</span><span class="s1">&#39;Success&#39;</span><span class="p">])</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">oc_df</span><span class="p">[</span><span class="s1">&#39;strike_distance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">oc_df</span><span class="p">[</span><span class="s1">&#39;spot_price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="o">-</span> <span class="n">oc_df</span><span class="p">[</span><span class="s1">&#39;strike_price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span><span class="o">//</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
+
+<span class="n">oc_df</span><span class="p">[</span><span class="n">oc_df</span><span class="p">[</span><span class="s1">&#39;strike_distance&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;strike_price&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>exchange_code</th>
+      <th>product_type</th>
+      <th>stock_code</th>
+      <th>expiry_date</th>
+      <th>right</th>
+      <th>strike_price</th>
+      <th>ltp</th>
+      <th>ltt</th>
+      <th>best_bid_price</th>
+      <th>best_bid_quantity</th>
+      <th>...</th>
+      <th>upper_circuit</th>
+      <th>lower_circuit</th>
+      <th>total_quantity_traded</th>
+      <th>spot_price</th>
+      <th>ltq</th>
+      <th>open_interest</th>
+      <th>chnge_oi</th>
+      <th>total_buy_qty</th>
+      <th>total_sell_qty</th>
+      <th>strike_distance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>21600.0</td>
+      <td>652.20</td>
+      <td>19-Apr-2024 15:29:30</td>
+      <td>652.80</td>
+      <td>400</td>
+      <td>...</td>
+      <td>1088.40</td>
+      <td>222.30</td>
+      <td>51400</td>
+      <td>22147</td>
+      <td>200</td>
+      <td>13950.0</td>
+      <td>0.0</td>
+      <td>8650</td>
+      <td>4700</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>21650.0</td>
+      <td>606.80</td>
+      <td>19-Apr-2024 15:27:18</td>
+      <td>609.55</td>
+      <td>400</td>
+      <td>...</td>
+      <td>1034.70</td>
+      <td>189.90</td>
+      <td>44050</td>
+      <td>22147</td>
+      <td>100</td>
+      <td>7950.0</td>
+      <td>0.0</td>
+      <td>11400</td>
+      <td>5400</td>
+      <td>9.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>21700.0</td>
+      <td>570.00</td>
+      <td>19-Apr-2024 15:29:30</td>
+      <td>567.70</td>
+      <td>400</td>
+      <td>...</td>
+      <td>987.10</td>
+      <td>165.60</td>
+      <td>196850</td>
+      <td>22147</td>
+      <td>100</td>
+      <td>23000.0</td>
+      <td>0.0</td>
+      <td>15700</td>
+      <td>6500</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>21750.0</td>
+      <td>527.70</td>
+      <td>19-Apr-2024 15:29:23</td>
+      <td>525.70</td>
+      <td>400</td>
+      <td>...</td>
+      <td>928.75</td>
+      <td>132.55</td>
+      <td>82750</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>14000.0</td>
+      <td>0.0</td>
+      <td>16500</td>
+      <td>8100</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>21800.0</td>
+      <td>486.90</td>
+      <td>19-Apr-2024 15:29:53</td>
+      <td>484.30</td>
+      <td>50</td>
+      <td>...</td>
+      <td>881.15</td>
+      <td>112.15</td>
+      <td>1150600</td>
+      <td>22147</td>
+      <td>100</td>
+      <td>165450.0</td>
+      <td>0.0</td>
+      <td>17400</td>
+      <td>11500</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>21850.0</td>
+      <td>445.70</td>
+      <td>19-Apr-2024 15:29:45</td>
+      <td>445.85</td>
+      <td>950</td>
+      <td>...</td>
+      <td>823.55</td>
+      <td>83.65</td>
+      <td>492750</td>
+      <td>22147</td>
+      <td>100</td>
+      <td>28350.0</td>
+      <td>0.0</td>
+      <td>11100</td>
+      <td>7750</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>21900.0</td>
+      <td>410.00</td>
+      <td>19-Apr-2024 15:29:53</td>
+      <td>407.80</td>
+      <td>1000</td>
+      <td>...</td>
+      <td>772.25</td>
+      <td>63.05</td>
+      <td>1783200</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>176000.0</td>
+      <td>0.0</td>
+      <td>15050</td>
+      <td>10100</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>21950.0</td>
+      <td>370.15</td>
+      <td>19-Apr-2024 15:29:50</td>
+      <td>370.30</td>
+      <td>800</td>
+      <td>...</td>
+      <td>718.55</td>
+      <td>41.55</td>
+      <td>404800</td>
+      <td>22147</td>
+      <td>150</td>
+      <td>34400.0</td>
+      <td>0.0</td>
+      <td>11300</td>
+      <td>8750</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>22000.0</td>
+      <td>330.30</td>
+      <td>19-Apr-2024 15:29:54</td>
+      <td>335.00</td>
+      <td>1050</td>
+      <td>...</td>
+      <td>671.40</td>
+      <td>27.80</td>
+      <td>4019100</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>519200.0</td>
+      <td>0.0</td>
+      <td>34450</td>
+      <td>15150</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>22050.0</td>
+      <td>305.00</td>
+      <td>19-Apr-2024 15:29:59</td>
+      <td>300.00</td>
+      <td>50</td>
+      <td>...</td>
+      <td>615.00</td>
+      <td>5.90</td>
+      <td>526800</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>44350.0</td>
+      <td>0.0</td>
+      <td>14500</td>
+      <td>4800</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>22100.0</td>
+      <td>271.90</td>
+      <td>19-Apr-2024 15:29:58</td>
+      <td>271.75</td>
+      <td>1250</td>
+      <td>...</td>
+      <td>567.20</td>
+      <td>0.05</td>
+      <td>2869950</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>310900.0</td>
+      <td>0.0</td>
+      <td>26650</td>
+      <td>11450</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>22150.0</td>
+      <td>244.70</td>
+      <td>19-Apr-2024 15:29:59</td>
+      <td>240.20</td>
+      <td>50</td>
+      <td>...</td>
+      <td>520.15</td>
+      <td>0.05</td>
+      <td>1058750</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>73500.0</td>
+      <td>0.0</td>
+      <td>21900</td>
+      <td>5300</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>22200.0</td>
+      <td>211.35</td>
+      <td>19-Apr-2024 15:29:59</td>
+      <td>211.35</td>
+      <td>550</td>
+      <td>...</td>
+      <td>470.90</td>
+      <td>0.05</td>
+      <td>2989300</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>465850.0</td>
+      <td>0.0</td>
+      <td>25150</td>
+      <td>22950</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>22250.0</td>
+      <td>185.40</td>
+      <td>19-Apr-2024 15:29:59</td>
+      <td>182.00</td>
+      <td>50</td>
+      <td>...</td>
+      <td>425.25</td>
+      <td>0.05</td>
+      <td>703300</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>78250.0</td>
+      <td>0.0</td>
+      <td>21600</td>
+      <td>9200</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>22300.0</td>
+      <td>159.90</td>
+      <td>19-Apr-2024 15:29:58</td>
+      <td>159.00</td>
+      <td>600</td>
+      <td>...</td>
+      <td>382.70</td>
+      <td>0.05</td>
+      <td>2656550</td>
+      <td>22147</td>
+      <td>250</td>
+      <td>580550.0</td>
+      <td>0.0</td>
+      <td>29700</td>
+      <td>20850</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>22350.0</td>
+      <td>137.00</td>
+      <td>19-Apr-2024 15:29:59</td>
+      <td>137.00</td>
+      <td>100</td>
+      <td>...</td>
+      <td>339.75</td>
+      <td>0.05</td>
+      <td>650650</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>91850.0</td>
+      <td>0.0</td>
+      <td>18150</td>
+      <td>9850</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>22400.0</td>
+      <td>117.00</td>
+      <td>19-Apr-2024 15:29:59</td>
+      <td>116.20</td>
+      <td>200</td>
+      <td>...</td>
+      <td>302.50</td>
+      <td>0.05</td>
+      <td>2622100</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>481100.0</td>
+      <td>0.0</td>
+      <td>27600</td>
+      <td>13550</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>22450.0</td>
+      <td>99.45</td>
+      <td>19-Apr-2024 15:29:59</td>
+      <td>96.35</td>
+      <td>50</td>
+      <td>...</td>
+      <td>268.65</td>
+      <td>0.05</td>
+      <td>624450</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>89950.0</td>
+      <td>0.0</td>
+      <td>23750</td>
+      <td>7600</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>22500.0</td>
+      <td>84.35</td>
+      <td>19-Apr-2024 15:29:58</td>
+      <td>81.00</td>
+      <td>1550</td>
+      <td>...</td>
+      <td>234.85</td>
+      <td>0.05</td>
+      <td>3556350</td>
+      <td>22147</td>
+      <td>100</td>
+      <td>543450.0</td>
+      <td>0.0</td>
+      <td>50250</td>
+      <td>27700</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>22550.0</td>
+      <td>66.00</td>
+      <td>19-Apr-2024 15:29:46</td>
+      <td>65.20</td>
+      <td>50</td>
+      <td>...</td>
+      <td>203.70</td>
+      <td>0.05</td>
+      <td>613350</td>
+      <td>22147</td>
+      <td>250</td>
+      <td>91850.0</td>
+      <td>0.0</td>
+      <td>45400</td>
+      <td>12500</td>
+      <td>9.0</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Call</td>
+      <td>22600.0</td>
+      <td>54.00</td>
+      <td>19-Apr-2024 15:29:56</td>
+      <td>53.60</td>
+      <td>50</td>
+      <td>...</td>
+      <td>177.45</td>
+      <td>0.05</td>
+      <td>2655100</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>297250.0</td>
+      <td>0.0</td>
+      <td>38650</td>
+      <td>8850</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>21600.0</td>
+      <td>61.60</td>
+      <td>19-Apr-2024 15:29:58</td>
+      <td>60.75</td>
+      <td>50</td>
+      <td>...</td>
+      <td>137.65</td>
+      <td>0.75</td>
+      <td>2153600</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>195450.0</td>
+      <td>0.0</td>
+      <td>16750</td>
+      <td>20250</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>21650.0</td>
+      <td>71.55</td>
+      <td>19-Apr-2024 15:29:51</td>
+      <td>66.75</td>
+      <td>50</td>
+      <td>...</td>
+      <td>154.45</td>
+      <td>0.05</td>
+      <td>497800</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>85600.0</td>
+      <td>0.0</td>
+      <td>9850</td>
+      <td>7250</td>
+      <td>9.0</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>21700.0</td>
+      <td>78.00</td>
+      <td>19-Apr-2024 15:29:59</td>
+      <td>75.65</td>
+      <td>50</td>
+      <td>...</td>
+      <td>173.95</td>
+      <td>0.05</td>
+      <td>2714950</td>
+      <td>22147</td>
+      <td>100</td>
+      <td>211550.0</td>
+      <td>0.0</td>
+      <td>11600</td>
+      <td>25950</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>21750.0</td>
+      <td>94.40</td>
+      <td>19-Apr-2024 15:29:58</td>
+      <td>86.00</td>
+      <td>50</td>
+      <td>...</td>
+      <td>196.40</td>
+      <td>0.05</td>
+      <td>615900</td>
+      <td>22147</td>
+      <td>100</td>
+      <td>55850.0</td>
+      <td>0.0</td>
+      <td>8650</td>
+      <td>14300</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>21800.0</td>
+      <td>90.00</td>
+      <td>19-Apr-2024 15:29:59</td>
+      <td>90.00</td>
+      <td>300</td>
+      <td>...</td>
+      <td>218.65</td>
+      <td>0.05</td>
+      <td>4259200</td>
+      <td>22147</td>
+      <td>100</td>
+      <td>386100.0</td>
+      <td>0.0</td>
+      <td>11800</td>
+      <td>38800</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>21850.0</td>
+      <td>104.80</td>
+      <td>19-Apr-2024 15:29:51</td>
+      <td>105.30</td>
+      <td>950</td>
+      <td>...</td>
+      <td>245.80</td>
+      <td>0.05</td>
+      <td>990600</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>94800.0</td>
+      <td>0.0</td>
+      <td>9700</td>
+      <td>26100</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>21900.0</td>
+      <td>115.05</td>
+      <td>19-Apr-2024 15:29:57</td>
+      <td>117.95</td>
+      <td>50</td>
+      <td>...</td>
+      <td>270.60</td>
+      <td>0.05</td>
+      <td>3226100</td>
+      <td>22147</td>
+      <td>300</td>
+      <td>450500.0</td>
+      <td>0.0</td>
+      <td>8750</td>
+      <td>34850</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>21950.0</td>
+      <td>130.00</td>
+      <td>19-Apr-2024 15:29:59</td>
+      <td>120.00</td>
+      <td>100</td>
+      <td>...</td>
+      <td>299.70</td>
+      <td>0.05</td>
+      <td>635600</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>63000.0</td>
+      <td>0.0</td>
+      <td>3050</td>
+      <td>9800</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>22000.0</td>
+      <td>145.00</td>
+      <td>19-Apr-2024 15:29:59</td>
+      <td>145.00</td>
+      <td>50</td>
+      <td>...</td>
+      <td>331.35</td>
+      <td>0.05</td>
+      <td>4015850</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>761000.0</td>
+      <td>0.0</td>
+      <td>8600</td>
+      <td>40800</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>22050.0</td>
+      <td>161.00</td>
+      <td>19-Apr-2024 15:29:57</td>
+      <td>158.00</td>
+      <td>50</td>
+      <td>...</td>
+      <td>364.85</td>
+      <td>0.05</td>
+      <td>459350</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>72450.0</td>
+      <td>0.0</td>
+      <td>1400</td>
+      <td>8700</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>22100.0</td>
+      <td>179.00</td>
+      <td>19-Apr-2024 15:29:58</td>
+      <td>179.00</td>
+      <td>200</td>
+      <td>...</td>
+      <td>399.10</td>
+      <td>0.05</td>
+      <td>1521900</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>334900.0</td>
+      <td>0.0</td>
+      <td>5650</td>
+      <td>15700</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>22150.0</td>
+      <td>199.00</td>
+      <td>19-Apr-2024 15:29:59</td>
+      <td>196.90</td>
+      <td>250</td>
+      <td>...</td>
+      <td>436.75</td>
+      <td>0.05</td>
+      <td>424500</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>63150.0</td>
+      <td>0.0</td>
+      <td>4700</td>
+      <td>4800</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>22200.0</td>
+      <td>216.40</td>
+      <td>19-Apr-2024 15:29:58</td>
+      <td>216.40</td>
+      <td>150</td>
+      <td>...</td>
+      <td>474.15</td>
+      <td>0.05</td>
+      <td>1304100</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>400200.0</td>
+      <td>0.0</td>
+      <td>7100</td>
+      <td>22800</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>22250.0</td>
+      <td>240.50</td>
+      <td>19-Apr-2024 15:29:59</td>
+      <td>240.50</td>
+      <td>250</td>
+      <td>...</td>
+      <td>515.00</td>
+      <td>0.05</td>
+      <td>125300</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>30100.0</td>
+      <td>0.0</td>
+      <td>3400</td>
+      <td>5350</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>22300.0</td>
+      <td>265.35</td>
+      <td>19-Apr-2024 15:29:53</td>
+      <td>265.35</td>
+      <td>600</td>
+      <td>...</td>
+      <td>557.90</td>
+      <td>0.05</td>
+      <td>613900</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>296550.0</td>
+      <td>0.0</td>
+      <td>7000</td>
+      <td>10500</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>22350.0</td>
+      <td>297.55</td>
+      <td>19-Apr-2024 15:29:22</td>
+      <td>294.60</td>
+      <td>750</td>
+      <td>...</td>
+      <td>597.45</td>
+      <td>0.05</td>
+      <td>64050</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>25250.0</td>
+      <td>0.0</td>
+      <td>4850</td>
+      <td>14750</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>22400.0</td>
+      <td>319.65</td>
+      <td>19-Apr-2024 15:29:40</td>
+      <td>321.70</td>
+      <td>50</td>
+      <td>...</td>
+      <td>643.20</td>
+      <td>1.90</td>
+      <td>202650</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>93450.0</td>
+      <td>0.0</td>
+      <td>4850</td>
+      <td>10600</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>22450.0</td>
+      <td>356.45</td>
+      <td>19-Apr-2024 15:29:23</td>
+      <td>354.60</td>
+      <td>400</td>
+      <td>...</td>
+      <td>690.35</td>
+      <td>16.25</td>
+      <td>19800</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>9450.0</td>
+      <td>0.0</td>
+      <td>3150</td>
+      <td>8250</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>22500.0</td>
+      <td>385.80</td>
+      <td>19-Apr-2024 15:29:48</td>
+      <td>386.50</td>
+      <td>50</td>
+      <td>...</td>
+      <td>741.10</td>
+      <td>35.40</td>
+      <td>237300</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>144100.0</td>
+      <td>0.0</td>
+      <td>4400</td>
+      <td>11750</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>22550.0</td>
+      <td>435.15</td>
+      <td>19-Apr-2024 15:27:22</td>
+      <td>422.00</td>
+      <td>400</td>
+      <td>...</td>
+      <td>792.35</td>
+      <td>56.65</td>
+      <td>17900</td>
+      <td>22147</td>
+      <td>200</td>
+      <td>6150.0</td>
+      <td>0.0</td>
+      <td>3350</td>
+      <td>8400</td>
+      <td>9.0</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>NFO</td>
+      <td>Options</td>
+      <td>NIFTY</td>
+      <td>02-May-2024</td>
+      <td>Put</td>
+      <td>22600.0</td>
+      <td>459.90</td>
+      <td>19-Apr-2024 15:29:30</td>
+      <td>459.05</td>
+      <td>400</td>
+      <td>...</td>
+      <td>840.05</td>
+      <td>76.05</td>
+      <td>68350</td>
+      <td>22147</td>
+      <td>50</td>
+      <td>56450.0</td>
+      <td>0.0</td>
+      <td>2800</td>
+      <td>10400</td>
+      <td>10.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>42 rows × 27 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">odf</span> <span class="o">=</span> <span class="n">oc_df</span><span class="p">[</span><span class="n">oc_df</span><span class="p">[</span><span class="s1">&#39;strike_distance&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="s1">&#39;strike_price&#39;</span><span class="p">)[[</span><span class="s1">&#39;stock_code&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;strike_price&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">WTE</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">hist_dfs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">odf</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">):</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">get_option_history</span><span class="p">(</span>
+        <span class="s1">&#39;NIFTY&#39;</span><span class="p">,</span>
+        <span class="n">record</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">],</span>
+        <span class="n">WTE</span><span class="p">,</span>
+        <span class="nb">int</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;strike_price&#39;</span><span class="p">]),</span>
+        <span class="s1">&#39;20240419&#39;</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;Error&#39;</span><span class="p">]:</span>
+        <span class="k">continue</span>
+    <span class="n">hist_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">resp</span><span class="p">[</span><span class="s1">&#39;Success&#39;</span><span class="p">])</span>
+    <span class="n">hist_df</span><span class="p">[</span><span class="s1">&#39;stock_code&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s1">&#39;stock_code&#39;</span><span class="p">]</span>
+    <span class="n">hist_dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hist_df</span><span class="p">)</span>
+
+<span class="n">hist_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">hist_dfs</span><span class="p">)</span>
+
+<span class="n">ndf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;/workspace/nifty/NIFTY/20240419.csv&#39;</span><span class="p">,</span>
+                  <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">hist_dfs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>42
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">spot</span> <span class="o">=</span> <span class="n">oc_df</span><span class="o">.</span><span class="n">spot_price</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">unique</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">hist_df</span> <span class="ow">in</span> <span class="n">hist_dfs</span><span class="p">:</span>
+    <span class="n">strike</span> <span class="o">=</span> <span class="n">hist_df</span><span class="p">[</span><span class="s1">&#39;strike_price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">unique</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">right</span> <span class="o">=</span> <span class="n">hist_df</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">spot</span> <span class="o">-</span> <span class="n">strike</span><span class="p">)</span><span class="o">//</span><span class="mi">50</span><span class="p">)</span><span class="o">/</span><span class="mi">30</span>
+    <span class="n">hist_df</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">hist_df</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">])</span>
+    <span class="n">hist_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">)[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">twinx</span><span class="p">(),</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span> <span class="k">if</span> <span class="n">right</span> <span class="o">==</span> <span class="s1">&#39;Call&#39;</span> <span class="k">else</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.35</span><span class="o">-</span><span class="n">dist</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+
+<span class="n">ndf</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.7</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;-.&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/418ccce0e3e8cf734afba2dc4a799276f5ad1cfbd23be59774adff3d936ac31d.png" src="../../_images/418ccce0e3e8cf734afba2dc4a799276f5ad1cfbd23be59774adff3d936ac31d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">time_offset</span> <span class="o">=</span> <span class="mi">150</span>
+
+<span class="n">curr_date</span> <span class="o">=</span> <span class="n">ndf</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">time_offset</span><span class="p">]</span>
+<span class="n">hist_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">hist_dfs</span><span class="p">)</span>
+<span class="n">hist_df</span><span class="o">.</span><span class="n">expiry_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">hist_df</span><span class="o">.</span><span class="n">expiry_date</span><span class="p">)</span>
+
+<span class="n">expiry_date</span> <span class="o">=</span> <span class="n">hist_df</span><span class="o">.</span><span class="n">expiry_date</span><span class="o">.</span><span class="n">unique</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">days_to_expiry</span> <span class="o">=</span> <span class="p">(</span><span class="n">expiry_date</span> <span class="o">-</span> <span class="n">curr_date</span><span class="p">)</span><span class="o">.</span><span class="n">days</span> <span class="o">+</span> \
+    <span class="p">(</span><span class="n">expiry_date</span> <span class="o">-</span> <span class="n">curr_date</span><span class="p">)</span><span class="o">.</span><span class="n">seconds</span> <span class="o">/</span> <span class="p">(</span><span class="mi">3600</span><span class="o">*</span><span class="mi">24</span><span class="p">)</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">days_to_expiry</span> <span class="o">/</span> <span class="mi">365</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mf">0.06</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S</span> <span class="o">=</span> <span class="mi">22147</span>
+<span class="n">K</span> <span class="o">=</span> <span class="mi">21600</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">option_type</span> <span class="o">=</span> <span class="s1">&#39;Call&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">black_scholes_greeks</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">option_type</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates option Greeks using the Black-Scholes model.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        S: Current underlying asset price</span>
+<span class="sd">        K: Strike price</span>
+<span class="sd">        T: Time to expiration (in years)</span>
+<span class="sd">        r: Risk-free interest rate</span>
+<span class="sd">        sigma: Volatility of the underlying asset</span>
+<span class="sd">        option_type: &#39;Call&#39; or &#39;Put&#39;</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary containing the following Greeks:</span>
+<span class="sd">            delta: Change in option price w.r.t. underlying price</span>
+<span class="sd">            gamma: Change in delta w.r.t. underlying price</span>
+<span class="sd">            vega: Change in option price w.r.t. volatility</span>
+<span class="sd">            theta: Change in option price w.r.t. time</span>
+<span class="sd">            rho: Change in option price w.r.t. interest rate</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">d1</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">S</span> <span class="o">/</span> <span class="n">K</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">))</span>
+    <span class="n">d2</span> <span class="o">=</span> <span class="n">d1</span> <span class="o">-</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">&#39;Call&#39;</span><span class="p">:</span>
+        <span class="n">N_d1</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span>
+        <span class="n">N_d2</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">d2</span><span class="p">)</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">N_d1</span>
+        <span class="n">gamma</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">))</span>
+        <span class="n">vega</span> <span class="o">=</span> <span class="n">S</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">/</span> \
+            <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">))</span> <span class="o">-</span> <span class="n">r</span> <span class="o">*</span> <span class="n">K</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">N_d2</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">K</span> <span class="o">*</span> <span class="n">T</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">N_d2</span>
+    <span class="k">elif</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">&#39;Put&#39;</span><span class="p">:</span>
+        <span class="n">N_d1</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="o">-</span><span class="n">d1</span><span class="p">)</span>
+        <span class="n">N_d2</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="o">-</span><span class="n">d2</span><span class="p">)</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="o">-</span><span class="n">N_d1</span>
+        <span class="n">gamma</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">))</span>
+        <span class="n">vega</span> <span class="o">=</span> <span class="n">S</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">/</span> \
+            <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">))</span> <span class="o">+</span> <span class="n">r</span> <span class="o">*</span> <span class="n">K</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">N_d2</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="o">-</span><span class="n">K</span> <span class="o">*</span> <span class="n">T</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">N_d2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Invalid option type. Please specify &#39;Call&#39; or &#39;Put&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;delta&#39;</span><span class="p">:</span> <span class="n">delta</span><span class="p">,</span>
+        <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="n">gamma</span><span class="p">,</span>
+        <span class="s1">&#39;vega&#39;</span><span class="p">:</span> <span class="n">vega</span><span class="p">,</span>
+        <span class="s1">&#39;theta&#39;</span><span class="p">:</span> <span class="n">theta</span><span class="p">,</span>
+        <span class="s1">&#39;rho&#39;</span><span class="p">:</span> <span class="n">rho</span>
+    <span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">black_scholes_price</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">option_type</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the Black-Scholes option price.&quot;&quot;&quot;</span>
+    <span class="n">d1</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">S</span> <span class="o">/</span> <span class="n">K</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">))</span>
+    <span class="n">d2</span> <span class="o">=</span> <span class="n">d1</span> <span class="o">-</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">&#39;Call&#39;</span><span class="p">:</span>
+        <span class="n">price</span> <span class="o">=</span> <span class="n">S</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">-</span> <span class="n">K</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">d2</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">&#39;Put&#39;</span><span class="p">:</span>
+        <span class="n">price</span> <span class="o">=</span> <span class="n">K</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="o">-</span><span class="n">d2</span><span class="p">)</span> <span class="o">-</span> \
+            <span class="n">S</span> <span class="o">*</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="o">-</span><span class="n">d1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Invalid option type. Please specify &#39;Call&#39; or &#39;Put&#39;.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">price</span>
+
+
+<span class="k">def</span> <span class="nf">implied_volatility</span><span class="p">(</span>
+    <span class="n">S</span><span class="p">,</span>
+    <span class="n">K</span><span class="p">,</span>
+    <span class="n">T</span><span class="p">,</span>
+    <span class="n">r</span><span class="p">,</span>
+    <span class="n">market_price</span><span class="p">,</span>
+    <span class="n">option_type</span><span class="p">,</span>
+    <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates implied volatility using the Newton-Raphson method.&quot;&quot;&quot;</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="mf">.5</span>  <span class="c1"># Initial guess for volatility</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
+        <span class="n">price</span> <span class="o">=</span> <span class="n">black_scholes_price</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">option_type</span><span class="p">)</span>
+        <span class="n">vega</span> <span class="o">=</span> <span class="n">black_scholes_greeks</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">option_type</span><span class="p">)[</span><span class="s1">&#39;vega&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">vega</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">sigma_new</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">-</span> <span class="p">(</span><span class="n">price</span> <span class="o">-</span> <span class="n">market_price</span><span class="p">)</span> <span class="o">/</span> <span class="n">vega</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">vega</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">market_price</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sigma_new</span> <span class="o">-</span> <span class="n">sigma</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sigma_new</span> <span class="o">-</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma_new</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Failed to converge within tolerance., </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sigma_new</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">sigma</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">tol</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">sigma_new</span>
+
+
+<span class="c1"># black_scholes_greeks(S, K, T, r, sigma, option_type)</span>
+<span class="n">implied_volatility</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">option_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>866.0383746846674 980.0152344418309 0.5 0.2 0.8834948113615875
+-188.31766020166015 921.0395102439235 -0.3834948113615875 0.2 0.2046792326549966
+-28.10587036382458 534.5493553504499 -0.17881557870659087 0.2 0.05295277242504068
+-6.560107825975933 263.25355614418845 -0.1258628062815502 0.2 0.02567907505216495
+-1.7163488407288696 116.88934368997442 -0.10018373122938524 0.2 0.016394555570536873
+-0.42788913615160595 45.11966234312244 -0.08378917565884837 0.2 0.013916086768927569
+-0.06723055147885049 11.26742573689863 -0.0698730888899208 0.2 0.023717090107256922
+-6.119675360648918e-05 0.03136685125657432 -0.04615599878266388 0.2 6.378109014422504
+6905.8912960598445 993.0389111253335 6.33195301563984 0.2 6.954099400026696
+-421.2830315311121 1011.1161577134548 -0.6221463843868555 0.2 0.4168492693107158
+-43.60815267466296 632.2356913252609 -0.20529711507613974 0.2 0.06929085667851889
+-9.530149124374248 322.04916722227046 -0.13600625839762084 0.2 0.03021324106594797
+-2.4553553428324335 146.9306058208885 -0.10579301733167287 0.2 0.01807217310510084
+-0.6330018458995141 59.55524655089667 -0.08772084422657203 0.2 0.013987043865020699
+-0.12294373708132156 17.929276650467035 -0.07373380036155133 0.2 0.018012089577127993
+-0.002717559292325422 0.8306600301028182 -0.05572171078442334 0.2 0.24404395534384057
+599.9296102112421 572.4154906677081 0.18832224455941723 0.2 1.0477172962452024
+-664.9347695504166 1038.4564319266076 -0.8593950516857851 0.2 0.6405032980694415
+-52.490942370181074 673.6817136995338 -0.2188917536163436 0.2 0.07821340745739991
+-11.096484708797561 348.3585795181909 -0.1406783461589437 0.2 0.032427749373710124
+-2.833236121236496 160.6384864769214 -0.10825059678523358 0.2 0.018882374876410923
+-0.736528338002131 66.18612349761123 -0.08936822190882265 0.2 0.014149919779422218
+-0.15182834694068248 21.037419363229727 -0.07521830212940044 0.2 0.016723930861768432
+-0.006011072765293779 1.6118554364804827 -0.058494371267632 0.2 0.12780989417706276
+566.6205309495745 10.46818212796558 0.06931552290943076 0.2 54.10877686550668
+-21560.76992667383 4.329188386005077 -54.03946134259725 0.2 4980.372301739919
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">60</span><span class="p">],</span> <span class="n">line</span> <span class="mi">108</span>
+<span class="g g-Whitespace">    </span><span class="mi">104</span>     <span class="k">return</span> <span class="n">sigma_new</span>
+<span class="g g-Whitespace">    </span><span class="mi">107</span> <span class="c1"># black_scholes_greeks(S, K, T, r, sigma, option_type)</span>
+<span class="ne">--&gt; </span><span class="mi">108</span> <span class="n">implied_volatility</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">option_type</span><span class="p">)</span>
+
+<span class="nn">Cell In[60], line 101,</span> in <span class="ni">implied_volatility</span><span class="nt">(S, K, T, r, market_price, option_type, tol, max_iter)</span>
+<span class="g g-Whitespace">     </span><span class="mi">99</span>     <span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma_new</span>
+<span class="g g-Whitespace">    </span><span class="mi">100</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">101</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">102</span>         <span class="sa">f</span><span class="s2">&quot;Failed to converge within tolerance., </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sigma_new</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">sigma</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">tol</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">103</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">104</span> <span class="k">return</span> <span class="n">sigma_new</span>
+
+<span class="ne">ValueError</span>: Failed to converge within tolerance., 0.0, 1e-06
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hist_df</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">hist_df</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">ndf</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">time_offset</span><span class="p">])</span>
+    <span class="o">&amp;</span> <span class="p">(</span><span class="n">hist_df</span><span class="p">[</span><span class="s1">&#39;strike_price&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mf">22100.0</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>close</th>
+      <th>datetime</th>
+      <th>exchange_code</th>
+      <th>expiry_date</th>
+      <th>high</th>
+      <th>low</th>
+      <th>open</th>
+      <th>open_interest</th>
+      <th>product_type</th>
+      <th>right</th>
+      <th>stock_code</th>
+      <th>strike_price</th>
+      <th>volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>261</th>
+      <td>260.55</td>
+      <td>2024-04-19 11:44:00</td>
+      <td>NFO</td>
+      <td>2024-04-25</td>
+      <td>261.80</td>
+      <td>255.0</td>
+      <td>256.25</td>
+      <td>1929250</td>
+      <td>Options</td>
+      <td>Put</td>
+      <td>NIFTY</td>
+      <td>22100.0</td>
+      <td>29000</td>
+    </tr>
+    <tr>
+      <th>273</th>
+      <td>87.65</td>
+      <td>2024-04-19 11:44:00</td>
+      <td>NFO</td>
+      <td>2024-04-25</td>
+      <td>90.90</td>
+      <td>87.2</td>
+      <td>90.75</td>
+      <td>3698600</td>
+      <td>Options</td>
+      <td>Call</td>
+      <td>NIFTY</td>
+      <td>22100.0</td>
+      <td>254550</td>
+    </tr>
+    <tr>
+      <th>274</th>
+      <td>88.10</td>
+      <td>2024-04-19 11:44:00</td>
+      <td>NFO</td>
+      <td>2024-04-25</td>
+      <td>90.35</td>
+      <td>87.2</td>
+      <td>90.25</td>
+      <td>3698600</td>
+      <td>Options</td>
+      <td>Call</td>
+      <td>NIFTY</td>
+      <td>22100.0</td>
+      <td>252100</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hdf = hist_dfs[10].set_index(&#39;datetime&#39;).copy()</span>
+
+<span class="c1"># hdf.expiry_date = pd.to_datetime(hdf.expiry_date)</span>
+
+<span class="c1"># nifty_close_price = ndf[ndf.index[100]:ndf.index[100]].close.values[0]</span>
+<span class="c1"># option_close_price = hdf[ndf.index[100]:ndf.index[100]].head(1).close.values[0]</span>
+<span class="c1"># option_strike_price = hdf[ndf.index[100]                          :ndf.index[100]].head(1).strike_price.values[0]</span>
+
+
+<span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">tdf</span> <span class="o">=</span> <span class="n">hist_df</span><span class="p">[</span>
+    <span class="n">hist_df</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">ndf</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">time_offset</span><span class="p">]</span>
+<span class="p">][[</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="s1">&#39;strike_price&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;close&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">oc_df</span><span class="p">[[</span><span class="s1">&#39;spot_price&#39;</span><span class="p">,</span> <span class="s1">&#39;strike_price&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">]],</span>
+    <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;strike_price&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">],</span>
+    <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;strike_price&#39;</span><span class="p">,]</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">tdf</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;spot_price&#39;</span><span class="p">])</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;strike_price&#39;</span><span class="p">])</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">implied_volatility</span><span class="p">(</span>
+            <span class="n">S</span><span class="p">,</span>
+            <span class="n">K</span><span class="p">,</span>
+            <span class="n">T</span><span class="p">,</span>
+            <span class="n">r</span><span class="p">,</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]),</span>
+            <span class="n">record</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">option_type</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span>
+
+        <span class="n">record</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="n">black_scholes_greeks</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">option_type</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+
+<span class="n">greeks_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+<span class="n">greeks_df</span><span class="p">[</span><span class="s1">&#39;strike_distance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">greeks_df</span><span class="p">[</span><span class="s1">&#39;spot_price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="o">-</span> <span class="n">greeks_df</span><span class="p">[</span><span class="s1">&#39;strike_price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span><span class="o">//</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
+
+<span class="n">greeks_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;strike_distance&#39;</span><span class="p">]</span>
+                      <span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;strike_price&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_1403175/3734915972.py:58: RuntimeWarning: overflow encountered in scalar power
+  d1 = (np.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * np.sqrt(T))
+/tmp/ipykernel_1403175/3734915972.py:22: RuntimeWarning: overflow encountered in scalar power
+  d1 = (np.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * np.sqrt(T))
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>datetime</th>
+      <th>close</th>
+      <th>spot_price</th>
+      <th>delta</th>
+      <th>gamma</th>
+      <th>vega</th>
+      <th>theta</th>
+      <th>rho</th>
+      <th>strike_distance</th>
+    </tr>
+    <tr>
+      <th>right</th>
+      <th>strike_price</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="11" valign="top">Call</th>
+      <th>22100.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>87.65</td>
+      <td>22147</td>
+      <td>0.717419</td>
+      <td>0.002884</td>
+      <td>920.144259</td>
+      <td>-2260.542604</td>
+      <td>238.578761</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>22150.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>71.00</td>
+      <td>22147</td>
+      <td>0.545023</td>
+      <td>0.002546</td>
+      <td>1078.749450</td>
+      <td>-2764.057236</td>
+      <td>181.181655</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>22200.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>55.75</td>
+      <td>22147</td>
+      <td>0.428238</td>
+      <td>0.002207</td>
+      <td>1068.058622</td>
+      <td>-2876.654706</td>
+      <td>142.359477</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>22250.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>43.75</td>
+      <td>22147</td>
+      <td>0.338082</td>
+      <td>0.001866</td>
+      <td>994.972756</td>
+      <td>-2818.529006</td>
+      <td>112.392774</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>22300.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>33.75</td>
+      <td>22147</td>
+      <td>0.265588</td>
+      <td>0.001563</td>
+      <td>892.371908</td>
+      <td>-2629.706082</td>
+      <td>88.302069</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>22350.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>25.80</td>
+      <td>22147</td>
+      <td>0.207316</td>
+      <td>0.001290</td>
+      <td>778.379249</td>
+      <td>-2374.335606</td>
+      <td>68.936173</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>22400.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>19.60</td>
+      <td>22147</td>
+      <td>0.160838</td>
+      <td>0.001051</td>
+      <td>664.405179</td>
+      <td>-2091.206817</td>
+      <td>53.487568</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>22450.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>14.90</td>
+      <td>22147</td>
+      <td>0.124473</td>
+      <td>0.000846</td>
+      <td>558.551119</td>
+      <td>-1812.548992</td>
+      <td>41.398155</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>22500.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>11.50</td>
+      <td>22147</td>
+      <td>0.097019</td>
+      <td>0.000678</td>
+      <td>467.130521</td>
+      <td>-1566.911527</td>
+      <td>32.269137</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>22550.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>8.60</td>
+      <td>22147</td>
+      <td>0.074036</td>
+      <td>0.000537</td>
+      <td>381.438944</td>
+      <td>-1310.165880</td>
+      <td>24.627439</td>
+      <td>9.0</td>
+    </tr>
+    <tr>
+      <th>22600.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>6.45</td>
+      <td>22147</td>
+      <td>0.056470</td>
+      <td>0.000422</td>
+      <td>309.096463</td>
+      <td>-1087.210647</td>
+      <td>18.785873</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th rowspan="21" valign="top">Put</th>
+      <th>21600.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>71.20</td>
+      <td>22147</td>
+      <td>-0.190834</td>
+      <td>0.000408</td>
+      <td>740.475580</td>
+      <td>-5757.093806</td>
+      <td>-64.889255</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>21650.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>81.25</td>
+      <td>22147</td>
+      <td>-0.211888</td>
+      <td>0.000435</td>
+      <td>788.429830</td>
+      <td>-6103.329608</td>
+      <td>-72.081328</td>
+      <td>9.0</td>
+    </tr>
+    <tr>
+      <th>21700.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>93.20</td>
+      <td>22147</td>
+      <td>-0.235143</td>
+      <td>0.000461</td>
+      <td>836.563240</td>
+      <td>-6473.236977</td>
+      <td>-80.038242</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>21750.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>106.00</td>
+      <td>22147</td>
+      <td>-0.259244</td>
+      <td>0.000486</td>
+      <td>881.392337</td>
+      <td>-6803.575775</td>
+      <td>-88.290598</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>21800.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>121.65</td>
+      <td>22147</td>
+      <td>-0.285787</td>
+      <td>0.000506</td>
+      <td>925.122282</td>
+      <td>-7174.344657</td>
+      <td>-97.402980</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>21850.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>138.90</td>
+      <td>22147</td>
+      <td>-0.313216</td>
+      <td>0.000524</td>
+      <td>964.382221</td>
+      <td>-7517.179973</td>
+      <td>-106.835368</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>21900.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>158.25</td>
+      <td>22147</td>
+      <td>-0.341569</td>
+      <td>0.000537</td>
+      <td>998.891295</td>
+      <td>-7844.685905</td>
+      <td>-116.608789</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>21950.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>179.45</td>
+      <td>22147</td>
+      <td>-0.370341</td>
+      <td>0.000546</td>
+      <td>1027.813958</td>
+      <td>-8141.015100</td>
+      <td>-126.550195</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>22000.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>204.20</td>
+      <td>22147</td>
+      <td>-0.399784</td>
+      <td>0.000549</td>
+      <td>1051.233316</td>
+      <td>-8461.642302</td>
+      <td>-136.769559</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>22050.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>231.25</td>
+      <td>22147</td>
+      <td>-0.428807</td>
+      <td>0.000546</td>
+      <td>1068.337316</td>
+      <td>-8758.936140</td>
+      <td>-146.882979</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>22100.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>260.55</td>
+      <td>22147</td>
+      <td>-0.457043</td>
+      <td>0.000539</td>
+      <td>1079.370716</td>
+      <td>-9033.086306</td>
+      <td>-156.767361</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>22150.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>293.75</td>
+      <td>22147</td>
+      <td>-0.484196</td>
+      <td>0.000526</td>
+      <td>1084.818681</td>
+      <td>-9342.850811</td>
+      <td>-166.348461</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>22200.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>328.90</td>
+      <td>22147</td>
+      <td>-0.509727</td>
+      <td>0.000510</td>
+      <td>1085.347985</td>
+      <td>-9630.392489</td>
+      <td>-175.416799</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>22250.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>366.30</td>
+      <td>22147</td>
+      <td>-0.533476</td>
+      <td>0.000492</td>
+      <td>1081.846184</td>
+      <td>-9914.372137</td>
+      <td>-183.923135</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>22300.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>406.05</td>
+      <td>22147</td>
+      <td>-0.555273</td>
+      <td>0.000471</td>
+      <td>1075.233800</td>
+      <td>-10207.891570</td>
+      <td>-191.812065</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>22350.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>444.45</td>
+      <td>22147</td>
+      <td>-0.575976</td>
+      <td>0.000454</td>
+      <td>1065.922648</td>
+      <td>-10392.502167</td>
+      <td>-199.314906</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>22400.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>492.65</td>
+      <td>22147</td>
+      <td>-0.592563</td>
+      <td>0.000427</td>
+      <td>1056.315277</td>
+      <td>-10867.652271</td>
+      <td>-205.589140</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>22450.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>536.05</td>
+      <td>22147</td>
+      <td>-0.609124</td>
+      <td>0.000408</td>
+      <td>1044.797679</td>
+      <td>-11129.839170</td>
+      <td>-211.782507</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>22500.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>586.05</td>
+      <td>22147</td>
+      <td>-0.622176</td>
+      <td>0.000384</td>
+      <td>1034.352150</td>
+      <td>-11596.477297</td>
+      <td>-216.901845</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>22550.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>635.35</td>
+      <td>22147</td>
+      <td>-0.634255</td>
+      <td>0.000363</td>
+      <td>1023.597768</td>
+      <td>-12009.785447</td>
+      <td>-221.685640</td>
+      <td>9.0</td>
+    </tr>
+    <tr>
+      <th>22600.0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>674.15</td>
+      <td>22147</td>
+      <td>-0.649512</td>
+      <td>0.000353</td>
+      <td>1008.504824</td>
+      <td>-11989.753985</td>
+      <td>-227.373176</td>
+      <td>10.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">greeks_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;strike_price&#39;</span><span class="p">]</span>
+                      <span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#   .groupby([&#39;right&#39;, &#39;strike_price&#39;]).first()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>datetime</th>
+      <th>strike_price</th>
+      <th>right</th>
+      <th>close</th>
+      <th>spot_price</th>
+      <th>delta</th>
+      <th>gamma</th>
+      <th>vega</th>
+      <th>theta</th>
+      <th>rho</th>
+      <th>strike_distance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22100.0</td>
+      <td>Call</td>
+      <td>87.65</td>
+      <td>22147</td>
+      <td>0.717419</td>
+      <td>0.002884</td>
+      <td>920.144259</td>
+      <td>-2260.542604</td>
+      <td>238.578761</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22100.0</td>
+      <td>Call</td>
+      <td>88.10</td>
+      <td>22147</td>
+      <td>0.715256</td>
+      <td>0.002863</td>
+      <td>923.511473</td>
+      <td>-2277.372890</td>
+      <td>237.848614</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22150.0</td>
+      <td>Call</td>
+      <td>71.00</td>
+      <td>22147</td>
+      <td>0.545023</td>
+      <td>0.002546</td>
+      <td>1078.749450</td>
+      <td>-2764.057236</td>
+      <td>181.181655</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22200.0</td>
+      <td>Call</td>
+      <td>55.75</td>
+      <td>22147</td>
+      <td>0.428238</td>
+      <td>0.002207</td>
+      <td>1068.058622</td>
+      <td>-2876.654706</td>
+      <td>142.359477</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22250.0</td>
+      <td>Call</td>
+      <td>43.75</td>
+      <td>22147</td>
+      <td>0.338082</td>
+      <td>0.001866</td>
+      <td>994.972756</td>
+      <td>-2818.529006</td>
+      <td>112.392774</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22300.0</td>
+      <td>Call</td>
+      <td>33.75</td>
+      <td>22147</td>
+      <td>0.265588</td>
+      <td>0.001563</td>
+      <td>892.371908</td>
+      <td>-2629.706082</td>
+      <td>88.302069</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22350.0</td>
+      <td>Call</td>
+      <td>25.80</td>
+      <td>22147</td>
+      <td>0.207316</td>
+      <td>0.001290</td>
+      <td>778.379249</td>
+      <td>-2374.335606</td>
+      <td>68.936173</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22400.0</td>
+      <td>Call</td>
+      <td>19.60</td>
+      <td>22147</td>
+      <td>0.160838</td>
+      <td>0.001051</td>
+      <td>664.405179</td>
+      <td>-2091.206817</td>
+      <td>53.487568</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22450.0</td>
+      <td>Call</td>
+      <td>14.90</td>
+      <td>22147</td>
+      <td>0.124473</td>
+      <td>0.000846</td>
+      <td>558.551119</td>
+      <td>-1812.548992</td>
+      <td>41.398155</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22500.0</td>
+      <td>Call</td>
+      <td>11.50</td>
+      <td>22147</td>
+      <td>0.097019</td>
+      <td>0.000678</td>
+      <td>467.130521</td>
+      <td>-1566.911527</td>
+      <td>32.269137</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22500.0</td>
+      <td>Call</td>
+      <td>11.60</td>
+      <td>22147</td>
+      <td>0.097535</td>
+      <td>0.000679</td>
+      <td>468.953752</td>
+      <td>-1576.524988</td>
+      <td>32.440331</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22550.0</td>
+      <td>Call</td>
+      <td>8.60</td>
+      <td>22147</td>
+      <td>0.074036</td>
+      <td>0.000537</td>
+      <td>381.438944</td>
+      <td>-1310.165880</td>
+      <td>24.627439</td>
+      <td>9.0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22600.0</td>
+      <td>Call</td>
+      <td>6.45</td>
+      <td>22147</td>
+      <td>0.056470</td>
+      <td>0.000422</td>
+      <td>309.096463</td>
+      <td>-1087.210647</td>
+      <td>18.785873</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>21600.0</td>
+      <td>Put</td>
+      <td>71.20</td>
+      <td>22147</td>
+      <td>-0.190834</td>
+      <td>0.000408</td>
+      <td>740.475580</td>
+      <td>-5757.093806</td>
+      <td>-64.889255</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>21650.0</td>
+      <td>Put</td>
+      <td>81.25</td>
+      <td>22147</td>
+      <td>-0.211888</td>
+      <td>0.000435</td>
+      <td>788.429830</td>
+      <td>-6103.329608</td>
+      <td>-72.081328</td>
+      <td>9.0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>21700.0</td>
+      <td>Put</td>
+      <td>93.20</td>
+      <td>22147</td>
+      <td>-0.235143</td>
+      <td>0.000461</td>
+      <td>836.563240</td>
+      <td>-6473.236977</td>
+      <td>-80.038242</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>21750.0</td>
+      <td>Put</td>
+      <td>106.00</td>
+      <td>22147</td>
+      <td>-0.259244</td>
+      <td>0.000486</td>
+      <td>881.392337</td>
+      <td>-6803.575775</td>
+      <td>-88.290598</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>21800.0</td>
+      <td>Put</td>
+      <td>121.65</td>
+      <td>22147</td>
+      <td>-0.285787</td>
+      <td>0.000506</td>
+      <td>925.122282</td>
+      <td>-7174.344657</td>
+      <td>-97.402980</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>21850.0</td>
+      <td>Put</td>
+      <td>138.90</td>
+      <td>22147</td>
+      <td>-0.313216</td>
+      <td>0.000524</td>
+      <td>964.382221</td>
+      <td>-7517.179973</td>
+      <td>-106.835368</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>21900.0</td>
+      <td>Put</td>
+      <td>158.25</td>
+      <td>22147</td>
+      <td>-0.341569</td>
+      <td>0.000537</td>
+      <td>998.891295</td>
+      <td>-7844.685905</td>
+      <td>-116.608789</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>21950.0</td>
+      <td>Put</td>
+      <td>179.45</td>
+      <td>22147</td>
+      <td>-0.370341</td>
+      <td>0.000546</td>
+      <td>1027.813958</td>
+      <td>-8141.015100</td>
+      <td>-126.550195</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22000.0</td>
+      <td>Put</td>
+      <td>204.20</td>
+      <td>22147</td>
+      <td>-0.399784</td>
+      <td>0.000549</td>
+      <td>1051.233316</td>
+      <td>-8461.642302</td>
+      <td>-136.769559</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22050.0</td>
+      <td>Put</td>
+      <td>231.25</td>
+      <td>22147</td>
+      <td>-0.428807</td>
+      <td>0.000546</td>
+      <td>1068.337316</td>
+      <td>-8758.936140</td>
+      <td>-146.882979</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22100.0</td>
+      <td>Put</td>
+      <td>260.55</td>
+      <td>22147</td>
+      <td>-0.457043</td>
+      <td>0.000539</td>
+      <td>1079.370716</td>
+      <td>-9033.086306</td>
+      <td>-156.767361</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22150.0</td>
+      <td>Put</td>
+      <td>293.75</td>
+      <td>22147</td>
+      <td>-0.484196</td>
+      <td>0.000526</td>
+      <td>1084.818681</td>
+      <td>-9342.850811</td>
+      <td>-166.348461</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22200.0</td>
+      <td>Put</td>
+      <td>328.90</td>
+      <td>22147</td>
+      <td>-0.509727</td>
+      <td>0.000510</td>
+      <td>1085.347985</td>
+      <td>-9630.392489</td>
+      <td>-175.416799</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22250.0</td>
+      <td>Put</td>
+      <td>366.30</td>
+      <td>22147</td>
+      <td>-0.533476</td>
+      <td>0.000492</td>
+      <td>1081.846184</td>
+      <td>-9914.372137</td>
+      <td>-183.923135</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22300.0</td>
+      <td>Put</td>
+      <td>406.05</td>
+      <td>22147</td>
+      <td>-0.555273</td>
+      <td>0.000471</td>
+      <td>1075.233800</td>
+      <td>-10207.891570</td>
+      <td>-191.812065</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22350.0</td>
+      <td>Put</td>
+      <td>444.45</td>
+      <td>22147</td>
+      <td>-0.575976</td>
+      <td>0.000454</td>
+      <td>1065.922648</td>
+      <td>-10392.502167</td>
+      <td>-199.314906</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22400.0</td>
+      <td>Put</td>
+      <td>492.65</td>
+      <td>22147</td>
+      <td>-0.592563</td>
+      <td>0.000427</td>
+      <td>1056.315277</td>
+      <td>-10867.652271</td>
+      <td>-205.589140</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22450.0</td>
+      <td>Put</td>
+      <td>536.05</td>
+      <td>22147</td>
+      <td>-0.609124</td>
+      <td>0.000408</td>
+      <td>1044.797679</td>
+      <td>-11129.839170</td>
+      <td>-211.782507</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22500.0</td>
+      <td>Put</td>
+      <td>586.05</td>
+      <td>22147</td>
+      <td>-0.622176</td>
+      <td>0.000384</td>
+      <td>1034.352150</td>
+      <td>-11596.477297</td>
+      <td>-216.901845</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22550.0</td>
+      <td>Put</td>
+      <td>635.35</td>
+      <td>22147</td>
+      <td>-0.634255</td>
+      <td>0.000363</td>
+      <td>1023.597768</td>
+      <td>-12009.785447</td>
+      <td>-221.685640</td>
+      <td>9.0</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>2024-04-19 11:44:00</td>
+      <td>22600.0</td>
+      <td>Put</td>
+      <td>674.15</td>
+      <td>22147</td>
+      <td>-0.649512</td>
+      <td>0.000353</td>
+      <td>1008.504824</td>
+      <td>-11989.753985</td>
+      <td>-227.373176</td>
+      <td>10.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># record = {&#39;strike_price&#39;: 21600.0, &#39;close&#39;: 454.95, &#39;datetime&#39;: Timestamp(&#39;2024-04-19 10:54:00&#39;), &#39;exchange_code&#39;: &#39;NFO&#39;, &#39;expiry_date&#39;: &#39;02-MAY-2024&#39;, &#39;high&#39;: 456.5,</span>
+<span class="c1">#  &#39;low&#39;: 450.15, &#39;open&#39;: 456.5, &#39;open_interest&#39;: 16350, &#39;product_type&#39;: &#39;Options&#39;, &#39;right&#39;: &#39;Call&#39;, &#39;stock_code&#39;: &#39;NIFTY&#39;, &#39;volume&#39;: 250, &#39;spot_price&#39;: &#39;22147&#39;}</span>
+
+<span class="n">record</span> <span class="o">=</span> <span class="n">tdf</span><span class="p">[</span><span class="n">tdf</span><span class="p">[</span><span class="s1">&#39;strike_price&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mf">21600.0</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;spot_price&#39;</span><span class="p">])</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;strike_price&#39;</span><span class="p">])</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">implied_volatility</span><span class="p">(</span>
+        <span class="n">S</span><span class="p">,</span>
+        <span class="n">K</span><span class="p">,</span>
+        <span class="n">T</span><span class="p">,</span>
+        <span class="n">r</span><span class="p">,</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]),</span>
+        <span class="n">record</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">option_type</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span>
+
+    <span class="n">record</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+        <span class="n">black_scholes_greeks</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">option_type</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">record</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">],</span> <span class="n">record</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="nb">print</span><span class="p">(</span><span class="n">record</span><span class="p">))</span>
+    <span class="k">raise</span> <span class="n">e</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks/evolutionary_algo"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="20240131.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">GP for Options Strategy</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../experiments/20231219.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Dynamic Time Warping (DTW) for similarity measure in Stock Patterns</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Th3Nic3Guy
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Uth! Kaam abhi baaki hai
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

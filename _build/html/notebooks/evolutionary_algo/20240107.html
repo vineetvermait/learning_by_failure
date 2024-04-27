@@ -1,0 +1,861 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>GP for AT Strategy Discovery &#8212; Learning By Failure - DS/ML/AI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/evolutionary_algo/20240107';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Genetic Algorithms for Options Strategy Optimization" href="20240130.html" />
+    <link rel="prev" title="[Not Started] Genetic Programming" href="gp.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Learning By Failure: Data Science/ML/AI
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Concepts</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../problem_definition.html">[Not Started] Problem Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../holy_grail.html">[Not Started] Holy grail: Trading Epitome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../eda.html">[Not Started] Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scaling_techniques.html">[Not Started] Scaling Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../temporal_vectors.html">[In Progress] Temporal Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../statistics.html">[Not Started] Statistics</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Algo Trading</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../algo_trading/sma_crossover.html">[Not Started] Basic SMA Crossover</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo_trading/20231227_1.html">[Rework] Bollinger Bands Strategy with Threshold Crossover</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo_trading/20231228.html">Experiment: Bollinger Bands Scaling Strategy (BBSS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo_trading/20240101.html">Experiment: BBSS + RSI: Doesn’t work</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo_trading/20240116.html">[Rework] Clustering Approach</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo_trading/20240428-01.html">Bollinger Bands Strategy with Threshold Crossover</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ml/regression.html">[Not Started] Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reinforcement Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../rl/finrl.html">[Not Started] FinRL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Evolutionary Algorithms</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="ga.html">[Not Started] Genetic Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gp.html">[Not Started] Genetic Programming</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">GP for AT Strategy Discovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20240130.html">Genetic Algorithms for Options Strategy Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20240131.html">GP for Options Strategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20240321.html">Reattempt for GA with Options Strategy</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../experiments/20231219.html">Dynamic Time Warping (DTW) for similarity measure in Stock Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/20240428-0.html">[Not Started] Relative Scaling | Temporal Window Vector Clustering | Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/20240428-1.html">[Not Started] Relative Scaling | Multi-Feature Temporal Window Vector Clustering | Time Series Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/20240428-2.html">[Not Started] Relative Scaling | Temporal Window Vector Clustering | Probability Model</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/vineetvermait/learning_by_failure_ai/issues/new?title=Issue%20on%20page%20%2Fnotebooks/evolutionary_algo/20240107.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button"
+   title="Open an issue"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/evolutionary_algo/20240107.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>GP for AT Strategy Discovery</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#concept">Concept</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="gp-for-at-strategy-discovery">
+<h1>GP for AT Strategy Discovery<a class="headerlink" href="#gp-for-at-strategy-discovery" title="Permalink to this heading">#</a></h1>
+<section id="concept">
+<h2>Concept<a class="headerlink" href="#concept" title="Permalink to this heading">#</a></h2>
+<p>I need to define a function</p>
+<div class="math notranslate nohighlight">
+\[
+F(x) \rightarrow (B, C, S) =\prod_{k=1}^{N}\phi^k({OHLC}, \tau_{k}, \sigma_{k})
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\phi^k(OHLC, \tau, \sigma) = \begin{cases}
+    1, &amp; \text{if } \Iota(OHLC, \tau) \lesseqqgtr \text{ is true}\\
+    0, &amp; \text{otherwise}
+  \end{cases}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[
+\Iota(OHLC, \tau) \rightarrow \real
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\sigma \in \begin{cases}
+    \Iota(OHLC, \tau)&amp; \text{Technical Indicator}\\
+    f, &amp; \text{Some float value}
+  \end{cases}
+\end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(N\)</span> is the number of terms in the equation</p></li>
+<li><p><span class="math notranslate nohighlight">\((B, C, S)\)</span> is the tuple of boolean (<code class="docutils literal notranslate"><span class="pre">buy</span></code>, <code class="docutils literal notranslate"><span class="pre">close_pos</span></code>, <code class="docutils literal notranslate"><span class="pre">sell</span></code>) signal</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Iota^k(OHLC)\)</span> is an technical indicator on <code class="docutils literal notranslate"><span class="pre">open</span></code>, <code class="docutils literal notranslate"><span class="pre">high</span></code>, <code class="docutils literal notranslate"><span class="pre">low</span></code>, <code class="docutils literal notranslate"><span class="pre">close</span></code>, in timeperiod <span class="math notranslate nohighlight">\(\tau\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma\)</span> is the value for comparison.</p></li>
+</ul>
+<p>The value <span class="math notranslate nohighlight">\(\sigma\)</span> could be a <code class="docutils literal notranslate"><span class="pre">float</span></code> value or <span class="math notranslate nohighlight">\(\Iota^k(OHLC, \tau)\)</span> of the OHLC/Technical Indicator.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">from</span> <span class="nn">deap</span> <span class="kn">import</span> <span class="n">base</span>
+<span class="kn">from</span> <span class="nn">deap</span> <span class="kn">import</span> <span class="n">creator</span>
+<span class="kn">from</span> <span class="nn">deap</span> <span class="kn">import</span> <span class="n">gp</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">backtesting</span> <span class="kn">import</span> <span class="n">Backtest</span>
+<span class="kn">from</span> <span class="nn">gp_pset</span> <span class="kn">import</span> <span class="n">get_pset</span><span class="p">,</span> <span class="n">generate_samples</span>
+<span class="kn">from</span> <span class="nn">backtester</span> <span class="kn">import</span> <span class="n">GPStrategy</span>
+<span class="kn">from</span> <span class="nn">models</span> <span class="kn">import</span> <span class="n">Open</span><span class="p">,</span> <span class="n">High</span><span class="p">,</span> <span class="n">Low</span><span class="p">,</span> <span class="n">Close</span>
+
+<span class="kn">from</span> <span class="nn">deap</span> <span class="kn">import</span> <span class="n">algorithms</span>
+<span class="kn">from</span> <span class="nn">deap</span> <span class="kn">import</span> <span class="n">base</span>
+<span class="kn">from</span> <span class="nn">deap</span> <span class="kn">import</span> <span class="n">creator</span>
+<span class="kn">from</span> <span class="nn">deap</span> <span class="kn">import</span> <span class="n">tools</span>
+<span class="kn">from</span> <span class="nn">deap</span> <span class="kn">import</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span>
+    <span class="s1">&#39;postgresql://postgres:postgres@localhost:4004/postgres&#39;</span>
+<span class="p">)</span>
+
+
+<span class="c1"># if &#39;FitnessMin&#39; not in dir(creator):</span>
+<span class="c1">#     creator.create(&quot;FitnessMin&quot;, base.Fitness, weights=(-1.0,))</span>
+
+<span class="k">if</span> <span class="s1">&#39;FitnessMax&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">creator</span><span class="p">):</span>
+    <span class="n">creator</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="s2">&quot;FitnessMax&quot;</span><span class="p">,</span>
+        <span class="n">base</span><span class="o">.</span><span class="n">Fitness</span><span class="p">,</span>
+        <span class="n">weights</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,),</span>
+    <span class="p">)</span>
+
+<span class="k">if</span> <span class="s1">&#39;Individual&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">creator</span><span class="p">):</span>
+    <span class="n">creator</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="s2">&quot;Individual&quot;</span><span class="p">,</span>
+        <span class="n">gp</span><span class="o">.</span><span class="n">PrimitiveTree</span><span class="p">,</span>
+        <span class="n">fitness</span><span class="o">=</span><span class="n">creator</span><span class="o">.</span><span class="n">FitnessMax</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">load_nifty_data</span><span class="p">():</span>
+
+    <span class="n">nifty_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/workspace/nifty/NIFTY/202403*.csv&#39;</span><span class="p">)</span>
+    <span class="p">))</span>
+    <span class="n">nifty_df</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">nifty_df</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">])</span>
+    <span class="n">nifty_df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nifty_df</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span>
+    <span class="n">nifty_df</span> <span class="o">=</span> <span class="n">nifty_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">nifty_df</span>
+
+
+<span class="n">pset</span> <span class="o">=</span> <span class="n">get_pset</span><span class="p">()</span>
+<span class="n">nifty_df</span> <span class="o">=</span> <span class="n">load_nifty_data</span><span class="p">()</span>
+<span class="n">nifty_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+
+<span class="n">o</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">Open</span><span class="p">(</span><span class="n">nifty_df</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">),</span>
+    <span class="n">High</span><span class="p">(</span><span class="n">nifty_df</span><span class="p">[</span><span class="s1">&#39;high&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">),</span>
+    <span class="n">Low</span><span class="p">(</span><span class="n">nifty_df</span><span class="p">[</span><span class="s1">&#39;low&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">),</span>
+    <span class="n">Close</span><span class="p">(</span><span class="n">nifty_df</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># eqs = generate_samples(pset, 50, min_depth=1, max_depth=6)</span>
+
+<span class="c1"># records = []</span>
+<span class="c1"># all_stats = []</span>
+
+<span class="c1"># for eq in tqdm(eqs):</span>
+<span class="c1">#     try:</span>
+<span class="c1">#         run = Backtest(</span>
+<span class="c1">#             nifty_df.rename(</span>
+<span class="c1">#                 columns={</span>
+<span class="c1">#                     &#39;open&#39;: &#39;Open&#39;,</span>
+<span class="c1">#                     &#39;high&#39;: &#39;High&#39;,</span>
+<span class="c1">#                     &#39;low&#39;: &#39;Low&#39;,</span>
+<span class="c1">#                     &#39;close&#39;: &#39;Close&#39;,</span>
+<span class="c1">#                 }</span>
+<span class="c1">#             ),</span>
+<span class="c1">#             GPStrategy,</span>
+<span class="c1">#             cash=30000,</span>
+<span class="c1">#             commission=.002,</span>
+<span class="c1">#             trade_on_close=True,</span>
+<span class="c1">#         )</span>
+
+<span class="c1">#         stats = run.run(signal_func=gp.compile(eq, pset))</span>
+<span class="c1">#         all_stats.append((eq, stats, stats))</span>
+
+<span class="c1">#         q_vals = np.nan_to_num(stats._trades.PnL.quantile(</span>
+<span class="c1">#             [.05, .25, .5, .75, .95]).values, 0)</span>
+
+<span class="c1">#         pd.DataFrame(</span>
+<span class="c1">#             [</span>
+<span class="c1">#                 {</span>
+<span class="c1">#                     &#39;eq&#39;: str(eq),</span>
+<span class="c1">#                     &#39;trades&#39;: stats[&#39;# Trades&#39;],</span>
+<span class="c1">#                     &#39;ret_pct&#39;: stats[&#39;Return [%]&#39;],</span>
+<span class="c1">#                     &#39;equity_final&#39;: stats[&#39;Equity Final [$]&#39;],</span>
+<span class="c1">#                     # &#39;avg_trade_duration&#39;: stats[&#39;Avg. Trade Duration&#39;],</span>
+<span class="c1">#                     # &#39;max_drawdown_duration&#39;: stats[&#39;Max. Drawdown Duration&#39;],</span>
+<span class="c1">#                     &#39;profit_factor&#39;: stats[&#39;Profit Factor&#39;],</span>
+<span class="c1">#                     &#39;expectancy&#39;: stats[&#39;Expectancy [%]&#39;],</span>
+<span class="c1">#                     &#39;sqn&#39;: stats[&#39;SQN&#39;],</span>
+<span class="c1">#                     &#39;q05&#39;: q_vals[0],</span>
+<span class="c1">#                     &#39;q25&#39;: q_vals[1],</span>
+<span class="c1">#                     &#39;q50&#39;: q_vals[2],</span>
+<span class="c1">#                     &#39;q75&#39;: q_vals[3],</span>
+<span class="c1">#                     &#39;q95&#39;: q_vals[4],</span>
+<span class="c1">#                     &#39;metric&#39;: stats[&#39;# Trades&#39;] * q_vals[1]</span>
+<span class="c1">#                 }</span>
+<span class="c1">#             ]</span>
+<span class="c1">#         ).to_sql(&#39;gp_backtest_results&#39;, engine, if_exists=&#39;append&#39;, index=False)</span>
+<span class="c1">#     except Exception as e:</span>
+<span class="c1">#         print(eq, e)</span>
+<span class="c1">#         break</span>
+
+<span class="c1"># rdf = pd.read_sql(&#39;gp_backtest_results&#39;, engine)</span>
+<span class="c1"># print(rdf.shape)</span>
+<span class="c1"># # stats = all_stats[26][1]</span>
+<span class="c1"># # fig, ax = plt.subplots(figsize=(15, 5))</span>
+<span class="c1"># # # ax.vlines(stats._trades.index, 0, stats._equity_curve.values[stats._trades.index])</span>
+<span class="c1"># # ax.axhline(stats._equity_curve.Equity.iloc[0], color=&#39;k&#39;, linestyle=&#39;--&#39;)</span>
+<span class="c1"># # ax.axhline(stats._equity_curve.Equity.iloc[-1], color=&#39;g&#39;, linestyle=&#39;--&#39;)</span>
+<span class="c1"># # stats._equity_curve.reset_index().Equity.plot(ax=ax)</span>
+<span class="c1"># # print(stats)</span>
+<span class="c1"># rdf[rdf[&#39;trades&#39;] &gt; 0].sort_values([&#39;q50&#39;], ascending=False)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="n">toolbox</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">Toolbox</span><span class="p">()</span>
+<span class="n">toolbox</span><span class="o">.</span><span class="n">register</span><span class="p">(</span>
+    <span class="s2">&quot;expr&quot;</span><span class="p">,</span>
+    <span class="n">gp</span><span class="o">.</span><span class="n">genHalfAndHalf</span><span class="p">,</span>
+    <span class="n">pset</span><span class="o">=</span><span class="n">pset</span><span class="p">,</span>
+    <span class="n">min_</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">max_</span><span class="o">=</span><span class="mi">8</span>
+<span class="p">)</span>
+<span class="n">toolbox</span><span class="o">.</span><span class="n">register</span><span class="p">(</span>
+    <span class="s2">&quot;individual&quot;</span><span class="p">,</span>
+    <span class="n">tools</span><span class="o">.</span><span class="n">initIterate</span><span class="p">,</span>
+    <span class="n">creator</span><span class="o">.</span><span class="n">Individual</span><span class="p">,</span>
+    <span class="n">toolbox</span><span class="o">.</span><span class="n">expr</span>
+<span class="p">)</span>
+<span class="n">toolbox</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="n">tools</span><span class="o">.</span><span class="n">initRepeat</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">toolbox</span><span class="o">.</span><span class="n">individual</span><span class="p">)</span>
+<span class="c1"># toolbox.register(&quot;compile&quot;, gp.compile, primitive_set=pset)</span>
+
+
+<span class="k">def</span> <span class="nf">evalFitness</span><span class="p">(</span><span class="n">individual</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">run</span> <span class="o">=</span> <span class="n">Backtest</span><span class="p">(</span>
+            <span class="n">nifty_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+                <span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s1">&#39;open&#39;</span><span class="p">:</span> <span class="s1">&#39;Open&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;high&#39;</span><span class="p">:</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;low&#39;</span><span class="p">:</span> <span class="s1">&#39;Low&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;close&#39;</span><span class="p">:</span> <span class="s1">&#39;Close&#39;</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">),</span>
+            <span class="n">GPStrategy</span><span class="p">,</span>
+            <span class="n">cash</span><span class="o">=</span><span class="mi">30000</span><span class="p">,</span>
+            <span class="n">commission</span><span class="o">=</span><span class="mf">.002</span><span class="p">,</span>
+            <span class="n">trade_on_close</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">signal_func</span><span class="o">=</span><span class="n">gp</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">pset</span><span class="p">))</span>
+
+        <span class="n">q_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">_trades</span><span class="o">.</span><span class="n">PnL</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span>
+            <span class="p">[</span><span class="mf">.05</span><span class="p">,</span> <span class="mf">.25</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.75</span><span class="p">,</span> <span class="mf">.95</span><span class="p">])</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;eq&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">individual</span><span class="p">),</span>
+                    <span class="s1">&#39;trades&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;# Trades&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;ret_pct&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;Return [%]&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;equity_final&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;Equity Final [$]&#39;</span><span class="p">],</span>
+                    <span class="c1"># &#39;avg_trade_duration&#39;: stats[&#39;Avg. Trade Duration&#39;],</span>
+                    <span class="c1"># &#39;max_drawdown_duration&#39;: stats[&#39;Max. Drawdown Duration&#39;],</span>
+                    <span class="s1">&#39;profit_factor&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;Profit Factor&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;expectancy&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;Expectancy [%]&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;sqn&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;SQN&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;q05&#39;</span><span class="p">:</span> <span class="n">q_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="s1">&#39;q25&#39;</span><span class="p">:</span> <span class="n">q_vals</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                    <span class="s1">&#39;q50&#39;</span><span class="p">:</span> <span class="n">q_vals</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                    <span class="s1">&#39;q75&#39;</span><span class="p">:</span> <span class="n">q_vals</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+                    <span class="s1">&#39;q95&#39;</span><span class="p">:</span> <span class="n">q_vals</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+                    <span class="s1">&#39;metric&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;# Trades&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">q_vals</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s1">&#39;gp_backtest_results&#39;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;append&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;Return [%]&#39;</span><span class="p">],</span>  <span class="c1"># ,  stats[&#39;# Trades&#39;] * q_vals[1],</span>
+    <span class="c1"># stats[&#39;# Trades&#39;], stats[&#39;Return [%]&#39;], q_vals[0], q_vals[1], q_vals[2], q_vals[3], q_vals[4],</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">eq</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">9999</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">,</span>
+
+
+<span class="n">toolbox</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;evaluate&#39;</span><span class="p">,</span> <span class="n">evalFitness</span><span class="p">)</span>
+<span class="n">toolbox</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;select&#39;</span><span class="p">,</span> <span class="n">tools</span><span class="o">.</span><span class="n">selTournament</span><span class="p">,</span> <span class="n">tournsize</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">toolbox</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;mate&#39;</span><span class="p">,</span> <span class="n">gp</span><span class="o">.</span><span class="n">cxOnePoint</span><span class="p">)</span>
+<span class="n">toolbox</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;expr&#39;</span><span class="p">,</span> <span class="n">gp</span><span class="o">.</span><span class="n">genFull</span><span class="p">,</span> <span class="n">min_</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">toolbox</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;mutate&#39;</span><span class="p">,</span> <span class="n">gp</span><span class="o">.</span><span class="n">mutUniform</span><span class="p">,</span> <span class="n">expr</span><span class="o">=</span><span class="n">toolbox</span><span class="o">.</span><span class="n">expr</span><span class="p">,</span> <span class="n">pset</span><span class="o">=</span><span class="n">pset</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+
+    <span class="n">pop</span> <span class="o">=</span> <span class="n">toolbox</span><span class="o">.</span><span class="n">population</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">hof</span> <span class="o">=</span> <span class="n">tools</span><span class="o">.</span><span class="n">HallOfFame</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">stats</span> <span class="o">=</span> <span class="n">tools</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ind</span><span class="p">:</span> <span class="n">ind</span><span class="o">.</span><span class="n">fitness</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">stats</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;avg&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span>
+    <span class="n">stats</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;std&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">)</span>
+    <span class="n">stats</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">)</span>
+    <span class="n">stats</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+
+    <span class="c1"># algorithms.eaMuPlusLambda(</span>
+    <span class="n">algorithms</span><span class="o">.</span><span class="n">eaSimple</span><span class="p">(</span>
+        <span class="n">population</span><span class="o">=</span><span class="n">pop</span><span class="p">,</span>
+        <span class="n">toolbox</span><span class="o">=</span><span class="n">toolbox</span><span class="p">,</span>
+        <span class="c1"># mu=0.5,</span>
+        <span class="c1"># lambda_=0.2,</span>
+        <span class="n">ngen</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">stats</span><span class="o">=</span><span class="n">stats</span><span class="p">,</span>
+        <span class="n">cxpb</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">mutpb</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+        <span class="n">halloffame</span><span class="o">=</span><span class="n">hof</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best individual : &#39;</span><span class="p">,</span> <span class="n">hof</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">hof</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pop</span><span class="p">,</span> <span class="n">hof</span><span class="p">,</span> <span class="n">stats</span>
+
+
+<span class="n">pop</span><span class="p">,</span> <span class="n">hof</span><span class="p">,</span> <span class="n">stats</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>gen	nevals	avg     	std    	min     	max
+0  	100   	-8.26694	11.5279	-27.8967	0  
+1  	63    	-1.21631	4.69597	-27.7842	0  
+2  	64    	-0.0871258	0.866891	-8.71258	0  
+3  	66    	0         	0       	0       	0  
+4  	66    	-0.0772853	0.768979	-7.72853	0  
+5  	62    	0         	0       	0       	0  
+6  	72    	0         	0       	0       	0  
+7  	69    	0         	0       	0       	0  
+8  	54    	-0.267402 	2.66061 	-26.7402	0  
+9  	64    	0         	0       	0       	0  
+10 	57    	0         	0       	0       	0  
+11 	71    	-0.0538029	0.535332	-5.38029	0  
+12 	69    	0         	0       	0       	0  
+13 	61    	0         	0       	0       	0  
+14 	68    	0         	0       	0       	0  
+15 	67    	0         	0       	0       	0  
+16 	59    	0         	0       	0       	0  
+17 	61    	-0.27886  	2.77462 	-27.886 	0  
+18 	61    	0         	0       	0       	0  
+19 	65    	0         	0       	0       	0  
+20 	65    	0         	0       	0       	0  
+21 	63    	-0.00754608	0.0750825	-0.754608	0  
+22 	61    	0          	0        	0        	0  
+23 	66    	0          	0        	0        	0  
+24 	59    	-0.0379087 	0.377186 	-3.79087 	0  
+25 	72    	-0.0297541 	0.280432 	-2.81553 	0  
+26 	61    	0          	0        	0        	0  
+27 	61    	0          	0        	0        	0  
+28 	68    	0          	0        	0        	0  
+29 	70    	0          	0        	0        	0  
+30 	58    	0          	0        	0        	0  
+31 	62    	0          	0        	0        	0  
+32 	65    	0          	0        	0        	0  
+33 	61    	-0.0460927 	0.458617 	-4.60927 	0  
+34 	63    	0          	0        	0        	0  
+35 	63    	0          	0        	0        	0  
+36 	61    	0          	0        	0        	0  
+37 	65    	0          	0        	0        	0  
+38 	64    	-0.0498977 	0.496476 	-4.98977 	0  
+39 	64    	0          	0        	0        	0  
+40 	61    	-0.105871  	0.742072 	-5.56259 	0  
+41 	72    	0          	0        	0        	0  
+42 	74    	0          	0        	0        	0  
+43 	65    	0          	0        	0        	0  
+44 	73    	-0.0674398 	0.671018 	-6.74398 	0  
+45 	71    	0          	0        	0        	0  
+46 	77    	0          	0        	0        	0  
+47 	62    	0          	0        	0        	0  
+48 	65    	0          	0        	0        	0  
+49 	70    	-0.0529929 	0.527272 	-5.29929 	0  
+50 	60    	0          	0        	0        	0  
+Best individual :  &lt;deap.gp.Primitive object at 0x7fada4324950&gt; (0.0,)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks/evolutionary_algo"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="gp.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">[Not Started] Genetic Programming</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="20240130.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Genetic Algorithms for Options Strategy Optimization</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#concept">Concept</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Th3Nic3Guy
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Uth! Kaam abhi baaki hai
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

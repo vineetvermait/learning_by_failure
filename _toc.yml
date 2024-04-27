@@ -16,9 +16,15 @@ parts:
   - caption: Algo Trading
     chapters:
       - file: notebooks/algo_trading/sma_crossover
+      - file: notebooks/algo_trading/20231227_1
+      - file: notebooks/algo_trading/20231228
+      - file: notebooks/algo_trading/20240101
+      - file: notebooks/algo_trading/20240116
+      - file: notebooks/algo_trading/20240428-01
   - caption: Machine Learning
     chapters:
       - file: notebooks/ml/regression
+      - file: notebooks/ml/20240225
   # - caption: Deep Learning
   # chapters:
   # - file: placeholder
@@ -29,8 +35,13 @@ parts:
     chapters:
       - file: notebooks/evolutionary_algo/ga
       - file: notebooks/evolutionary_algo/gp
+      - file: notebooks/evolutionary_algo/20240107
+      - file: notebooks/evolutionary_algo/20240130
+      - file: notebooks/evolutionary_algo/20240131
+      - file: notebooks/evolutionary_algo/20240321
   - caption: Experiments
     chapters:
+      - file: notebooks/experiments/20231219
       - file: notebooks/experiments/20240428-0
       - file: notebooks/experiments/20240428-1
       - file: notebooks/experiments/20240428-2

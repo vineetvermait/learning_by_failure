@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Holy grail: Trading Epitome &#8212; Learning By Failure - DS/ML/AI</title>
+    <title>[Not Started] Holy grail: Trading Epitome &#8212; Learning By Failure - DS/ML/AI</title>
   
   
   
@@ -169,15 +169,19 @@ const thebe_selector_output = ".output, .cell_output"
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="problem_definition.html">[Not Started] Problem Definition</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Holy grail: Trading Epitome</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">[Not Started] Holy grail: Trading Epitome</a></li>
 <li class="toctree-l1"><a class="reference internal" href="eda.html">[Not Started] Exploratory Data Analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="scaling_techniques.html">[Not Started] Scaling Techniques</a></li>
 <li class="toctree-l1"><a class="reference internal" href="temporal_vectors.html">[In Progress] Temporal Vectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="statistics.html">Statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="statistics.html">[Not Started] Statistics</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Algo Trading</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="algo_trading/sma_crossover.html">[Not Started] Basic SMA Crossover</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algo_trading/20231227_1.html">[Rework] Bollinger Bands Strategy with Threshold Crossover</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algo_trading/20231228.html">Experiment: Bollinger Bands Scaling Strategy (BBSS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algo_trading/20240101.html">Experiment: BBSS + RSI: Doesn’t work</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algo_trading/20240428-01.html">Bollinger Bands Strategy with Threshold Crossover</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine Learning</span></p>
 <ul class="nav bd-sidenav">
@@ -240,50 +244,18 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="article-header-buttons">
 
 
-
-
-
-<div class="dropdown dropdown-source-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
-    <i class="fab fa-github"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="https://github.com/vineetvermait/learning_by_failure_ai" target="_blank"
-   class="btn btn-sm btn-source-repository-button dropdown-item"
-   title="Source repository"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="btn__text-container">Repository</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li><a href="https://github.com/vineetvermait/learning_by_failure_ai/issues/new?title=Issue%20on%20page%20%2Fnotebooks/holy_grail.html&body=Your%20issue%20content%20here." target="_blank"
-   class="btn btn-sm btn-source-issues-button dropdown-item"
+<a href="https://github.com/vineetvermait/learning_by_failure_ai/issues/new?title=Issue%20on%20page%20%2Fnotebooks/holy_grail.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button"
    title="Open an issue"
-   data-bs-placement="left" data-bs-toggle="tooltip"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
   
 
 <span class="btn__icon-container">
   <i class="fas fa-lightbulb"></i>
   </span>
-<span class="btn__text-container">Open issue</span>
+
 </a>
-</li>
-      
-  </ul>
-</div>
 
 
 
@@ -378,7 +350,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Holy grail: Trading Epitome</h1>
+    <h1>[Not Started] Holy grail: Trading Epitome</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -392,8 +364,86 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="holy-grail-trading-epitome">
-<h1>Holy grail: Trading Epitome<a class="headerlink" href="#holy-grail-trading-epitome" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="not-started-holy-grail-trading-epitome">
+<h1>[Not Started] Holy grail: Trading Epitome<a class="headerlink" href="#not-started-holy-grail-trading-epitome" title="Permalink to this heading">#</a></h1>
+<p><a class="reference external" href="https://github.com/kernc/backtesting.py/blob/master/doc/alternatives.md">alternatives to backtesting.py</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="n">BASE_PATH</span> <span class="o">=</span> <span class="s1">&#39;/workspace/nifty/</span><span class="si">{stock}</span><span class="s1">/</span><span class="si">{year}{month}</span><span class="s1">*.csv&#39;</span>
+<span class="n">OHLC_COLUMNS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="s1">&#39;high&#39;</span><span class="p">,</span> <span class="s1">&#39;low&#39;</span><span class="p">,</span> <span class="s1">&#39;close&#39;</span><span class="p">]</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;sqlite:////workspace/learning_by_failure/nifty.db&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">load</span><span class="p">(</span>
+        <span class="n">stock</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">year</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span>
+        <span class="n">month</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">BASE_PATH</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stock</span><span class="o">=</span><span class="n">stock</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="n">month</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+        <span class="nb">list</span><span class="p">(</span>
+            <span class="nb">map</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                <span class="n">tqdm</span><span class="p">(</span>
+                    <span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="p">),</span>
+                    <span class="n">leave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">desc</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Loading data for </span><span class="si">{</span><span class="n">stock</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">datetime</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span><span class="p">[</span><span class="n">OHLC_COLUMNS</span><span class="p">]</span>
+
+
+<span class="n">stocks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span>
+    <span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/workspace/nifty/*&#39;</span><span class="p">))))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stocks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;ADAENT&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_dfs</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">stock</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">stocks</span><span class="p">[:]):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="n">stock</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stock</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span>
+        <span class="s1">&#39;ohlc_data&#39;</span><span class="p">,</span>
+        <span class="n">engine</span><span class="p">,</span>
+        <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;append&#39;</span>
+    <span class="p">)</span>
+    <span class="c1"># all_dfs.append(df)</span>
+
+<span class="c1"># all_df = pd.concat(all_dfs).reset_index()</span>
+<span class="c1"># .set_index(&#39;symbol&#39;, append=True)</span>
+
+<span class="c1"># all_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "34065dfcaf5f43d886eee6592c354faf", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "d315d6d8660a49488ac5610a20dd68db", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "8be99011059a480985262d7d4d93e84e", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "8a7e8f556fd4414cb0d4671e05f0feeb", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "eafa640ccb0248649a4d922be04d12b5", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "4fc54e903fe24600bf897cea06b54f44", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "3aa11b058d06441baf7c4276d877c5f8", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "34d4d5a912614ba49f359e7b4ca11847", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "613d8d98d8c04b689e11f751b7fb8daa", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "2ed7ec55ef004dddbc82f77ba9e72c94", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "efd8f52cb4cf48b48b21b7c3c46fb9c8", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "6a964f60e2144ef08a6e2a2e8cbe5563", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "cc0bf2bd98a7459fb37ab5811221c154", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "88c473cb2d054c38928e3b9985faf553", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "3934c9c464f2492c8fd4e6a8ea0b5f97", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "cb9c6f803a5249b0aeb769f36346dd54", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "6460af21cf5f41c0a32d6b1424fdadd1", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "732f87ee191946d09957e6902878ba1e", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "82011272cbe14be8aefc593f7e218f05", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "c23249d707f041c886a45427d224baa2", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "fa26b68cf09d4f68bb1e48a3a8ad02a5", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "c03e353c27c94de0b45bd20ffc04329a", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "ded9a3c649bd4608a5e7df9c423c9c33", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "d72383d99a604c2790f5988a63a8f993", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "389047306d1f478f9075ea4e64b687e6", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "f80034f1f612473bb81e768407f1f59b", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "9298381f8dd74e8b80295417a35c9963", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "e515d24fedee4ac7b9fb4c7f1143163b", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "e5132cefd3604c18990fc0e4366cec44", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "23edeaddbb484fd686b3a547ac225e5d", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "8ee9fd29dbc143eda612815a08f869bd", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "64f9e3ea3bd54d6eb24c810841c1d51a", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "2c2c6179f04b4703958c9039c814bcb8", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "ff8b784d6b6340848a87384a0b17b7a5", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "b9b4ccaf75ed4ecc839e976e1f00aa42", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "b5226b94546946f8a968d237da293311", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "bb32b8feb8ee4924a398fac96048176b", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "0be0dcd8ebc9497a9217e6bbb5607a6f", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "e415025070f84b6eaeb429cceb572030", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "3e7ef1e9978f4e3b906cedff2a15bc30", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "31dd92876da248108d9dfb0da28568a4", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "3cffb2217a304e5d84a7d5f29d2c5aa8", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "1f0f4849d8b242119cb404d9c6c19eea", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "9e307893223347a2b34e6d163fc39b6f", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "c560c32fc06c497f81f278fa06eedd3d", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "cc34b5dd6c13473c937ac678b0461df5", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "e8c615b01a17489599d765f2186e1d8e", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "06299e371e9a4d9c9b322dc3cfb4d12c", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "78bbb74e53c14b049abd95968c740a62", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "897b74d359534a0e8f4532d4dba29e40", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "733cb8bc00e94444bba65891fff7d125", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "27ff6563bbad4671ac6bc92fabff76bc", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "139dc5f7b5754c3e9e8d2d8e05ed091e", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "10d781c2e59a431ca38e31478d549f4f", "version_major": 2, "version_minor": 0}</script></div>
+</div>
 </section>
 
     <script type="text/x-thebe-config">

@@ -1,0 +1,1848 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Experiment: Bollinger Bands Scaling Strategy (BBSS) &#8212; Learning By Failure - DS/ML/AI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/algo_trading/20231228';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Experiment: BBSS + RSI: Doesn’t work" href="20240101.html" />
+    <link rel="prev" title="[Rework] Bollinger Bands Strategy with Threshold Crossover" href="20231227_1.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Learning By Failure: Data Science/ML/AI
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Concepts</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../problem_definition.html">[Not Started] Problem Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../holy_grail.html">[Not Started] Holy grail: Trading Epitome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../eda.html">[Not Started] Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scaling_techniques.html">[Not Started] Scaling Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../temporal_vectors.html">[In Progress] Temporal Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../statistics.html">[Not Started] Statistics</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Algo Trading</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="sma_crossover.html">[Not Started] Basic SMA Crossover</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20231227_1.html">[Rework] Bollinger Bands Strategy with Threshold Crossover</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Experiment: Bollinger Bands Scaling Strategy (BBSS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20240101.html">Experiment: BBSS + RSI: Doesn’t work</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20240428-01.html">Bollinger Bands Strategy with Threshold Crossover</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ml/regression.html">[Not Started] Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reinforcement Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../rl/finrl.html">[Not Started] FinRL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Evolutionary Algorithms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../evolutionary_algo/ga.html">[Not Started] Genetic Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../evolutionary_algo/gp.html">[Not Started] Genetic Programming</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../experiments/20240428-0.html">[Not Started] Relative Scaling | Temporal Window Vector Clustering | Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/20240428-1.html">[Not Started] Relative Scaling | Multi-Feature Temporal Window Vector Clustering | Time Series Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/20240428-2.html">[Not Started] Relative Scaling | Temporal Window Vector Clustering | Probability Model</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/vineetvermait/learning_by_failure_ai/issues/new?title=Issue%20on%20page%20%2Fnotebooks/algo_trading/20231228.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button"
+   title="Open an issue"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/algo_trading/20231228.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Experiment: Bollinger Bands Scaling Strategy (BBSS)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="experiment-bollinger-bands-scaling-strategy-bbss">
+<h1>Experiment: Bollinger Bands Scaling Strategy (BBSS)<a class="headerlink" href="#experiment-bollinger-bands-scaling-strategy-bbss" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">talib</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+
+<span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">file_</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">_df</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">_df</span><span class="o">.</span><span class="n">datetime</span><span class="p">)</span>
+        <span class="n">_df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_df</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span>
+        <span class="n">_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_df</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">mark_events</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ref_frame</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;sell&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="n">ref_frame</span><span class="p">)</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">ref_frame</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;buy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="n">ref_frame</span><span class="p">)</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">ref_frame</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;hold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span>
+        <span class="ow">not</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;sell&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;buy&#39;</span><span class="p">])),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+
+<span class="n">file_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;stock_code&#39;</span><span class="p">:</span> <span class="n">file_</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span>
+        <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="n">file_</span><span class="p">,</span>
+    <span class="p">}</span> <span class="k">for</span> <span class="n">file_</span> <span class="ow">in</span> <span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/workspace/nifty/NIFTY/2023*.csv&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;options_history&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file_</span> <span class="ow">and</span> <span class="s1">&#39;OPTIONS&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file_</span> <span class="ow">and</span> <span class="s1">&#39;CALL&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file_</span> <span class="ow">and</span> <span class="s1">&#39;PUT&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file_</span>
+<span class="p">])</span>
+
+<span class="n">df_map</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<span class="k">for</span> <span class="n">stock</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">file_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;stock_code&#39;</span><span class="p">)):</span>
+    <span class="n">df_map</span><span class="p">[</span><span class="n">stock</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+        <span class="nb">list</span><span class="p">(</span>
+            <span class="nb">map</span><span class="p">(</span>
+                <span class="n">load</span><span class="p">,</span>
+                <span class="nb">sorted</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1/1 [00:00&lt;00:00,  1.35it/s]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">backtesting</span> <span class="kn">import</span> <span class="n">Strategy</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">backtester</span> <span class="kn">import</span> <span class="n">simulate</span>
+
+<span class="n">Signal</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">mark_action</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">trades</span><span class="p">,</span> <span class="n">closed_trades</span><span class="p">):</span>
+    <span class="n">buy</span><span class="p">,</span> <span class="n">close_pos</span><span class="p">,</span> <span class="n">sell</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">strategy_buy</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">positions</span><span class="o">.</span><span class="n">size</span> <span class="ow">or</span> <span class="n">positions</span><span class="o">.</span><span class="n">is_short</span><span class="p">):</span>
+        <span class="n">buy</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">close_pos</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">strategy_sell</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">positions</span><span class="o">.</span><span class="n">size</span> <span class="ow">or</span> <span class="n">positions</span><span class="o">.</span><span class="n">is_long</span><span class="p">):</span>
+        <span class="n">sell</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">close_pos</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">buy</span><span class="p">,</span> <span class="n">close_pos</span><span class="p">,</span> <span class="n">sell</span>
+
+
+<span class="k">class</span> <span class="nc">BBStrategy</span><span class="p">(</span><span class="n">Strategy</span><span class="p">):</span>
+    <span class="n">signal</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">SL</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">TP</span> <span class="o">=</span> <span class="mi">10</span>
+
+    <span class="k">def</span> <span class="nf">_is_trading_window</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hour</span> <span class="o">==</span> <span class="mi">15</span> <span class="ow">and</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">minute</span> <span class="o">&gt;</span> <span class="mi">15</span>
+        <span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hour</span> <span class="o">==</span> <span class="mi">9</span> <span class="ow">and</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">minute</span> <span class="o">&lt;</span> <span class="mi">30</span>
+        <span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">broker</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">broker</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signal</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;signal&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_open</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Open</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_high</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">High</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_low</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Low</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_close</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Close</span>
+
+    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_trading_window</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="n">buy</span><span class="p">,</span> <span class="n">close</span><span class="p">,</span> <span class="n">sell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trades</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">closed_trades</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">close</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">buy</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">buy</span><span class="p">(</span>
+                <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="c1"># sl=self.data.Low - self.SL,</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">sell</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sell</span><span class="p">(</span>
+                <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="c1"># sl=self.data.High + self.SL</span>
+            <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">BUY_QUANTILE</span> <span class="o">=</span> <span class="mf">.5</span>
+<span class="n">SELL_QUANTILE</span> <span class="o">=</span> <span class="mf">.20</span>
+<span class="n">DEVIATION</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">TIMEPERIOD</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">REF_FRAME</span> <span class="o">=</span> <span class="mi">12</span>
+
+
+<span class="k">def</span> <span class="nf">scale_by_bb</span><span class="p">(</span>
+        <span class="n">series</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+        <span class="n">deviation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">timeperiod</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="p">):</span>
+    <span class="n">upper</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">lower</span> <span class="o">=</span> <span class="n">talib</span><span class="o">.</span><span class="n">BBANDS</span><span class="p">(</span>
+        <span class="n">series</span><span class="p">,</span>
+        <span class="n">timeperiod</span><span class="o">=</span><span class="n">timeperiod</span><span class="p">,</span>
+        <span class="n">nbdevup</span><span class="o">=</span><span class="n">deviation</span><span class="p">,</span>
+        <span class="n">nbdevdn</span><span class="o">=</span><span class="n">deviation</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">series</span> <span class="o">-</span> <span class="n">lower</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">upper</span> <span class="o">-</span> <span class="n">lower</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">evaluate_metrics</span><span class="p">(</span>
+        <span class="n">stock_code</span><span class="p">,</span>
+        <span class="n">df</span><span class="p">,</span>
+        <span class="n">deviation</span><span class="o">=</span><span class="n">DEVIATION</span><span class="p">,</span>
+        <span class="n">timeperiod</span><span class="o">=</span><span class="n">TIMEPERIOD</span><span class="p">,</span>
+        <span class="n">ref_frame</span><span class="o">=</span><span class="n">REF_FRAME</span>
+<span class="p">):</span>
+    <span class="n">dfs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">initial_cash</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">high</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mi">5</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="n">stock_code</span><span class="p">):</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;scaled_close&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale_by_bb</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">close</span><span class="p">,</span> <span class="n">deviation</span><span class="p">,</span> <span class="n">timeperiod</span><span class="p">)</span>
+        <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">mark_events</span><span class="p">(</span>
+                <span class="n">group</span><span class="p">,</span>
+                <span class="n">ref_frame</span><span class="o">=</span><span class="n">ref_frame</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span>
+    <span class="n">poi_buy</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">scaled_close</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">buy</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">poi_sell</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">scaled_close</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">sell</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">buy_threshold</span> <span class="o">=</span> <span class="n">poi_buy</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">BUY_QUANTILE</span><span class="p">)</span>
+    <span class="n">sell_threshold</span> <span class="o">=</span> <span class="n">poi_sell</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">SELL_QUANTILE</span><span class="p">)</span>
+
+    <span class="c1"># Exit Strategy</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;strategy_buy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">scaled_close</span> <span class="o">&gt;=</span> <span class="n">buy_threshold</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">scaled_close</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">buy_threshold</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;strategy_sell&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">scaled_close</span> <span class="o">&lt;=</span> <span class="n">sell_threshold</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">scaled_close</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">sell_threshold</span><span class="p">)</span>
+
+    <span class="c1"># Entry Strategy</span>
+    <span class="c1"># df[&#39;strategy_buy&#39;] = (df.scaled_close &lt;= buy_threshold) &amp; (</span>
+    <span class="c1">#     df.scaled_close.shift(1) &gt; buy_threshold)</span>
+    <span class="c1"># df[&#39;strategy_sell&#39;] = (df.scaled_close &gt;= sell_threshold) &amp; (</span>
+    <span class="c1">#     df.scaled_close.shift(1) &lt; sell_threshold)</span>
+
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;strategy_buy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;strategy_buy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;strategy_sell&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;strategy_sell&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="n">stats</span> <span class="o">=</span> <span class="n">simulate</span><span class="p">(</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;open&#39;</span><span class="p">:</span> <span class="s1">&#39;Open&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;high&#39;</span><span class="p">:</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;low&#39;</span><span class="p">:</span> <span class="s1">&#39;Low&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;close&#39;</span><span class="p">:</span> <span class="s1">&#39;Close&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+        <span class="p">),</span>
+        <span class="n">cash</span><span class="o">=</span><span class="n">initial_cash</span><span class="p">,</span>
+        <span class="n">strategy</span><span class="o">=</span><span class="n">mark_action</span><span class="p">,</span>
+        <span class="n">backtest_class</span><span class="o">=</span><span class="n">BBStrategy</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># stats._trades.to_csv(f&#39;./simulations/{stock_code}_trades.csv&#39;, index=False)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;stock_code&#39;</span><span class="p">:</span> <span class="n">stock_code</span><span class="p">,</span>
+        <span class="s1">&#39;initial_cash&#39;</span><span class="p">:</span> <span class="n">initial_cash</span><span class="p">,</span>
+        <span class="s1">&#39;buy_threshold&#39;</span><span class="p">:</span> <span class="n">buy_threshold</span><span class="p">,</span>
+        <span class="s1">&#39;sell_threshold&#39;</span><span class="p">:</span> <span class="n">sell_threshold</span><span class="p">,</span>
+        <span class="s1">&#39;Return [%]&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;Return [%]&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Equity Final [$]&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;Equity Final [$]&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Avg. Drawdown [%]&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;Avg. Drawdown [%]&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;# Trades&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;# Trades&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Win Rate [%]&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;Win Rate [%]&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Avg. Trade Duration&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;Avg. Trade Duration&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Expectancy [%]&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;Expectancy [%]&#39;</span><span class="p">],</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ndf</span> <span class="o">=</span> <span class="n">df_map</span><span class="p">[</span><span class="s1">&#39;NIFTY&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">ndf</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;only_date&#39;</span><span class="p">,</span> <span class="s1">&#39;exchange_code&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;stock_code&#39;</span><span class="p">,</span> <span class="s1">&#39;volume&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ndf</span><span class="p">[</span><span class="s1">&#39;hour&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ndf</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span><span class="o">.</span><span class="n">values</span>
+<span class="n">ndf</span><span class="p">[</span><span class="s1">&#39;day_of_week&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ndf</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">dayofweek</span><span class="o">.</span><span class="n">values</span>
+<span class="n">dates</span> <span class="o">=</span> <span class="n">ndf</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">unique</span><span class="p">()[</span><span class="o">-</span><span class="mi">500</span><span class="p">:]</span>
+
+<span class="n">dfs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">initial_cash</span> <span class="o">=</span> <span class="n">ndf</span><span class="o">.</span><span class="n">high</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mi">5</span>
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">ndf</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)):</span>
+    <span class="n">group</span><span class="p">[</span><span class="s1">&#39;scaled_close&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale_by_bb</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">close</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+    <span class="n">start_index</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">hour</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">minute</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">end_index</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">hour</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">minute</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="n">start_index</span><span class="p">:</span><span class="n">end_index</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">mark_events</span><span class="p">(</span>
+            <span class="n">group</span><span class="p">,</span>
+            <span class="n">ref_frame</span><span class="o">=</span><span class="mi">4</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="n">ndf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span>
+<span class="n">ndf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/242 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 242/242 [00:00&lt;00:00, 262.67it/s]
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>open</th>
+      <th>high</th>
+      <th>low</th>
+      <th>close</th>
+      <th>date</th>
+      <th>hour</th>
+      <th>day_of_week</th>
+      <th>scaled_close</th>
+      <th>sell</th>
+      <th>buy</th>
+      <th>hold</th>
+    </tr>
+    <tr>
+      <th>datetime</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2023-01-02 09:30:00</th>
+      <td>18101.90</td>
+      <td>18111.55</td>
+      <td>18094.25</td>
+      <td>18094.35</td>
+      <td>2023-01-02</td>
+      <td>9</td>
+      <td>0</td>
+      <td>0.182213</td>
+      <td>None</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2023-01-02 09:31:00</th>
+      <td>18093.40</td>
+      <td>18103.55</td>
+      <td>18086.50</td>
+      <td>18103.20</td>
+      <td>2023-01-02</td>
+      <td>9</td>
+      <td>0</td>
+      <td>0.448954</td>
+      <td>None</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2023-01-02 09:32:00</th>
+      <td>18103.25</td>
+      <td>18103.25</td>
+      <td>18091.70</td>
+      <td>18096.25</td>
+      <td>2023-01-02</td>
+      <td>9</td>
+      <td>0</td>
+      <td>0.237267</td>
+      <td>None</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2023-01-02 09:33:00</th>
+      <td>18096.20</td>
+      <td>18117.70</td>
+      <td>18089.95</td>
+      <td>18112.45</td>
+      <td>2023-01-02</td>
+      <td>9</td>
+      <td>0</td>
+      <td>0.948226</td>
+      <td>None</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2023-01-02 09:34:00</th>
+      <td>18112.75</td>
+      <td>18128.70</td>
+      <td>18107.10</td>
+      <td>18122.85</td>
+      <td>2023-01-02</td>
+      <td>9</td>
+      <td>0</td>
+      <td>0.950973</td>
+      <td>None</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2023-12-29 15:11:00</th>
+      <td>21732.60</td>
+      <td>21736.00</td>
+      <td>21730.25</td>
+      <td>21731.75</td>
+      <td>2023-12-29</td>
+      <td>15</td>
+      <td>4</td>
+      <td>0.166548</td>
+      <td>None</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2023-12-29 15:12:00</th>
+      <td>21731.20</td>
+      <td>21731.85</td>
+      <td>21718.95</td>
+      <td>21718.95</td>
+      <td>2023-12-29</td>
+      <td>15</td>
+      <td>4</td>
+      <td>-0.019801</td>
+      <td>None</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2023-12-29 15:13:00</th>
+      <td>21718.80</td>
+      <td>21729.55</td>
+      <td>21716.30</td>
+      <td>21728.95</td>
+      <td>2023-12-29</td>
+      <td>15</td>
+      <td>4</td>
+      <td>0.430657</td>
+      <td>None</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2023-12-29 15:14:00</th>
+      <td>21728.75</td>
+      <td>21730.10</td>
+      <td>21714.00</td>
+      <td>21716.30</td>
+      <td>2023-12-29</td>
+      <td>15</td>
+      <td>4</td>
+      <td>0.117277</td>
+      <td>None</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2023-12-29 15:15:00</th>
+      <td>21716.75</td>
+      <td>21731.05</td>
+      <td>21716.75</td>
+      <td>21729.20</td>
+      <td>2023-12-29</td>
+      <td>15</td>
+      <td>4</td>
+      <td>0.616205</td>
+      <td>None</td>
+      <td>None</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>83337 rows × 11 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ndf[&#39;poi_buy&#39;] = (ndf.scaled_close * ndf.buy).dropna()</span>
+<span class="c1"># ndf[&#39;poi_sell&#39;] = (ndf.scaled_close * ndf.sell).dropna()</span>
+
+<span class="c1"># ndf[&#39;poi_hold&#39;] = ndf.scaled_close * (</span>
+<span class="c1">#     ~(</span>
+<span class="c1">#         ndf[&#39;poi_buy&#39;].astype(bool).fillna(False) &amp;</span>
+<span class="c1">#         ndf[&#39;poi_sell&#39;].fillna(False).astype(bool)</span>
+<span class="c1">#     )</span>
+<span class="c1"># ).astype(int)</span>
+
+
+<span class="c1"># fig, (ax, hax) = plt.subplots(2, 1, figsize=(20, 3), sharex=True)</span>
+<span class="c1"># ndf[&#39;poi_buy&#39;].plot.box(vert=False, ax=ax, color=&#39;g&#39;)</span>
+<span class="c1"># ndf[&#39;poi_sell&#39;].plot.box(vert=False, ax=ax.twinx(), color=&#39;r&#39;)</span>
+<span class="c1"># ndf[&#39;poi_hold&#39;].plot.box(vert=False, ax=hax, color=&#39;b&#39;)</span>
+<span class="c1"># buy_threshold = ndf[&#39;poi_buy&#39;].quantile(BUY_QUANTILE)</span>
+<span class="c1"># sell_threshold = ndf[&#39;poi_sell&#39;].quantile(SELL_QUANTILE)</span>
+
+<span class="c1"># # df[&#39;poi_hold&#39;].plot.box(vert=False, ax=ax.twinx().twinx(), color=&#39;r&#39;)</span>
+<span class="c1"># ax.axvline(buy_threshold, color=&#39;g&#39;)</span>
+<span class="c1"># hax.axvline(buy_threshold, color=&#39;g&#39;)</span>
+<span class="c1"># ax.axvline(sell_threshold, color=&#39;r&#39;)</span>
+<span class="c1"># hax.axvline(sell_threshold, color=&#39;r&#39;)</span>
+
+<span class="c1"># ndf</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># BUY_QUANTILE = .5</span>
+<span class="c1"># SELL_QUANTILE = .25</span>
+<span class="c1"># for day, group in ndf.groupby([&#39;hour&#39;]):</span>
+<span class="c1">#     fig, (ax, hax) = plt.subplots(2, 1, figsize=(20, 5), sharex=True)</span>
+<span class="c1">#     group[&#39;poi_buy&#39;].plot.box(vert=False, ax=ax, color=&#39;g&#39;)</span>
+<span class="c1">#     group[&#39;poi_sell&#39;].plot.box(vert=False, ax=ax.twinx(), color=&#39;r&#39;)</span>
+<span class="c1">#     group[&#39;poi_hold&#39;].plot.box(vert=False, ax=hax, color=&#39;b&#39;)</span>
+<span class="c1">#     ax.set_title(day)</span>
+<span class="c1">#     buy_threshold = group[&#39;poi_buy&#39;].quantile(BUY_QUANTILE)</span>
+<span class="c1">#     sell_threshold = group[&#39;poi_sell&#39;].quantile(SELL_QUANTILE)</span>
+
+<span class="c1">#     # df[&#39;poi_hold&#39;].plot.box(vert=False, ax=ax.twinx().twinx(), color=&#39;r&#39;)</span>
+<span class="c1">#     ax.axvline(buy_threshold, color=&#39;g&#39;)</span>
+<span class="c1">#     hax.axvline(buy_threshold, color=&#39;g&#39;)</span>
+<span class="c1">#     ax.axvline(sell_threshold, color=&#39;r&#39;)</span>
+<span class="c1">#     hax.axvline(sell_threshold, color=&#39;r&#39;)</span>
+<span class="c1">#     plt.show()</span>
+<span class="c1">#     plt.close()</span>
+
+<span class="c1">#     # print(day, group[[&#39;poi_buy&#39;, &#39;poi_sell&#39;, &#39;poi_hold&#39;]</span>
+<span class="c1">#     #                  ].quantile([.05, .5, .95]))</span>
+<span class="c1">#     # print()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">trange</span>
+
+<span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">configs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">period</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="n">configs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">frame</span><span class="p">,</span> <span class="n">period</span><span class="p">))</span>
+
+
+<span class="k">for</span> <span class="n">frame</span><span class="p">,</span> <span class="n">period</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">configs</span><span class="p">):</span>
+    <span class="n">metric</span> <span class="o">=</span> <span class="n">evaluate_metrics</span><span class="p">(</span>
+        <span class="s1">&#39;NIFTY&#39;</span><span class="p">,</span>
+        <span class="n">ndf</span><span class="p">[</span><span class="n">ndf</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">dates</span><span class="p">)],</span>
+        <span class="n">deviation</span><span class="o">=</span><span class="n">DEVIATION</span><span class="p">,</span>
+        <span class="n">timeperiod</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
+        <span class="n">ref_frame</span><span class="o">=</span><span class="n">frame</span>
+    <span class="p">)</span>
+    <span class="n">metric</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+        <span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">frame</span><span class="p">,</span>
+        <span class="s1">&#39;period&#39;</span><span class="p">:</span> <span class="n">period</span>
+    <span class="p">})</span>
+    <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">metric</span>
+    <span class="p">)</span>
+
+<span class="n">metrics_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
+<span class="n">metrics_df</span><span class="p">[</span><span class="s1">&#39;Win Rate [%]&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metrics_df</span><span class="p">[</span><span class="s1">&#39;Win Rate [%]&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">()</span>
+<span class="n">metrics_df</span><span class="p">[</span><span class="s1">&#39;Return [%]&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metrics_df</span><span class="p">[</span><span class="s1">&#39;Return [%]&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">()</span>
+<span class="n">metrics_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;./nifty_metrics.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">metrics_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;Win Rate [%]&#39;</span><span class="p">,</span> <span class="s1">&#39;Equity Final [$]&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 264.12it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 272.82it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 299.22it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 267.75it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 269.62it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 297.99it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 300.29it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 274.83it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 272.88it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 261.97it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 295.87it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 295.97it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 296.11it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 298.43it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 298.64it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 296.90it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 274.83it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 298.21it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 295.99it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 294.20it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 290.87it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 297.21it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 294.47it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 298.24it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 290.05it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 295.77it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 271.03it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 297.16it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 296.23it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 295.40it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 270.55it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 296.69it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 297.71it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 273.07it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 295.50it/s]
+NIFTY: 100%|██████████| 241/241 [00:00&lt;00:00, 294.74it/s]
+100%|██████████| 36/36 [02:42&lt;00:00,  4.51s/it]
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>stock_code</th>
+      <th>initial_cash</th>
+      <th>buy_threshold</th>
+      <th>sell_threshold</th>
+      <th>Return [%]</th>
+      <th>Equity Final [$]</th>
+      <th>Avg. Drawdown [%]</th>
+      <th># Trades</th>
+      <th>Win Rate [%]</th>
+      <th>Avg. Trade Duration</th>
+      <th>Expectancy [%]</th>
+      <th>frame</th>
+      <th>period</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>31</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.078006</td>
+      <td>0.836772</td>
+      <td>3.0</td>
+      <td>111879.40</td>
+      <td>-0.025801</td>
+      <td>5466</td>
+      <td>64.0</td>
+      <td>0 days 01:36:00</td>
+      <td>0.002785</td>
+      <td>14</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.078885</td>
+      <td>0.836428</td>
+      <td>3.0</td>
+      <td>111742.50</td>
+      <td>-0.026606</td>
+      <td>5478</td>
+      <td>64.0</td>
+      <td>0 days 01:35:00</td>
+      <td>0.002645</td>
+      <td>12</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.079998</td>
+      <td>0.835781</td>
+      <td>2.0</td>
+      <td>111557.70</td>
+      <td>-0.027196</td>
+      <td>5488</td>
+      <td>64.0</td>
+      <td>0 days 01:35:00</td>
+      <td>0.002474</td>
+      <td>10</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.084419</td>
+      <td>0.833004</td>
+      <td>2.0</td>
+      <td>111383.50</td>
+      <td>-0.027248</td>
+      <td>5586</td>
+      <td>64.0</td>
+      <td>0 days 01:34:00</td>
+      <td>0.002292</td>
+      <td>8</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.061696</td>
+      <td>0.840356</td>
+      <td>0.0</td>
+      <td>109129.50</td>
+      <td>-0.045507</td>
+      <td>3900</td>
+      <td>64.0</td>
+      <td>0 days 02:14:00</td>
+      <td>0.000215</td>
+      <td>10</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.045086</td>
+      <td>0.860628</td>
+      <td>0.0</td>
+      <td>108997.45</td>
+      <td>-0.036985</td>
+      <td>3658</td>
+      <td>64.0</td>
+      <td>0 days 02:23:00</td>
+      <td>0.000181</td>
+      <td>12</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.042948</td>
+      <td>0.862973</td>
+      <td>-0.0</td>
+      <td>108768.45</td>
+      <td>-0.038485</td>
+      <td>3618</td>
+      <td>64.0</td>
+      <td>0 days 02:24:00</td>
+      <td>-0.000155</td>
+      <td>14</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.032948</td>
+      <td>0.844865</td>
+      <td>-1.0</td>
+      <td>108066.65</td>
+      <td>-0.075327</td>
+      <td>2391</td>
+      <td>64.0</td>
+      <td>0 days 03:38:00</td>
+      <td>-0.001817</td>
+      <td>14</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.049661</td>
+      <td>0.816259</td>
+      <td>-1.0</td>
+      <td>107958.25</td>
+      <td>-0.062054</td>
+      <td>2547</td>
+      <td>64.0</td>
+      <td>0 days 03:25:00</td>
+      <td>-0.001908</td>
+      <td>12</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.064118</td>
+      <td>0.811705</td>
+      <td>-1.0</td>
+      <td>107862.05</td>
+      <td>-0.095353</td>
+      <td>3190</td>
+      <td>64.0</td>
+      <td>0 days 02:44:00</td>
+      <td>-0.001903</td>
+      <td>10</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.029853</td>
+      <td>0.865894</td>
+      <td>-1.0</td>
+      <td>107777.75</td>
+      <td>-0.061286</td>
+      <td>2760</td>
+      <td>64.0</td>
+      <td>0 days 03:09:00</td>
+      <td>-0.002178</td>
+      <td>14</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.045212</td>
+      <td>0.847417</td>
+      <td>-2.0</td>
+      <td>107199.25</td>
+      <td>-0.076849</td>
+      <td>2906</td>
+      <td>64.0</td>
+      <td>0 days 02:59:00</td>
+      <td>-0.003112</td>
+      <td>12</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.040858</td>
+      <td>0.821096</td>
+      <td>-2.0</td>
+      <td>106909.95</td>
+      <td>-0.144330</td>
+      <td>2145</td>
+      <td>64.0</td>
+      <td>0 days 04:03:00</td>
+      <td>-0.004968</td>
+      <td>14</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.058608</td>
+      <td>0.779392</td>
+      <td>-2.0</td>
+      <td>106781.70</td>
+      <td>-0.174355</td>
+      <td>2291</td>
+      <td>64.0</td>
+      <td>0 days 03:48:00</td>
+      <td>-0.005002</td>
+      <td>12</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.110083</td>
+      <td>0.790604</td>
+      <td>2.0</td>
+      <td>110944.70</td>
+      <td>-0.026602</td>
+      <td>6320</td>
+      <td>63.0</td>
+      <td>0 days 01:23:00</td>
+      <td>0.001568</td>
+      <td>6</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.082018</td>
+      <td>0.798558</td>
+      <td>0.0</td>
+      <td>109206.00</td>
+      <td>-0.050172</td>
+      <td>4262</td>
+      <td>63.0</td>
+      <td>0 days 02:03:00</td>
+      <td>0.000363</td>
+      <td>8</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.088293</td>
+      <td>0.745396</td>
+      <td>-1.0</td>
+      <td>107902.95</td>
+      <td>-0.061045</td>
+      <td>3566</td>
+      <td>63.0</td>
+      <td>0 days 02:26:00</td>
+      <td>-0.001554</td>
+      <td>8</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.071709</td>
+      <td>0.769315</td>
+      <td>-1.0</td>
+      <td>107503.95</td>
+      <td>-0.082735</td>
+      <td>2788</td>
+      <td>63.0</td>
+      <td>0 days 03:07:00</td>
+      <td>-0.002618</td>
+      <td>10</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.113239</td>
+      <td>0.710127</td>
+      <td>-0.0</td>
+      <td>108456.55</td>
+      <td>-0.061363</td>
+      <td>4964</td>
+      <td>62.0</td>
+      <td>0 days 01:45:00</td>
+      <td>-0.000488</td>
+      <td>6</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.100582</td>
+      <td>0.685269</td>
+      <td>-1.0</td>
+      <td>108175.80</td>
+      <td>-0.052100</td>
+      <td>3176</td>
+      <td>62.0</td>
+      <td>0 days 02:44:00</td>
+      <td>-0.001236</td>
+      <td>8</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.161206</td>
+      <td>0.766775</td>
+      <td>6.0</td>
+      <td>115656.15</td>
+      <td>-0.020007</td>
+      <td>12334</td>
+      <td>61.0</td>
+      <td>0 days 00:43:00</td>
+      <td>0.002991</td>
+      <td>4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.156157</td>
+      <td>0.770924</td>
+      <td>6.0</td>
+      <td>115648.75</td>
+      <td>-0.020435</td>
+      <td>11986</td>
+      <td>61.0</td>
+      <td>0 days 00:44:00</td>
+      <td>0.003065</td>
+      <td>6</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.157100</td>
+      <td>0.772139</td>
+      <td>6.0</td>
+      <td>115559.45</td>
+      <td>-0.021141</td>
+      <td>12000</td>
+      <td>61.0</td>
+      <td>0 days 00:44:00</td>
+      <td>0.003034</td>
+      <td>12</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.156193</td>
+      <td>0.772796</td>
+      <td>6.0</td>
+      <td>115534.45</td>
+      <td>-0.020558</td>
+      <td>11952</td>
+      <td>61.0</td>
+      <td>0 days 00:44:00</td>
+      <td>0.003021</td>
+      <td>8</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.158015</td>
+      <td>0.772066</td>
+      <td>6.0</td>
+      <td>115488.15</td>
+      <td>-0.021456</td>
+      <td>12054</td>
+      <td>61.0</td>
+      <td>0 days 00:44:00</td>
+      <td>0.002986</td>
+      <td>14</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.156159</td>
+      <td>0.773478</td>
+      <td>6.0</td>
+      <td>115474.45</td>
+      <td>-0.020274</td>
+      <td>11940</td>
+      <td>61.0</td>
+      <td>0 days 00:44:00</td>
+      <td>0.002999</td>
+      <td>10</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.090710</td>
+      <td>0.713287</td>
+      <td>-2.0</td>
+      <td>106314.30</td>
+      <td>-0.150796</td>
+      <td>2529</td>
+      <td>61.0</td>
+      <td>0 days 03:26:00</td>
+      <td>-0.005652</td>
+      <td>10</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.120188</td>
+      <td>0.637376</td>
+      <td>-3.0</td>
+      <td>105867.40</td>
+      <td>-0.280231</td>
+      <td>2859</td>
+      <td>61.0</td>
+      <td>0 days 03:02:00</td>
+      <td>-0.005793</td>
+      <td>8</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.126500</td>
+      <td>0.631600</td>
+      <td>-0.0</td>
+      <td>108758.00</td>
+      <td>-0.055439</td>
+      <td>4232</td>
+      <td>60.0</td>
+      <td>0 days 02:03:00</td>
+      <td>-0.000149</td>
+      <td>6</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.154166</td>
+      <td>0.590231</td>
+      <td>-0.0</td>
+      <td>108480.90</td>
+      <td>-0.074608</td>
+      <td>3822</td>
+      <td>60.0</td>
+      <td>0 days 02:17:00</td>
+      <td>-0.000654</td>
+      <td>6</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.150423</td>
+      <td>0.663983</td>
+      <td>2.0</td>
+      <td>111177.85</td>
+      <td>-0.025604</td>
+      <td>7824</td>
+      <td>59.0</td>
+      <td>0 days 01:07:00</td>
+      <td>0.001502</td>
+      <td>4</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.175837</td>
+      <td>0.552492</td>
+      <td>-2.0</td>
+      <td>106475.80</td>
+      <td>-0.288217</td>
+      <td>3513</td>
+      <td>59.0</td>
+      <td>0 days 02:29:00</td>
+      <td>-0.003625</td>
+      <td>6</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.167778</td>
+      <td>0.561712</td>
+      <td>2.0</td>
+      <td>110951.30</td>
+      <td>-0.033030</td>
+      <td>6358</td>
+      <td>56.0</td>
+      <td>0 days 01:22:00</td>
+      <td>0.001612</td>
+      <td>4</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.204754</td>
+      <td>0.507597</td>
+      <td>-0.0</td>
+      <td>108537.45</td>
+      <td>-0.121859</td>
+      <td>5648</td>
+      <td>53.0</td>
+      <td>0 days 01:33:00</td>
+      <td>-0.000511</td>
+      <td>4</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.236355</td>
+      <td>0.472517</td>
+      <td>-1.0</td>
+      <td>107964.25</td>
+      <td>-0.131850</td>
+      <td>5184</td>
+      <td>49.0</td>
+      <td>0 days 01:41:00</td>
+      <td>-0.001225</td>
+      <td>4</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>NIFTY</td>
+      <td>108921.25</td>
+      <td>0.262336</td>
+      <td>0.448973</td>
+      <td>-2.0</td>
+      <td>106926.75</td>
+      <td>-0.941948</td>
+      <td>4910</td>
+      <td>45.0</td>
+      <td>0 days 01:46:00</td>
+      <td>-0.002391</td>
+      <td>4</td>
+      <td>24</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">,</span> <span class="n">stock_code</span> <span class="o">=</span> <span class="n">df_map</span><span class="p">[</span><span class="s1">&#39;NIFTY&#39;</span><span class="p">],</span> <span class="s1">&#39;NIFTY&#39;</span>
+
+<span class="n">dfs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">initial_cash</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">high</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mi">5</span>
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="n">stock_code</span><span class="p">):</span>
+    <span class="n">group</span><span class="p">[</span><span class="s1">&#39;scaled_close&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale_by_bb</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">close</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+    <span class="n">start_index</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">hour</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">minute</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">end_index</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">hour</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">minute</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="n">start_index</span><span class="p">:</span><span class="n">end_index</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">mark_events</span><span class="p">(</span>
+            <span class="n">group</span><span class="p">,</span>
+            <span class="n">ref_frame</span><span class="o">=</span><span class="mi">4</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;only_date&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;day_of_week&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day_of_week</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;poi_buy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">scaled_close</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">buy</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;poi_sell&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">scaled_close</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">sell</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;poi_hold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">scaled_close</span> <span class="o">*</span> <span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;poi_buy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span>
+    <span class="kc">False</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;poi_sell&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">buy_threshold</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;poi_buy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">BUY_QUANTILE</span><span class="p">)</span>
+<span class="n">sell_threshold</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;poi_sell&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">SELL_QUANTILE</span><span class="p">)</span>
+
+<span class="n">BUY_QUANTILE</span> <span class="o">=</span> <span class="mf">.5</span>
+<span class="n">SELL_QUANTILE</span> <span class="o">=</span> <span class="mf">.25</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">hax</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;poi_buy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;poi_sell&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">twinx</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;poi_hold&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">hax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+
+<span class="n">buy_threshold</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;poi_buy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">BUY_QUANTILE</span><span class="p">)</span>
+<span class="n">sell_threshold</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;poi_sell&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">SELL_QUANTILE</span><span class="p">)</span>
+
+<span class="c1"># df[&#39;poi_hold&#39;].plot.box(vert=False, ax=ax.twinx().twinx(), color=&#39;r&#39;)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">buy_threshold</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">hax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">buy_threshold</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">sell_threshold</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">hax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">sell_threshold</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NIFTY: 100%|██████████| 242/242 [00:00&lt;00:00, 263.69it/s]
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x7fceeb537090&gt;
+</pre></div>
+</div>
+<img alt="../../_images/7513158035ea701e2d8c0b20e647120b04b50226cb28d1113b786341744488a2.png" src="../../_images/7513158035ea701e2d8c0b20e647120b04b50226cb28d1113b786341744488a2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">stock_code</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">df_map</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">metric</span> <span class="o">=</span> <span class="n">evaluate_metrics</span><span class="p">(</span>
+            <span class="n">stock_code</span><span class="p">,</span>
+            <span class="n">df_map</span><span class="p">[</span><span class="n">stock_code</span><span class="p">],</span>
+            <span class="n">deviation</span><span class="o">=</span><span class="n">DEVIATION</span><span class="p">,</span>
+            <span class="n">timeperiod</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+            <span class="n">ref_frame</span><span class="o">=</span><span class="mi">4</span>
+        <span class="p">)</span>
+        <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">metric</span>
+        <span class="p">)</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;metrics_6_4.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NIFTY: 100%|██████████| 242/242 [00:00&lt;00:00, 256.81it/s]
+100%|██████████| 1/1 [00:05&lt;00:00,  5.64s/it]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">day</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;day_of_week&#39;</span><span class="p">]):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">hax</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">group</span><span class="p">[</span><span class="s1">&#39;poi_buy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">group</span><span class="p">[</span><span class="s1">&#39;poi_sell&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">twinx</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">group</span><span class="p">[</span><span class="s1">&#39;poi_hold&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">hax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">day</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">day</span><span class="p">,</span> <span class="n">group</span><span class="p">[[</span><span class="s1">&#39;poi_buy&#39;</span><span class="p">,</span> <span class="s1">&#39;poi_sell&#39;</span><span class="p">,</span> <span class="s1">&#39;poi_hold&#39;</span><span class="p">]</span>
+                     <span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="mf">.05</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.95</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/423a3fc9ffcdafc19f37562fd6cab49c1785531679a9027e4b5ac355a4a10a87.png" src="../../_images/423a3fc9ffcdafc19f37562fd6cab49c1785531679a9027e4b5ac355a4a10a87.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0,)        poi_buy  poi_sell  poi_hold
+0.05 -0.006672  0.556924  0.000000
+0.50  0.147533  0.849725  0.417351
+0.95  0.461697  0.999729  0.925730
+</pre></div>
+</div>
+<img alt="../../_images/a9979cc72838fa03f7dbc5e9baa899f62f375af0b9c5c6c110805ac47efff132.png" src="../../_images/a9979cc72838fa03f7dbc5e9baa899f62f375af0b9c5c6c110805ac47efff132.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1,)        poi_buy  poi_sell  poi_hold
+0.05 -0.004286  0.542995  0.000000
+0.50  0.149833  0.844223  0.415636
+0.95  0.471392  0.998663  0.926464
+</pre></div>
+</div>
+<img alt="../../_images/f13d0423ee41c52bad7df47a32baa4fe59ac6fa19b6b430f19ad27784e70796d.png" src="../../_images/f13d0423ee41c52bad7df47a32baa4fe59ac6fa19b6b430f19ad27784e70796d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2,)        poi_buy  poi_sell  poi_hold
+0.05 -0.007566  0.527172  0.000000
+0.50  0.149962   0.84273  0.416935
+0.95  0.469262  1.003449  0.926306
+</pre></div>
+</div>
+<img alt="../../_images/3eb6e5640b1a2b1c47a1856d379168b5bb29573201308c74eb6a334ea5bb3e09.png" src="../../_images/3eb6e5640b1a2b1c47a1856d379168b5bb29573201308c74eb6a334ea5bb3e09.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3,)        poi_buy  poi_sell  poi_hold
+0.05  -0.00654  0.520332  0.000000
+0.50   0.14835  0.844088  0.396486
+0.95  0.468364  0.999859  0.923746
+</pre></div>
+</div>
+<img alt="../../_images/a9fe7fd9123991b674d94016d0393d6de467b2d97bfba254b9213dca1fea4001.png" src="../../_images/a9fe7fd9123991b674d94016d0393d6de467b2d97bfba254b9213dca1fea4001.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4,)        poi_buy  poi_sell  poi_hold
+0.05 -0.003577  0.531755  0.000000
+0.50  0.150691  0.843988  0.415679
+0.95  0.480302  1.012422  0.929572
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks/algo_trading"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="20231227_1.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">[Rework] Bollinger Bands Strategy with Threshold Crossover</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="20240101.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Experiment: BBSS + RSI: Doesn’t work</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Th3Nic3Guy
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Uth! Kaam abhi baaki hai
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

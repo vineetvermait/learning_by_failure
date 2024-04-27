@@ -1,0 +1,1376 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Experiment: BBSS + RSI: Doesn’t work &#8212; Learning By Failure - DS/ML/AI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/algo_trading/20240101';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="20240116.html" />
+    <link rel="prev" title="Experiment: Bollinger Bands Scaling Strategy (BBSS)" href="20231228.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Learning By Failure: Data Science/ML/AI
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Concepts</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../problem_definition.html">[Not Started] Problem Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../holy_grail.html">[Not Started] Holy grail: Trading Epitome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../eda.html">[Not Started] Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scaling_techniques.html">[Not Started] Scaling Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../temporal_vectors.html">[In Progress] Temporal Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../statistics.html">[Not Started] Statistics</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Algo Trading</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="sma_crossover.html">[Not Started] Basic SMA Crossover</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20231227_1.html">[Rework] Bollinger Bands Strategy with Threshold Crossover</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20231228.html">Experiment: Bollinger Bands Scaling Strategy (BBSS)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Experiment: BBSS + RSI: Doesn’t work</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20240428-01.html">Bollinger Bands Strategy with Threshold Crossover</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ml/regression.html">[Not Started] Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reinforcement Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../rl/finrl.html">[Not Started] FinRL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Evolutionary Algorithms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../evolutionary_algo/ga.html">[Not Started] Genetic Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../evolutionary_algo/gp.html">[Not Started] Genetic Programming</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../experiments/20240428-0.html">[Not Started] Relative Scaling | Temporal Window Vector Clustering | Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/20240428-1.html">[Not Started] Relative Scaling | Multi-Feature Temporal Window Vector Clustering | Time Series Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/20240428-2.html">[Not Started] Relative Scaling | Temporal Window Vector Clustering | Probability Model</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/vineetvermait/learning_by_failure_ai/issues/new?title=Issue%20on%20page%20%2Fnotebooks/algo_trading/20240101.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button"
+   title="Open an issue"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/algo_trading/20240101.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Experiment: BBSS + RSI: Doesn’t work</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="experiment-bbss-rsi-doesn-t-work">
+<h1>Experiment: BBSS + RSI: Doesn’t work<a class="headerlink" href="#experiment-bbss-rsi-doesn-t-work" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">talib</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">trange</span><span class="p">,</span> <span class="n">tqdm</span>
+
+<span class="c1"># from option_history import get_nifty, get_option_chain</span>
+<span class="kn">import</span> <span class="nn">backtesting</span> <span class="k">as</span> <span class="nn">bt</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">file_</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">_df</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">_df</span><span class="o">.</span><span class="n">datetime</span><span class="p">)</span>
+        <span class="n">_df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_df</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span>
+        <span class="n">_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_df</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">find_threshold</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">timeperiod</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">14</span><span class="p">):</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">):</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;rsi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">talib</span><span class="o">.</span><span class="n">RSI</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">close</span><span class="p">,</span> <span class="n">timeperiod</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;scaled_rsi&#39;</span><span class="p">],</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">scale_by_bb</span><span class="p">(</span>
+            <span class="n">group</span><span class="o">.</span><span class="n">rsi</span><span class="p">,</span>
+            <span class="n">timeperiod</span><span class="o">=</span><span class="n">timeperiod</span>
+        <span class="p">)</span>
+        <span class="n">group</span><span class="p">[</span><span class="s1">&#39;scaled_close&#39;</span><span class="p">],</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">scale_by_bb</span><span class="p">(</span>
+            <span class="n">group</span><span class="o">.</span><span class="n">close</span><span class="p">,</span>
+            <span class="n">timeperiod</span><span class="o">=</span><span class="n">timeperiod</span>
+        <span class="p">)</span>
+        <span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
+    <span class="n">poi_bb_buy</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;scaled_close&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">buy</span><span class="p">)</span>
+    <span class="n">poi_bb_sell</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;scaled_close&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">sell</span><span class="p">)</span>
+    <span class="n">poi_rsi_buy</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;scaled_rsi&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">buy</span><span class="p">)</span>
+    <span class="n">poi_rsi_sell</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;scaled_rsi&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">sell</span><span class="p">)</span>
+
+    <span class="n">buy_q75</span> <span class="o">=</span> <span class="n">poi_bb_buy</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">sell_q25</span> <span class="o">=</span> <span class="n">poi_bb_sell</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">buy_rsi_q75</span> <span class="o">=</span> <span class="n">poi_rsi_buy</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">sell_rsi_q25</span> <span class="o">=</span> <span class="n">poi_rsi_sell</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">buy_q75</span><span class="p">,</span> <span class="n">sell_q25</span><span class="p">),</span> <span class="p">(</span><span class="n">buy_rsi_q75</span><span class="p">,</span> <span class="n">sell_rsi_q25</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">scale_by_bb</span><span class="p">(</span>
+        <span class="n">series</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+        <span class="n">deviation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">timeperiod</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="p">):</span>
+    <span class="n">upper</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">lower</span> <span class="o">=</span> <span class="n">talib</span><span class="o">.</span><span class="n">BBANDS</span><span class="p">(</span>
+        <span class="n">series</span><span class="p">,</span>
+        <span class="n">timeperiod</span><span class="o">=</span><span class="n">timeperiod</span><span class="p">,</span>
+        <span class="n">nbdevup</span><span class="o">=</span><span class="n">deviation</span><span class="p">,</span>
+        <span class="n">nbdevdn</span><span class="o">=</span><span class="n">deviation</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">series</span> <span class="o">-</span> <span class="n">lower</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">upper</span> <span class="o">-</span> <span class="n">lower</span><span class="p">),</span> <span class="n">upper</span><span class="p">,</span> <span class="n">lower</span>
+
+
+<span class="k">def</span> <span class="nf">mark_events</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ref_frame</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;sell&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="n">ref_frame</span><span class="p">)</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">ref_frame</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;buy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="n">ref_frame</span><span class="p">)</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">ref_frame</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;hold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span>
+        <span class="ow">not</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;sell&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;buy&#39;</span><span class="p">])),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+
+<span class="k">def</span> <span class="nf">load_historical_data</span><span class="p">(</span><span class="n">path_pattern</span><span class="p">,</span> <span class="n">ref_frame</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+
+    <span class="n">file_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;stock_code&#39;</span><span class="p">:</span> <span class="n">file_</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span>
+                <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="n">file_</span><span class="p">,</span>
+            <span class="p">}</span> <span class="k">for</span> <span class="n">file_</span> <span class="ow">in</span> <span class="n">glob</span><span class="p">(</span><span class="n">path_pattern</span><span class="p">)</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">file_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+    <span class="n">df_map</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">stock</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">file_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;stock_code&#39;</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="n">path_pattern</span><span class="p">):</span>
+        <span class="n">df_map</span><span class="p">[</span><span class="n">stock</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+            <span class="nb">list</span><span class="p">(</span>
+                <span class="nb">map</span><span class="p">(</span>
+                    <span class="n">load</span><span class="p">,</span>
+                    <span class="nb">sorted</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+
+    <span class="n">nifty_df</span> <span class="o">=</span> <span class="n">df_map</span><span class="p">[</span><span class="n">stock</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="s1">&#39;only_date&#39;</span> <span class="ow">in</span> <span class="n">nifty_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">nifty_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;only_date&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">groups</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">nifty_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">nifty_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">date</span><span class="p">):</span>
+
+        <span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">mark_events</span><span class="p">(</span>
+                <span class="n">group</span><span class="p">,</span>  <span class="c1"># [[&#39;open&#39;, &#39;high&#39;, &#39;low&#39;, &#39;close&#39;]],</span>
+                <span class="n">ref_frame</span><span class="o">=</span><span class="n">ref_frame</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
+
+<span class="c1"># def load_historical_data(path_pattern):</span>
+
+<span class="c1">#     file_df = pd.DataFrame([</span>
+<span class="c1">#         {</span>
+<span class="c1">#             &#39;stock_code&#39;: file_.split(&#39;/&#39;)[-2],</span>
+<span class="c1">#             &#39;path&#39;: file_,</span>
+<span class="c1">#         } for file_ in glob(path_pattern)</span>
+<span class="c1">#         if &#39;options_history&#39; not in file_ and &#39;OPTIONS&#39; not in file_ and &#39;CALL&#39; not in file_ and &#39;PUT&#39; not in file_</span>
+<span class="c1">#     ])</span>
+
+<span class="c1">#     df_map = {}</span>
+
+<span class="c1">#     for stock, group in tqdm(file_df.groupby(&#39;stock_code&#39;)):</span>
+<span class="c1">#         df_map[stock] = pd.concat(</span>
+<span class="c1">#             list(</span>
+<span class="c1">#                 map(</span>
+<span class="c1">#                     load,</span>
+<span class="c1">#                     sorted(group.path.tolist())</span>
+<span class="c1">#                 )</span>
+<span class="c1">#             )</span>
+<span class="c1">#         ).sort_index()</span>
+
+<span class="c1">#     nifty_df = df_map[stock]</span>
+<span class="c1">#     nifty_df = nifty_df.sort_index().drop(</span>
+<span class="c1">#         columns=[&#39;exchange_code&#39;, &#39;stock_code&#39;, &#39;volume&#39;])</span>
+
+<span class="c1">#     if &#39;only_date&#39; in nifty_df.columns:</span>
+<span class="c1">#         nifty_df.drop(columns=[&#39;only_date&#39;], inplace=True)</span>
+
+<span class="c1">#     groups = []</span>
+
+<span class="c1">#     for _, group in nifty_df.groupby(&#39;date&#39;):</span>
+<span class="c1">#         group = mark_events(group, ref_frame=5)</span>
+<span class="c1">#         groups.append(group)</span>
+
+<span class="c1">#     return pd.concat(groups)</span>
+
+
+<span class="n">training_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">load_historical_data</span><span class="p">(</span>
+            <span class="s1">&#39;/workspace/nifty/NIFTY/201*.csv&#39;</span>
+        <span class="p">),</span> <span class="n">load_historical_data</span><span class="p">(</span>
+            <span class="s1">&#39;/workspace/nifty/NIFTY/2020*.csv&#39;</span>
+        <span class="p">),</span> <span class="n">load_historical_data</span><span class="p">(</span>
+            <span class="s1">&#39;/workspace/nifty/NIFTY/2021*.csv&#39;</span>
+        <span class="p">),</span> <span class="n">load_historical_data</span><span class="p">(</span>
+            <span class="s1">&#39;/workspace/nifty/NIFTY/2022*.csv&#39;</span>
+        <span class="p">),</span> <span class="n">load_historical_data</span><span class="p">(</span>
+            <span class="s1">&#39;/workspace/nifty/NIFTY/20230*.csv&#39;</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">load_historical_data</span><span class="p">(</span>
+            <span class="s1">&#39;/workspace/nifty/NIFTY/20231*.csv&#39;</span>
+        <span class="p">),</span> <span class="n">load_historical_data</span><span class="p">(</span>
+            <span class="s1">&#39;/workspace/nifty/NIFTY/2024*.csv&#39;</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">trange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">45</span><span class="p">):</span>
+    <span class="n">bb_thresholds</span><span class="p">,</span> <span class="n">rsi_thresholds</span> <span class="o">=</span> <span class="n">find_threshold</span><span class="p">(</span><span class="n">training_data</span><span class="p">,</span> <span class="n">timeperiod</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s1">&#39;timeperiod&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+        <span class="s1">&#39;bb_buy&#39;</span><span class="p">:</span> <span class="n">bb_thresholds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="s1">&#39;bb_sell&#39;</span><span class="p">:</span> <span class="n">bb_thresholds</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="s1">&#39;rsi_buy&#39;</span><span class="p">:</span> <span class="n">rsi_thresholds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="s1">&#39;rsi_sell&#39;</span><span class="p">:</span> <span class="n">rsi_thresholds</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">})</span>
+<span class="n">thresholds_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+<span class="n">thresholds_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;timeperiod&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "9c84130e864e42228981c085b20f58e8", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "db7b4036a4cb432b8be10c33d0ff19fc", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "628bce4b225a4fb0ae0091811c7709e7", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "0ef6f15950464c1abcf7c75b917ad732", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "a9049d63cbff45909d583a1de17ace2c", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "802f862f594144ccb05d86aa10248084", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "acead727ce8649f39bc5e64ea5325f11", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "051aca9bacb64899a99d8d6e5279220b", "version_major": 2, "version_minor": 0}</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;timeperiod&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/2c4c767a188bfad38168241788e3349426ba87d9fa5db27aca5668cf6a39b2f9.png" src="../../_images/2c4c767a188bfad38168241788e3349426ba87d9fa5db27aca5668cf6a39b2f9.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;stock_code&#39;</span><span class="p">:</span> <span class="n">file_</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span>
+        <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="n">file_</span><span class="p">,</span>
+    <span class="p">}</span> <span class="k">for</span> <span class="n">file_</span> <span class="ow">in</span> <span class="p">(</span>
+        <span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/workspace/nifty/NIFTY/202312*.csv&#39;</span><span class="p">)</span> <span class="o">+</span>
+        <span class="c1"># glob(&#39;/workspace/nifty/NIFTY/2024*.csv&#39;) +</span>
+        <span class="p">[]</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;options_history&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file_</span> <span class="ow">and</span> <span class="s1">&#39;OPTIONS&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file_</span> <span class="ow">and</span> <span class="s1">&#39;CALL&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file_</span> <span class="ow">and</span> <span class="s1">&#39;PUT&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file_</span>
+<span class="p">])</span>
+
+<span class="n">df_map</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">stock</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">file_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;stock_code&#39;</span><span class="p">)):</span>
+    <span class="n">df_map</span><span class="p">[</span><span class="n">stock</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+        <span class="nb">list</span><span class="p">(</span>
+            <span class="nb">map</span><span class="p">(</span>
+                <span class="n">load</span><span class="p">,</span>
+                <span class="nb">sorted</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+
+<span class="n">opt_df</span> <span class="o">=</span> <span class="n">df_map</span><span class="p">[</span><span class="n">stock</span><span class="p">]</span>
+<span class="n">opt_df</span> <span class="o">=</span> <span class="n">opt_df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;exchange_code&#39;</span><span class="p">,</span> <span class="s1">&#39;stock_code&#39;</span><span class="p">,</span> <span class="s1">&#39;volume&#39;</span><span class="p">])</span>
+
+<span class="n">opt_df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "944b60bf557b4c62b73790ea7af40d6e", "version_major": 2, "version_minor": 0}</script><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>close</th>
+      <th>high</th>
+      <th>low</th>
+      <th>open</th>
+      <th>date</th>
+    </tr>
+    <tr>
+      <th>datetime</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2023-12-29 15:25:00</th>
+      <td>21727.25</td>
+      <td>21729.15</td>
+      <td>21722.50</td>
+      <td>21723.35</td>
+      <td>2023-12-29</td>
+    </tr>
+    <tr>
+      <th>2023-12-29 15:26:00</th>
+      <td>21730.90</td>
+      <td>21731.45</td>
+      <td>21725.10</td>
+      <td>21726.00</td>
+      <td>2023-12-29</td>
+    </tr>
+    <tr>
+      <th>2023-12-29 15:27:00</th>
+      <td>21736.30</td>
+      <td>21738.40</td>
+      <td>21729.35</td>
+      <td>21731.20</td>
+      <td>2023-12-29</td>
+    </tr>
+    <tr>
+      <th>2023-12-29 15:28:00</th>
+      <td>21734.65</td>
+      <td>21739.35</td>
+      <td>21729.65</td>
+      <td>21736.40</td>
+      <td>2023-12-29</td>
+    </tr>
+    <tr>
+      <th>2023-12-29 15:29:00</th>
+      <td>21728.30</td>
+      <td>21735.65</td>
+      <td>21724.70</td>
+      <td>21734.10</td>
+      <td>2023-12-29</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="k">def</span> <span class="nf">reversal</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">inv</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">op</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">less_equal</span> <span class="k">if</span> <span class="n">inv</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">greater_equal</span>
+    <span class="n">rop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">greater_equal</span> <span class="k">if</span> <span class="n">inv</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">less_equal</span>
+
+    <span class="n">filters</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span>
+    <span class="n">filters</span> <span class="o">&amp;=</span> <span class="n">op</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">threshold</span><span class="p">)</span>
+    <span class="n">filters</span> <span class="o">&amp;=</span> <span class="n">op</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">threshold</span><span class="p">)</span>
+    <span class="n">filters</span> <span class="o">&amp;=</span> <span class="n">rop</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">series</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">filters</span> <span class="o">&amp;=</span> <span class="n">rop</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">series</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">filters</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">BBStrategy</span><span class="p">(</span><span class="n">bt</span><span class="o">.</span><span class="n">Strategy</span><span class="p">):</span>
+    <span class="n">signal</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">SL</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">TP</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">TIMEPERIOD</span> <span class="o">=</span> <span class="mi">25</span>
+
+    <span class="k">def</span> <span class="nf">_is_trading_window</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hour</span> <span class="o">==</span> <span class="mi">15</span> <span class="ow">and</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">minute</span> <span class="o">&gt;</span> <span class="mi">15</span>
+        <span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hour</span> <span class="o">==</span> <span class="mi">9</span> <span class="ow">and</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">minute</span> <span class="o">&lt;</span> <span class="mi">30</span>
+        <span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_open</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Open</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_high</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">High</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_low</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Low</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_close</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Close</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rsi</span> <span class="o">=</span> <span class="n">talib</span><span class="o">.</span><span class="n">RSI</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Close</span><span class="p">,</span> <span class="n">timeperiod</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">TIMEPERIOD</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scaled_close</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">scale_by_bb</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Close</span><span class="p">,</span>
+            <span class="n">timeperiod</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">TIMEPERIOD</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scaled_rsi</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">scale_by_bb</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rsi</span><span class="p">,</span>
+            <span class="n">timeperiod</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">TIMEPERIOD</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scaled_close</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">I</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_scaled_close</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;scaled_close&#39;</span>
+        <span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="p">(</span>
+                <span class="n">_</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_buy_bb</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_sell_bb</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_buy_rsi</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_sell_rsi</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">thresholds_df</span><span class="p">[</span><span class="n">thresholds_df</span><span class="o">.</span><span class="n">timeperiod</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">TIMEPERIOD</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TIMEPERIOD</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">e</span>
+
+    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_trading_window</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">reversal</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scaled_close</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sell_bb</span><span class="p">,</span> <span class="n">inv</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="c1"># bt.lib.crossover(self._scaled_close, self._sell_bb)</span>
+            <span class="c1"># and bt.lib.crossover(self._scaled_rsi, self._sell_rsi)</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sell</span><span class="p">(</span>
+                <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">sl</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">High</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">SL</span><span class="p">,</span>
+                <span class="n">tp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Low</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">TP</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">reversal</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scaled_close</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buy_bb</span><span class="p">,</span> <span class="n">inv</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="c1"># bt.lib.crossover(self._buy_bb, self._scaled_close)</span>
+            <span class="c1"># and bt.lib.crossover(self._buy_rsi, self._scaled_rsi)</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">buy</span><span class="p">(</span>
+                <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">sl</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Low</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">SL</span><span class="p">,</span>
+                <span class="n">tp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">High</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">TP</span><span class="p">,</span>
+            <span class="p">)</span>
+
+
+<span class="n">test</span> <span class="o">=</span> <span class="n">bt</span><span class="o">.</span><span class="n">Backtest</span><span class="p">(</span>
+    <span class="n">opt_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;open&#39;</span><span class="p">:</span> <span class="s1">&#39;Open&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;high&#39;</span><span class="p">:</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;low&#39;</span><span class="p">:</span> <span class="s1">&#39;Low&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;close&#39;</span><span class="p">:</span> <span class="s1">&#39;Close&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">),</span>
+    <span class="n">BBStrategy</span><span class="p">,</span>
+    <span class="n">cash</span><span class="o">=</span><span class="mi">30000</span><span class="p">,</span>
+    <span class="n">commission</span><span class="o">=</span><span class="mf">.0000</span><span class="p">,</span>
+    <span class="n">exclusive_orders</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">trade_on_close</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">stats</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">stats</span><span class="o">.</span><span class="n">_equity_curve</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">_equity_curve</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">date</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">_equity_curve</span><span class="o">.</span><span class="n">Equity</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">_equity_curve</span><span class="o">.</span><span class="n">Equity</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">_equity_curve</span><span class="o">.</span><span class="n">Equity</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">30000</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">stats</span><span class="o">.</span><span class="n">_equity_curve</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">Equity</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">twiny</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Start                     2023-12-01 09:09:00
+End                       2023-12-29 15:29:00
+Duration                     28 days 06:20:00
+Exposure Time [%]                   42.772668
+Equity Final [$]                      30002.6
+Equity Peak [$]                       30076.3
+Return [%]                           0.008667
+Buy &amp; Hold Return [%]                7.597269
+Return (Ann.) [%]                   -1.062668
+Volatility (Ann.) [%]                2.467136
+Sharpe Ratio                              0.0
+Sortino Ratio                             0.0
+Calmar Ratio                              0.0
+Max. Drawdown [%]                    -0.92149
+Avg. Drawdown [%]                   -0.107139
+Max. Drawdown Duration       17 days 04:44:00
+Avg. Drawdown Duration        1 days 10:38:00
+# Trades                                  406
+Win Rate [%]                        37.192118
+Best Trade [%]                       0.175935
+Worst Trade [%]                     -0.082293
+Avg. Trade [%]                       0.000019
+Max. Trade Duration           0 days 00:47:00
+Avg. Trade Duration           0 days 00:08:00
+Profit Factor                         1.00145
+Expectancy [%]                       0.000033
+SQN                                  0.011572
+_strategy                          BBStrategy
+_equity_curve                             ...
+_trades                        Size  Entry...
+dtype: object
+</pre></div>
+</div>
+<img alt="../../_images/7706dbb53d97e73eaf101291d645a225f13cd1eaa95b68a3caefcce7dea21da8.png" src="../../_images/7706dbb53d97e73eaf101291d645a225f13cd1eaa95b68a3caefcce7dea21da8.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">profit_quantile</span><span class="p">(</span><span class="n">ser</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">ser</span><span class="o">.</span><span class="n">_trades</span><span class="o">.</span><span class="n">PnL</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">.5</span><span class="p">),</span> <span class="o">-</span><span class="mi">9999999</span><span class="p">))</span>
+    <span class="c1"># return (np.nan_to_num(ser._trades.PnL.quantile(.25), -9999999) * ser[&#39;# Trades&#39;]).sum()</span>
+
+
+<span class="n">opt</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span>
+    <span class="n">TIMEPERIOD</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">45</span><span class="p">),</span>
+    <span class="n">SL</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="p">),</span>
+    <span class="n">TP</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="p">),</span>
+    <span class="c1"># maximize=&#39;Equity Final [$]&#39;,</span>
+    <span class="n">maximize</span><span class="o">=</span><span class="n">profit_quantile</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">opt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">_trades</span><span class="o">.</span><span class="n">PnL</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="mf">.05</span><span class="p">,</span> <span class="mf">.25</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.75</span><span class="p">,</span> <span class="mf">.95</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.05   -20.4725
+0.25   -18.5500
+0.50    12.1500
+0.75    15.0625
+0.95    18.8450
+Name: PnL, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;metric&#39;</span><span class="p">:</span> <span class="s1">&#39;optimize_on&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;SL&#39;</span><span class="p">:</span> <span class="n">opt</span><span class="o">.</span><span class="n">_strategy</span><span class="o">.</span><span class="n">SL</span><span class="p">,</span>
+    <span class="s1">&#39;TP&#39;</span><span class="p">:</span> <span class="n">opt</span><span class="o">.</span><span class="n">_strategy</span><span class="o">.</span><span class="n">TP</span><span class="p">,</span>
+    <span class="s1">&#39;TIMEPERIOD&#39;</span><span class="p">:</span> <span class="n">opt</span><span class="o">.</span><span class="n">_strategy</span><span class="o">.</span><span class="n">TIMEPERIOD</span><span class="p">,</span>
+    <span class="s1">&#39;SQN&#39;</span><span class="p">:</span> <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;SQN&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Equity Final [$]&#39;</span><span class="p">:</span> <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;Equity Final [$]&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Win Rate [%]&#39;</span><span class="p">:</span> <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;Win Rate [%]&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Avg. Trade [%]&#39;</span><span class="p">:</span> <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;Avg. Trade [%]&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Sharpe Ratio&#39;</span><span class="p">:</span> <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;Sharpe Ratio&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;# Trades&#39;</span><span class="p">:</span> <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;# Trades&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Expectancy [%]&#39;</span><span class="p">:</span> <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;Expectancy [%]&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Return [%]&#39;</span><span class="p">:</span> <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;Return [%]&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Trades Per Day&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">opt</span><span class="p">[</span><span class="s1">&#39;# Trades&#39;</span><span class="p">]</span><span class="o">/</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;Duration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">days</span><span class="p">)),</span>
+    <span class="s1">&#39;Expected Final&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">opt</span><span class="p">[</span><span class="s1">&#39;Equity Final [$]&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">30000</span><span class="p">)</span> <span class="o">*</span> <span class="mf">.8</span> <span class="o">*</span> <span class="mi">50</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">-</span> <span class="mi">35</span> <span class="o">*</span> <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;# Trades&#39;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;metric&#39;: &#39;optimize_on&#39;,
+ &#39;SL&#39;: 18,
+ &#39;TP&#39;: 8,
+ &#39;TIMEPERIOD&#39;: 5,
+ &#39;SQN&#39;: 0.36322125464379296,
+ &#39;Equity Final [$]&#39;: 30033.499999999996,
+ &#39;Win Rate [%]&#39;: 57.14285714285714,
+ &#39;Avg. Trade [%]&#39;: 0.005530593427049979,
+ &#39;Sharpe Ratio&#39;: 1.038224895689797,
+ &#39;# Trades&#39;: 28,
+ &#39;Expectancy [%]&#39;: 0.005563605952891134,
+ &#39;Return [%]&#39;: 0.11166666666665453,
+ &#39;Trades Per Day&#39;: 1.0,
+ &#39;Expected Final&#39;: 5719.999999999272}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#  &#39;SL&#39;: 31,</span>
+<span class="c1">#  &#39;TP&#39;: 2,</span>
+<span class="c1">#  &#39;TIMEPERIOD&#39;: 29,</span>
+
+<span class="n">OptStrat</span> <span class="o">=</span> <span class="n">BBStrategy</span>
+<span class="n">OptStrat</span><span class="o">.</span><span class="n">TP</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">_strategy</span><span class="o">.</span><span class="n">TP</span>
+<span class="n">OptStrat</span><span class="o">.</span><span class="n">SL</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">_strategy</span><span class="o">.</span><span class="n">SL</span>
+<span class="n">OptStrat</span><span class="o">.</span><span class="n">TIMEPERIOD</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">_strategy</span><span class="o">.</span><span class="n">TIMEPERIOD</span>
+<span class="c1"># OptStrat.TP = 40</span>
+<span class="c1"># OptStrat.SL = 43</span>
+<span class="c1"># OptStrat.TIMEPERIOD = 36</span>
+
+<span class="c1"># file_df = pd.DataFrame([</span>
+<span class="c1">#     {</span>
+<span class="c1">#         &#39;stock_code&#39;: file_.split(&#39;/&#39;)[-2],</span>
+<span class="c1">#         &#39;path&#39;: file_,</span>
+<span class="c1">#     } for file_ in (</span>
+<span class="c1">#         # glob(&#39;/workspace/nifty/NIFTY/2023*.csv&#39;) +</span>
+<span class="c1">#         glob(&#39;/workspace/nifty/NIFTY/2024*.csv&#39;)</span>
+<span class="c1">#     )</span>
+<span class="c1">#     if &#39;options_history&#39; not in file_ and &#39;OPTIONS&#39; not in file_ and &#39;CALL&#39; not in file_ and &#39;PUT&#39; not in file_</span>
+<span class="c1"># ])</span>
+
+<span class="c1"># df_map = {}</span>
+
+<span class="c1"># for stock, group in tqdm(file_df.groupby(&#39;stock_code&#39;)):</span>
+<span class="c1">#     df_map[stock] = pd.concat(</span>
+<span class="c1">#         list(</span>
+<span class="c1">#             map(</span>
+<span class="c1">#                 load,</span>
+<span class="c1">#                 sorted(group.path.tolist())</span>
+<span class="c1">#             )</span>
+<span class="c1">#         )</span>
+<span class="c1">#     ).sort_index()</span>
+
+<span class="c1"># nifty_df = df_map[stock]</span>
+<span class="c1"># nifty_df = nifty_df.sort_index().drop(</span>
+<span class="c1">#     columns=[&#39;exchange_code&#39;, &#39;stock_code&#39;, &#39;volume&#39;])</span>
+
+
+<span class="n">test</span> <span class="o">=</span> <span class="n">bt</span><span class="o">.</span><span class="n">Backtest</span><span class="p">(</span>
+    <span class="n">test_data</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;open&#39;</span><span class="p">:</span> <span class="s1">&#39;Open&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;high&#39;</span><span class="p">:</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;low&#39;</span><span class="p">:</span> <span class="s1">&#39;Low&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;close&#39;</span><span class="p">:</span> <span class="s1">&#39;Close&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">),</span>
+    <span class="n">OptStrat</span><span class="p">,</span>
+    <span class="n">cash</span><span class="o">=</span><span class="mi">30000</span><span class="p">,</span>
+    <span class="n">commission</span><span class="o">=</span><span class="mf">.0000</span><span class="p">,</span>
+    <span class="n">exclusive_orders</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">trade_on_close</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">stats</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">stats</span><span class="o">.</span><span class="n">_equity_curve</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">_equity_curve</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">date</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">_equity_curve</span><span class="o">.</span><span class="n">Equity</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">_equity_curve</span><span class="o">.</span><span class="n">Equity</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">_equity_curve</span><span class="o">.</span><span class="n">Equity</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">30000</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">xax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+<span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">_equity_curve</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Equity</span><span class="o">.</span><span class="n">last</span><span class="p">()</span><span class="o">.</span><span class="n">diff</span><span class="p">())</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">xax</span><span class="p">)</span>
+
+<span class="c1"># # .plot(ax=ax)</span>
+<span class="n">yax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">twiny</span><span class="p">()</span>
+<span class="n">stats</span><span class="o">.</span><span class="n">_equity_curve</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">Equity</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">yax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">xax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">)</span>
+
+<span class="n">stats</span><span class="o">.</span><span class="n">_trades</span><span class="o">.</span><span class="n">PnL</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">stats</span><span class="o">.</span><span class="n">_trades</span><span class="o">.</span><span class="n">PnL</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># quantile([.05, .25, .5, .75, .95])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+<span class="n">stats</span><span class="o">.</span><span class="n">_trades</span><span class="o">.</span><span class="n">PnL</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="mf">.05</span><span class="p">,</span> <span class="mf">.25</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.75</span><span class="p">,</span> <span class="mf">.95</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/e53066efd8731b9c763d28cfd8e03165ffb2ddf2d579979a282eac5283198bf3.png" src="../../_images/e53066efd8731b9c763d28cfd8e03165ffb2ddf2d579979a282eac5283198bf3.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Start                     2023-10-03 09:09:00
+End                       2024-01-19 15:29:00
+Duration                    108 days 06:20:00
+Exposure Time [%]                    6.087563
+Equity Final [$]                     30110.45
+Equity Peak [$]                      30173.65
+Return [%]                           0.368167
+Buy &amp; Hold Return [%]               10.272953
+Return (Ann.) [%]                    1.080666
+Volatility (Ann.) [%]                0.839375
+Sharpe Ratio                         1.287464
+Sortino Ratio                        1.803312
+Calmar Ratio                         3.836192
+Max. Drawdown [%]                   -0.281703
+Avg. Drawdown [%]                   -0.042726
+Max. Drawdown Duration       27 days 23:27:00
+Avg. Drawdown Duration        1 days 15:30:00
+# Trades                                   87
+Win Rate [%]                         58.62069
+Best Trade [%]                       0.139554
+Worst Trade [%]                     -0.112843
+Avg. Trade [%]                        0.00669
+Max. Trade Duration           0 days 01:59:00
+Avg. Trade Duration           0 days 00:20:00
+Profit Factor                        1.192283
+Expectancy [%]                       0.006722
+SQN                                   0.72366
+_strategy                          BBStrategy
+_equity_curve                             ...
+_trades                       Size  EntryB...
+dtype: object
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.05   -19.990
+0.25   -18.450
+0.50    11.500
+0.75    14.775
+0.95    18.860
+Name: PnL, dtype: float64
+</pre></div>
+</div>
+<img alt="../../_images/d6d04b2653877f03df8d8f600d7fe3a7352f4729a18392f6e234df89df5e35b0.png" src="../../_images/d6d04b2653877f03df8d8f600d7fe3a7352f4729a18392f6e234df89df5e35b0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">opt</span><span class="o">.</span><span class="n">_trades</span><span class="p">[</span><span class="s1">&#39;wl&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">_trades</span><span class="o">.</span><span class="n">PnL</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Win&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Loss&#39;</span><span class="p">})</span>
+<span class="n">opt</span><span class="o">.</span><span class="n">_trades</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;wl&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">PnL</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>wl
+Loss    Axes(0.125,0.11;0.775x0.77)
+Win     Axes(0.125,0.11;0.775x0.77)
+Name: PnL, dtype: object
+</pre></div>
+</div>
+<img alt="../../_images/33f6293d152aed886abdef973d66f67c5f4be7f15f161452ba74c2d03398b7ec.png" src="../../_images/33f6293d152aed886abdef973d66f67c5f4be7f15f161452ba74c2d03398b7ec.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># nifty_df.reset_index(inplace=True)</span>
+<span class="n">nifty_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">iax</span><span class="p">,</span> <span class="n">wax</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">(</span>
+    <span class="n">_</span><span class="p">,</span>
+    <span class="n">buy_bb</span><span class="p">,</span>
+    <span class="n">sell_bb</span><span class="p">,</span>
+    <span class="n">_</span><span class="p">,</span>
+    <span class="n">_</span>
+<span class="p">)</span> <span class="o">=</span> <span class="n">thresholds_df</span><span class="p">[</span><span class="n">thresholds_df</span><span class="o">.</span><span class="n">timeperiod</span> <span class="o">==</span> <span class="n">OptStrat</span><span class="o">.</span><span class="n">TIMEPERIOD</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">trades_df</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">_trades</span>
+
+<span class="n">scaled_close</span><span class="p">,</span> <span class="n">ub</span><span class="p">,</span> <span class="n">lb</span> <span class="o">=</span> <span class="n">scale_by_bb</span><span class="p">(</span>
+    <span class="n">nifty_df</span><span class="o">.</span><span class="n">close</span><span class="p">,</span>
+    <span class="n">timeperiod</span><span class="o">=</span><span class="n">OptStrat</span><span class="o">.</span><span class="n">TIMEPERIOD</span>
+<span class="p">)</span>
+
+<span class="n">width</span> <span class="o">=</span> <span class="p">(</span><span class="n">ub</span><span class="o">-</span><span class="n">lb</span><span class="p">)</span>
+
+<span class="n">wax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">width</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.2</span><span class="p">)</span>
+
+<span class="c1"># tax = ax.twinx()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nifty_df</span><span class="o">.</span><span class="n">close</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ub</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.7</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lb</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.7</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">trade</span> <span class="ow">in</span> <span class="n">trades_df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">trade</span><span class="p">[</span><span class="s1">&#39;EntryBar&#39;</span><span class="p">],</span> <span class="n">trade</span><span class="p">[</span><span class="s1">&#39;ExitBar&#39;</span><span class="p">]],</span>
+        <span class="p">[</span><span class="n">trade</span><span class="p">[</span><span class="s1">&#39;EntryPrice&#39;</span><span class="p">],</span> <span class="n">trade</span><span class="p">[</span><span class="s1">&#39;ExitPrice&#39;</span><span class="p">]],</span>
+        <span class="n">c</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;g&#39;</span> <span class="k">if</span> <span class="n">trade</span><span class="p">[</span><span class="s1">&#39;PnL&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;r&#39;</span><span class="p">),</span>
+        <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;X&#39;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># iax.scatter(</span>
+    <span class="c1">#     trade[&#39;EntryBar&#39;],</span>
+    <span class="c1">#     trade[&#39;scaled_close&#39;],</span>
+    <span class="c1">#     c=(&#39;g&#39; if trade[&#39;PnL&#39;] &gt;= 0 else &#39;r&#39;),</span>
+    <span class="c1">#     marker=&#39;X&#39;</span>
+    <span class="c1"># )</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">trade</span><span class="p">[</span><span class="s1">&#39;EntryBar&#39;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.1</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span>
+        <span class="n">trade</span><span class="p">[</span><span class="s1">&#39;EntryBar&#39;</span><span class="p">],</span>
+        <span class="n">trade</span><span class="p">[</span><span class="s1">&#39;ExitBar&#39;</span><span class="p">],</span>
+        <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;g&#39;</span> <span class="k">if</span> <span class="n">trade</span><span class="p">[</span><span class="s1">&#39;PnL&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;r&#39;</span><span class="p">),</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">.1</span>
+    <span class="p">)</span>
+
+    <span class="n">iax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span>
+        <span class="n">trade</span><span class="p">[</span><span class="s1">&#39;EntryBar&#39;</span><span class="p">],</span>
+        <span class="n">trade</span><span class="p">[</span><span class="s1">&#39;ExitBar&#39;</span><span class="p">],</span>
+        <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;g&#39;</span> <span class="k">if</span> <span class="n">trade</span><span class="p">[</span><span class="s1">&#39;PnL&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;r&#39;</span><span class="p">),</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">.1</span>
+    <span class="p">)</span>
+    <span class="n">wax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span>
+        <span class="n">trade</span><span class="p">[</span><span class="s1">&#39;EntryBar&#39;</span><span class="p">],</span>
+        <span class="n">trade</span><span class="p">[</span><span class="s1">&#39;ExitBar&#39;</span><span class="p">],</span>
+        <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;g&#39;</span> <span class="k">if</span> <span class="n">trade</span><span class="p">[</span><span class="s1">&#39;PnL&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;r&#39;</span><span class="p">),</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">.1</span>
+    <span class="p">)</span>
+
+<span class="n">iax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">sell_bb</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.4</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">iax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">buy_bb</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.4</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">iax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scaled_close</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.2</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">iax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scaled_close</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.4</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/a984a022a4648359d5da6f7937179667f2611e6a01a30e9276518d42dc2d3453.png" src="../../_images/a984a022a4648359d5da6f7937179667f2611e6a01a30e9276518d42dc2d3453.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nifty_df</span><span class="p">[</span><span class="s1">&#39;scaled_close&#39;</span><span class="p">],</span> <span class="n">nifty_df</span><span class="p">[</span><span class="s1">&#39;ub&#39;</span><span class="p">],</span> <span class="n">nifty_df</span><span class="p">[</span><span class="s1">&#39;lb&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale_by_bb</span><span class="p">(</span>
+    <span class="n">nifty_df</span><span class="o">.</span><span class="n">close</span><span class="p">,</span>
+    <span class="n">timeperiod</span><span class="o">=</span><span class="n">OptStrat</span><span class="o">.</span><span class="n">TIMEPERIOD</span>
+
+<span class="p">)</span>
+<span class="n">ndf</span> <span class="o">=</span> <span class="n">nifty_df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">trades_df</span><span class="p">[[</span><span class="s1">&#39;EntryBar&#39;</span><span class="p">,</span> <span class="s1">&#39;EntryPrice&#39;</span><span class="p">,</span> <span class="s1">&#39;EntryTime&#39;</span><span class="p">,</span> <span class="s1">&#39;PnL&#39;</span><span class="p">]],</span>
+    <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span>
+    <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;EntryBar&#39;</span><span class="p">,</span>
+    <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">trades_df</span><span class="p">[[</span><span class="s1">&#39;ExitBar&#39;</span><span class="p">,</span> <span class="s1">&#39;ExitPrice&#39;</span><span class="p">,</span> <span class="s1">&#39;ExitTime&#39;</span><span class="p">,</span> <span class="s1">&#39;PnL&#39;</span><span class="p">]],</span>
+    <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span>
+    <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;ExitBar&#39;</span><span class="p">,</span>
+    <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span>
+<span class="p">)</span>
+<span class="n">ndf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="nn">/tmp/ipykernel_74707/781397626.py</span> in <span class="ni">?</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="n">nifty_df</span><span class="o">.</span><span class="n">close</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">timeperiod</span><span class="o">=</span><span class="n">OptStrat</span><span class="o">.</span><span class="n">TIMEPERIOD</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> 
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">ndf</span> <span class="o">=</span> <span class="n">nifty_df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">trades_df</span><span class="p">[[</span><span class="s1">&#39;EntryBar&#39;</span><span class="p">,</span> <span class="s1">&#39;EntryPrice&#39;</span><span class="p">,</span> <span class="s1">&#39;EntryTime&#39;</span><span class="p">,</span> <span class="s1">&#39;PnL&#39;</span><span class="p">]],</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;EntryBar&#39;</span><span class="p">,</span>
+
+<span class="nn">/workspace/intelligence/logbook/.venv/lib/python3.11/site-packages/pandas/core/frame.py</span> in <span class="ni">?</span><span class="nt">(self, right, how, on, left_on, right_on, left_index, right_index, sort, suffixes, copy, indicator, validate)</span>
+<span class="g g-Whitespace">  </span><span class="mi">10483</span>         <span class="n">validate</span><span class="p">:</span> <span class="n">MergeValidate</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="g g-Whitespace">  </span><span class="mi">10484</span>     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+<span class="g g-Whitespace">  </span><span class="mi">10485</span>         <span class="kn">from</span> <span class="nn">pandas.core.reshape.merge</span> <span class="kn">import</span> <span class="n">merge</span>
+<span class="g g-Whitespace">  </span><span class="mi">10486</span> 
+<span class="ne">&gt; </span><span class="mi">10487</span>         <span class="k">return</span> <span class="n">merge</span><span class="p">(</span>
+<span class="g g-Whitespace">  </span><span class="mi">10488</span>             <span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">  </span><span class="mi">10489</span>             <span class="n">right</span><span class="p">,</span>
+<span class="g g-Whitespace">  </span><span class="mi">10490</span>             <span class="n">how</span><span class="o">=</span><span class="n">how</span><span class="p">,</span>
+
+<span class="nn">/workspace/intelligence/logbook/.venv/lib/python3.11/site-packages/pandas/core/reshape/merge.py</span> in <span class="ni">?</span><span class="nt">(left, right, how, on, left_on, right_on, left_index, right_index, sort, suffixes, copy, indicator, validate)</span>
+<span class="g g-Whitespace">    </span><span class="mi">165</span>             <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">166</span>             <span class="n">copy</span><span class="o">=</span><span class="n">copy</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">167</span>         <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">168</span>     <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">169</span>         <span class="n">op</span> <span class="o">=</span> <span class="n">_MergeOperation</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">170</span>             <span class="n">left_df</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">171</span>             <span class="n">right_df</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">172</span>             <span class="n">how</span><span class="o">=</span><span class="n">how</span><span class="p">,</span>
+
+<span class="nn">/workspace/intelligence/logbook/.venv/lib/python3.11/site-packages/pandas/core/reshape/merge.py</span> in <span class="ni">?</span><span class="nt">(self, left, right, how, on, left_on, right_on, left_index, right_index, sort, suffixes, indicator, validate)</span>
+<span class="g g-Whitespace">    </span><span class="mi">787</span>             <span class="bp">self</span><span class="o">.</span><span class="n">right_join_keys</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">788</span>             <span class="bp">self</span><span class="o">.</span><span class="n">join_names</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">789</span>             <span class="n">left_drop</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">790</span>             <span class="n">right_drop</span><span class="p">,</span>
+<span class="ne">--&gt; </span><span class="mi">791</span>         <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_merge_keys</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">792</span> 
+<span class="g g-Whitespace">    </span><span class="mi">793</span>         <span class="k">if</span> <span class="n">left_drop</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">794</span>             <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">_drop_labels_or_levels</span><span class="p">(</span><span class="n">left_drop</span><span class="p">)</span>
+
+<span class="nn">/workspace/intelligence/logbook/.venv/lib/python3.11/site-packages/pandas/core/reshape/merge.py</span> in <span class="ni">?</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1283</span>                     <span class="k">if</span> <span class="n">lk</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1284</span>                         <span class="c1"># Then we&#39;re either Hashable or a wrong-length arraylike,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1285</span>                         <span class="c1">#  the latter of which will raise</span>
+<span class="g g-Whitespace">   </span><span class="mi">1286</span>                         <span class="n">lk</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">Hashable</span><span class="p">,</span> <span class="n">lk</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1287</span>                         <span class="n">left_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">left</span><span class="o">.</span><span class="n">_get_label_or_level_values</span><span class="p">(</span><span class="n">lk</span><span class="p">))</span>
+<span class="g g-Whitespace">   </span><span class="mi">1288</span>                         <span class="n">join_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lk</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1289</span>                     <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1290</span>                         <span class="c1"># work-around for merge_asof(left_index=True)</span>
+
+<span class="nn">/workspace/intelligence/logbook/.venv/lib/python3.11/site-packages/pandas/core/generic.py</span> in <span class="ni">?</span><span class="nt">(self, key, axis)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1840</span>             <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">other_axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">_values</span>
+<span class="g g-Whitespace">   </span><span class="mi">1841</span>         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_level_reference</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1842</span>             <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">_values</span>
+<span class="g g-Whitespace">   </span><span class="mi">1843</span>         <span class="k">else</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1844</span>             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1845</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1846</span>         <span class="c1"># Check for duplicates</span>
+<span class="g g-Whitespace">   </span><span class="mi">1847</span>         <span class="k">if</span> <span class="n">values</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+
+<span class="ne">KeyError</span>: &#39;index&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">entry_df</span> <span class="o">=</span> <span class="n">ndf</span><span class="p">[[</span><span class="s1">&#39;scaled_close&#39;</span><span class="p">,</span> <span class="s1">&#39;ub&#39;</span><span class="p">,</span> <span class="s1">&#39;lb&#39;</span><span class="p">,</span> <span class="s1">&#39;PnL_x&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="n">entry_df</span><span class="p">[</span><span class="s1">&#39;win&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">entry_df</span><span class="p">[</span><span class="s1">&#39;PnL_x&#39;</span><span class="p">])</span>
+<span class="n">entry_df</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry_df</span><span class="p">[</span><span class="s1">&#39;ub&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">entry_df</span><span class="p">[</span><span class="s1">&#39;lb&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">w</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">entry_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;win&#39;</span><span class="p">):</span>
+
+    <span class="n">g</span><span class="p">[</span><span class="s1">&#39;scaled_close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># .quantile([.05, .25, .5, .75, .95]).reset_index().pivot(</span>
+<span class="c1">#     index=&#39;win&#39;, columns=&#39;level_1&#39;, values=&#39;scaled_close&#39;</span>
+<span class="c1"># )</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks/algo_trading"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="20231228.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Experiment: Bollinger Bands Scaling Strategy (BBSS)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="20240116.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Th3Nic3Guy
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Uth! Kaam abhi baaki hai
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -5,7 +5,15 @@ title: Learning By Failure - DS/ML/AI
 author: Th3Nic3Guy
 logo: logo.svg
 exclude_patterns:
-  [_build, "*.db", .DS_Store, "**.ipynb_checkpoints", ".venv", ".git/**"]
+  [
+    _build,
+    "*.db",
+    .DS_Store,
+    "**.ipynb_checkpoints",
+    ".venv",
+    ".git/**",
+    ".json",
+  ]
 
 execute:
   execute_notebooks: "off"
@@ -24,5 +32,8 @@ repository:
 
 html:
   use_issues_button: true
-  use_repository_button: true
+  use_repository_button: false
   extra_footer: "Uth! Kaam abhi baaki hai"
+sphinx:
+  config:
+    mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
