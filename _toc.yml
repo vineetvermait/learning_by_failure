@@ -3,6 +3,15 @@
 
 format: jb-book
 root: intro
-chapters:
-  - file: notebooks/20240428-0
+parts:
+  - caption: Concepts
+    chapters:
+      - file: notebooks/eda
+      - file: notebooks/scaling_techniques
+      - file: notebooks/temporal_vectors
+  - caption: Experiments
+    chapters:
+      - notebooks/experiments/20240428-0
+      - notebooks/experiments/20240428-1
+      - notebooks/experiments/20240428-2
 # - file: markdown-notebooks
