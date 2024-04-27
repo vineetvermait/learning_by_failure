@@ -3,6 +3,7 @@
 
 format: jb-book
 root: intro
+
 parts:
   - caption: Concepts
     chapters:
@@ -11,7 +12,7 @@ parts:
       - file: notebooks/temporal_vectors
   - caption: Experiments
     chapters:
-      - notebooks/experiments/20240428-0
-      - notebooks/experiments/20240428-1
-      - notebooks/experiments/20240428-2
+      - file: notebooks/experiments/20240428-0
+      - file: notebooks/experiments/20240428-1
+      - file: notebooks/experiments/20240428-2
 # - file: markdown-notebooks
