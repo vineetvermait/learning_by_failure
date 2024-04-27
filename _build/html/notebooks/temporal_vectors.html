@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Temporal Vectors &#8212; Learning By Failure - DS/ML/AI</title>
+    <title>[In Progress] Temporal Vectors &#8212; Learning By Failure - DS/ML/AI</title>
   
   
   
@@ -65,7 +65,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/temporal_vectors';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="[Not Started] Exploratory Data Analysis | WIP" href="eda.html" />
+    <link rel="next" title="[Not Started] Relative Scaling | Temporal Window Vector Clustering | Language Model" href="experiments/20240428-0.html" />
+    <link rel="prev" title="[Not Started] Scaling Techniques" href="scaling_techniques.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -167,8 +168,16 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="eda.html">[Not Started] Exploratory Data Analysis | WIP</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Temporal Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problem_definition.html">[Not Started] Problem Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eda.html">[Not Started] Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scaling_techniques.html">[Not Started] Scaling Techniques</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">[In Progress] Temporal Vectors</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="experiments/20240428-0.html">[Not Started] Relative Scaling | Temporal Window Vector Clustering | Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments/20240428-1.html">[Not Started] Relative Scaling | Multi-Feature Temporal Window Vector Clustering | Time Series Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments/20240428-2.html">[Not Started] Relative Scaling | Temporal Window Vector Clustering | Probability Model</a></li>
 </ul>
 
     </div>
@@ -352,7 +361,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Temporal Vectors</h1>
+    <h1>[In Progress] Temporal Vectors</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -363,6 +372,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abstract">Abstract</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 </ul>
             </nav>
         </div>
@@ -374,11 +384,15 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="temporal-vectors">
-<h1>Temporal Vectors<a class="headerlink" href="#temporal-vectors" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="in-progress-temporal-vectors">
+<h1>[In Progress] Temporal Vectors<a class="headerlink" href="#in-progress-temporal-vectors" title="Permalink to this heading">#</a></h1>
 <section id="abstract">
 <h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">#</a></h2>
 <p>In this notebook, I will conceptualize Temporal Vectors. Temporal vectors are a way to encode the temporal information of a time series. They are used to encode movement pattern of a sequence. This information is very useful in time series forecasting tasks. I will show how to use temporal vectors in a simple model to forecast the number of passengers in a time series.</p>
+</section>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>Temporal vectors are a way to encode the temporal information of a time series. They are used to encode movement pattern of a sequence. This information is very useful in time series forecasting tasks. I will show how to use temporal vectors in a simple model to forecast the number of passengers in a time series.</p>
 </section>
 </section>
 
@@ -413,13 +427,22 @@ document.write(`
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="eda.html"
+       href="scaling_techniques.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">[Not Started] Exploratory Data Analysis | WIP</p>
+        <p class="prev-next-title">[Not Started] Scaling Techniques</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="experiments/20240428-0.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">[Not Started] Relative Scaling | Temporal Window Vector Clustering | Language Model</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -437,6 +460,7 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abstract">Abstract</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 </ul>
   </nav></div>
 
