@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>[Not Started] Relative Scaling | Temporal Window Vector Clustering | Language Model &#8212; Learning By Failure - DS/ML/AI</title>
+    <title>[Not Started] Regression &#8212; Learning By Failure - DS/ML/AI</title>
   
   
   
@@ -62,11 +62,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/experiments/20240428-0';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/ml/regression';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="[Not Started] Relative Scaling | Multi-Feature Temporal Window Vector Clustering | Time Series Classification" href="20240428-1.html" />
-    <link rel="prev" title="[Not Started] Genetic Programming" href="../evolutionary_algo/gp.html" />
+    <link rel="next" title="[Not Started] FinRL" href="../rl/finrl.html" />
+    <link rel="prev" title="[Not Started] Basic SMA Crossover" href="../algo_trading/sma_crossover.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -180,8 +180,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../algo_trading/sma_crossover.html">[Not Started] Basic SMA Crossover</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine Learning</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ml/regression.html">[Not Started] Regression</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">[Not Started] Regression</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Reinforcement Learning</span></p>
 <ul class="nav bd-sidenav">
@@ -193,10 +193,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../evolutionary_algo/gp.html">[Not Started] Genetic Programming</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">[Not Started] Relative Scaling | Temporal Window Vector Clustering | Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="20240428-1.html">[Not Started] Relative Scaling | Multi-Feature Temporal Window Vector Clustering | Time Series Classification</a></li>
-<li class="toctree-l1"><a class="reference internal" href="20240428-2.html">[Not Started] Relative Scaling | Temporal Window Vector Clustering | Probability Model</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../experiments/20240428-0.html">[Not Started] Relative Scaling | Temporal Window Vector Clustering | Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/20240428-1.html">[Not Started] Relative Scaling | Multi-Feature Temporal Window Vector Clustering | Time Series Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/20240428-2.html">[Not Started] Relative Scaling | Temporal Window Vector Clustering | Probability Model</a></li>
 </ul>
 
     </div>
@@ -268,7 +268,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/vineetvermait/learning_by_failure_ai/issues/new?title=Issue%20on%20page%20%2Fnotebooks/experiments/20240428-0.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/vineetvermait/learning_by_failure_ai/issues/new?title=Issue%20on%20page%20%2Fnotebooks/ml/regression.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -298,7 +298,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../../_sources/notebooks/experiments/20240428-0.ipynb" target="_blank"
+      <li><a href="../../_sources/notebooks/ml/regression.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -378,7 +378,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>[Not Started] Relative Scaling | Temporal Window Vector Clustering | Language Model</h1>
+    <h1>[Not Started] Regression</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -392,8 +392,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="not-started-relative-scaling-temporal-window-vector-clustering-language-model">
-<h1>[Not Started] Relative Scaling | Temporal Window Vector Clustering | Language Model<a class="headerlink" href="#not-started-relative-scaling-temporal-window-vector-clustering-language-model" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="not-started-regression">
+<h1>[Not Started] Regression<a class="headerlink" href="#not-started-regression" title="Permalink to this heading">#</a></h1>
 </section>
 
     <script type="text/x-thebe-config">
@@ -409,7 +409,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./notebooks/experiments"
+            path: "./notebooks/ml"
         },
         predefinedOutput: true
     }
@@ -427,20 +427,20 @@ document.write(`
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../evolutionary_algo/gp.html"
+       href="../algo_trading/sma_crossover.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">[Not Started] Genetic Programming</p>
+        <p class="prev-next-title">[Not Started] Basic SMA Crossover</p>
       </div>
     </a>
     <a class="right-next"
-       href="20240428-1.html"
+       href="../rl/finrl.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">[Not Started] Relative Scaling | Multi-Feature Temporal Window Vector Clustering | Time Series Classification</p>
+        <p class="prev-next-title">[Not Started] FinRL</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

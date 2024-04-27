@@ -8,9 +8,27 @@ parts:
   - caption: Concepts
     chapters:
       - file: notebooks/problem_definition
+      - file: notebooks/holy_grail
       - file: notebooks/eda
       - file: notebooks/scaling_techniques
       - file: notebooks/temporal_vectors
+      - file: notebooks/statistics
+  - caption: Algo Trading
+    chapters:
+      - file: notebooks/algo_trading/sma_crossover
+  - caption: Machine Learning
+    chapters:
+      - file: notebooks/ml/regression
+  # - caption: Deep Learning
+  # chapters:
+  # - file: placeholder
+  - caption: Reinforcement Learning
+    chapters:
+      - file: notebooks/rl/finrl
+  - caption: Evolutionary Algorithms
+    chapters:
+      - file: notebooks/evolutionary_algo/ga
+      - file: notebooks/evolutionary_algo/gp
   - caption: Experiments
     chapters:
       - file: notebooks/experiments/20240428-0
