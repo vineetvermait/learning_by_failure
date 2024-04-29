@@ -774,6 +774,7 @@ function(Bokeh) {
 <span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">show</span><span class="p">,</span> <span class="n">output_notebook</span>
 <span class="n">output_notebook</span><span class="p">()</span>
 
+
 <span class="k">def</span> <span class="nf">get_stock_data</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="p">):</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span>
         <span class="sa">f</span><span class="s1">&#39;select * from ohlc_data where symbol = </span><span class="se">\&#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">,</span>
@@ -802,6 +803,12 @@ function(Bokeh) {
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/workspace/learning_by_failure/.venv/lib/python3.11/site-packages/backtesting/test/__init__.py:8: FutureWarning: The argument &#39;infer_datetime_format&#39; is deprecated and will be removed in a future version. A strict version of it is now the default, see https://pandas.pydata.org/pdeps/0004-consistent-to-datetime-parsing.html. You can safely remove this argument.
+  return pd.read_csv(join(dirname(__file__), filename),
+/workspace/learning_by_failure/.venv/lib/python3.11/site-packages/backtesting/test/__init__.py:8: FutureWarning: The argument &#39;infer_datetime_format&#39; is deprecated and will be removed in a future version. A strict version of it is now the default, see https://pandas.pydata.org/pdeps/0004-consistent-to-datetime-parsing.html. You can safely remove this argument.
+  return pd.read_csv(join(dirname(__file__), filename),
+</pre></div>
+</div>
 <div class="output text_html">    <style>
         .bk-notebook-logo {
             display: block;
@@ -812,7 +819,7 @@ function(Bokeh) {
     </style>
     <div>
         <a href="https://bokeh.org" target="_blank" class="bk-notebook-logo"></a>
-        <span id="a3b9719a-350d-4ef2-9d3b-5d37e6bfe6fc">Loading BokehJS ...</span>
+        <span id="f5759573-1beb-409d-a76c-b7a968640751">Loading BokehJS ...</span>
     </div>
 </div><script type="application/javascript">'use strict';
 (function(root) {
@@ -977,7 +984,7 @@ const JS_MIME_TYPE = 'application/javascript';
      "</div>"}};
 
   function display_loaded(error = null) {
-    const el = document.getElementById("a3b9719a-350d-4ef2-9d3b-5d37e6bfe6fc");
+    const el = document.getElementById("f5759573-1beb-409d-a76c-b7a968640751");
     if (el != null) {
       const html = (() => {
         if (typeof root.Bokeh === "undefined") {
@@ -1111,7 +1118,7 @@ function(Bokeh) {
       console.log("Bokeh: BokehJS failed to load within specified timeout.");
       root._bokeh_failed_load = true;
     } else if (force !== true) {
-      const cell = $(document.getElementById("a3b9719a-350d-4ef2-9d3b-5d37e6bfe6fc")).parents('.cell').data().cell;
+      const cell = $(document.getElementById("f5759573-1beb-409d-a76c-b7a968640751")).parents('.cell').data().cell;
       cell.output_area.append_execute_result(NB_LOAD_WARNING)
     }
   }
