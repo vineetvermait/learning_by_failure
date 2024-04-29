@@ -424,10 +424,342 @@ check the success rate.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">backtesting</span> <span class="kn">import</span> <span class="n">set_bokeh_output</span>
+<span class="n">set_bokeh_output</span><span class="p">(</span><span class="n">notebook</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/workspace/learning_by_failure/.venv/lib/python3.11/site-packages/backtesting/_plotting.py:50: UserWarning: Jupyter Notebook detected. Setting Bokeh output to notebook. This may not work in Jupyter clients without JavaScript support (e.g. PyCharm, Spyder IDE). Reset with `backtesting.set_bokeh_output(notebook=False)`.
+  warnings.warn(&#39;Jupyter Notebook detected. &#39;
+</pre></div>
+</div>
+<div class="output text_html">    <style>
+        .bk-notebook-logo {
+            display: block;
+            width: 20px;
+            height: 20px;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAOkSURBVDiNjZRtaJVlGMd/1/08zzln5zjP1LWcU9N0NkN8m2CYjpgQYQXqSs0I84OLIC0hkEKoPtiH3gmKoiJDU7QpLgoLjLIQCpEsNJ1vqUOdO7ppbuec5+V+rj4ctwzd8IIbbi6u+8f1539dt3A78eXC7QizUF7gyV1fD1Yqg4JWz84yffhm0qkFqBogB9rM8tZdtwVsPUhWhGcFJngGeWrPzHm5oaMmkfEg1usvLFyc8jLRqDOMru7AyC8saQr7GG7f5fvDeH7Ej8CM66nIF+8yngt6HWaKh7k49Soy9nXurCi1o3qUbS3zWfrYeQDTB/Qj6kX6Ybhw4B+bOYoLKCC9H3Nu/leUTZ1JdRWkkn2ldcCamzrcf47KKXdAJllSlxAOkRgyHsGC/zRday5Qld9DyoM4/q/rUoy/CXh3jzOu3bHUVZeU+DEn8FInkPBFlu3+nW3Nw0mk6vCDiWg8CeJaxEwuHS3+z5RgY+YBR6V1Z1nxSOfoaPa4LASWxxdNp+VWTk7+4vzaou8v8PN+xo+KY2xsw6une2frhw05CTYOmQvsEhjhWjn0bmXPjpE1+kplmmkP3suftwTubK9Vq22qKmrBhpY4jvd5afdRA3wGjFAgcnTK2s4hY0/GPNIb0nErGMCRxWOOX64Z8RAC4oCXdklmEvcL8o0BfkNK4lUg9HTl+oPlQxdNo3Mg4Nv175e/1LDGzZen30MEjRUtmXSfiTVu1kK8W4txyV6BMKlbgk3lMwYCiusNy9fVfvvwMxv8Ynl6vxoByANLTWplvuj/nF9m2+PDtt1eiHPBr1oIfhCChQMBw6Aw0UulqTKZdfVvfG7VcfIqLG9bcldL/+pdWTLxLUy8Qq38heUIjh4XlzZxzQm19lLFlr8vdQ97rjZVOLf8nclzckbcD4wxXMidpX30sFd37Fv/GtwwhzhxGVAprjbg0gCAEeIgwCZyTV2Z1REEW8O4py0wsjeloKoMr6iCY6dP92H6Vw/oTyICIthibxjm/DfN9lVz8IqtqKYLUXfoKVMVQVVJOElGjrnnUt9T9wbgp8AyYKaGlqingHZU/uG2NTZSVqwHQTWkx9hxjkpWDaCg6Ckj5qebgBVbT3V3NNXMSiWSDdGV3hrtzla7J+duwPOToIg42ChPQOQjspnSlp1V+Gjdged7+8UN5CRAV7a5EdFNwCjEaBR27b3W890TE7g24NAP/mMDXRWrGoFPQI9ls/MWO2dWFAar/xcOIImbbpA3zgAAAABJRU5ErkJggg==);
+        }
+    </style>
+    <div>
+        <a href="https://bokeh.org" target="_blank" class="bk-notebook-logo"></a>
+        <span id="ff797414-181b-414e-9159-bf16529db95f">Loading BokehJS ...</span>
+    </div>
+</div><script type="application/javascript">'use strict';
+(function(root) {
+  function now() {
+    return new Date();
+  }
+
+  const force = true;
+
+  if (typeof root._bokeh_onload_callbacks === "undefined" || force === true) {
+    root._bokeh_onload_callbacks = [];
+    root._bokeh_is_loading = undefined;
+  }
+
+const JS_MIME_TYPE = 'application/javascript';
+  const HTML_MIME_TYPE = 'text/html';
+  const EXEC_MIME_TYPE = 'application/vnd.bokehjs_exec.v0+json';
+  const CLASS_NAME = 'output_bokeh rendered_html';
+
+  /**
+   * Render data to the DOM node
+   */
+  function render(props, node) {
+    const script = document.createElement("script");
+    node.appendChild(script);
+  }
+
+  /**
+   * Handle when an output is cleared or removed
+   */
+  function handleClearOutput(event, handle) {
+    function drop(id) {
+      const view = Bokeh.index.get_by_id(id)
+      if (view != null) {
+        view.model.document.clear()
+        Bokeh.index.delete(view)
+      }
+    }
+
+    const cell = handle.cell;
+
+    const id = cell.output_area._bokeh_element_id;
+    const server_id = cell.output_area._bokeh_server_id;
+
+    // Clean up Bokeh references
+    if (id != null) {
+      drop(id)
+    }
+
+    if (server_id !== undefined) {
+      // Clean up Bokeh references
+      const cmd_clean = "from bokeh.io.state import curstate; print(curstate().uuid_to_server['" + server_id + "'].get_sessions()[0].document.roots[0]._id)";
+      cell.notebook.kernel.execute(cmd_clean, {
+        iopub: {
+          output: function(msg) {
+            const id = msg.content.text.trim()
+            drop(id)
+          }
+        }
+      });
+      // Destroy server and session
+      const cmd_destroy = "import bokeh.io.notebook as ion; ion.destroy_server('" + server_id + "')";
+      cell.notebook.kernel.execute(cmd_destroy);
+    }
+  }
+
+  /**
+   * Handle when a new output is added
+   */
+  function handleAddOutput(event, handle) {
+    const output_area = handle.output_area;
+    const output = handle.output;
+
+    // limit handleAddOutput to display_data with EXEC_MIME_TYPE content only
+    if ((output.output_type != "display_data") || (!Object.prototype.hasOwnProperty.call(output.data, EXEC_MIME_TYPE))) {
+      return
+    }
+
+    const toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
+
+    if (output.metadata[EXEC_MIME_TYPE]["id"] !== undefined) {
+      toinsert[toinsert.length - 1].firstChild.textContent = output.data[JS_MIME_TYPE];
+      // store reference to embed id on output_area
+      output_area._bokeh_element_id = output.metadata[EXEC_MIME_TYPE]["id"];
+    }
+    if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
+      const bk_div = document.createElement("div");
+      bk_div.innerHTML = output.data[HTML_MIME_TYPE];
+      const script_attrs = bk_div.children[0].attributes;
+      for (let i = 0; i < script_attrs.length; i++) {
+        toinsert[toinsert.length - 1].firstChild.setAttribute(script_attrs[i].name, script_attrs[i].value);
+        toinsert[toinsert.length - 1].firstChild.textContent = bk_div.children[0].textContent
+      }
+      // store reference to server id on output_area
+      output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
+    }
+  }
+
+  function register_renderer(events, OutputArea) {
+
+    function append_mime(data, metadata, element) {
+      // create a DOM node to render to
+      const toinsert = this.create_output_subarea(
+        metadata,
+        CLASS_NAME,
+        EXEC_MIME_TYPE
+      );
+      this.keyboard_manager.register_events(toinsert);
+      // Render to node
+      const props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
+      render(props, toinsert[toinsert.length - 1]);
+      element.append(toinsert);
+      return toinsert
+    }
+
+    /* Handle when an output is cleared or removed */
+    events.on('clear_output.CodeCell', handleClearOutput);
+    events.on('delete.Cell', handleClearOutput);
+
+    /* Handle when a new output is added */
+    events.on('output_added.OutputArea', handleAddOutput);
+
+    /**
+     * Register the mime type and append_mime function with output_area
+     */
+    OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
+      /* Is output safe? */
+      safe: true,
+      /* Index of renderer in `output_area.display_order` */
+      index: 0
+    });
+  }
+
+  // register the mime type if in Jupyter Notebook environment and previously unregistered
+  if (root.Jupyter !== undefined) {
+    const events = require('base/js/events');
+    const OutputArea = require('notebook/js/outputarea').OutputArea;
+
+    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
+      register_renderer(events, OutputArea);
+    }
+  }
+  if (typeof (root._bokeh_timeout) === "undefined" || force === true) {
+    root._bokeh_timeout = Date.now() + 5000;
+    root._bokeh_failed_load = false;
+  }
+
+  const NB_LOAD_WARNING = {'data': {'text/html':
+     "<div style='background-color: #fdd'>\n"+
+     "<p>\n"+
+     "BokehJS does not appear to have successfully loaded. If loading BokehJS from CDN, this \n"+
+     "may be due to a slow or bad network connection. Possible fixes:\n"+
+     "</p>\n"+
+     "<ul>\n"+
+     "<li>re-rerun `output_notebook()` to attempt to load from CDN again, or</li>\n"+
+     "<li>use INLINE resources instead, as so:</li>\n"+
+     "</ul>\n"+
+     "<code>\n"+
+     "from bokeh.resources import INLINE\n"+
+     "output_notebook(resources=INLINE)\n"+
+     "</code>\n"+
+     "</div>"}};
+
+  function display_loaded(error = null) {
+    const el = document.getElementById("ff797414-181b-414e-9159-bf16529db95f");
+    if (el != null) {
+      const html = (() => {
+        if (typeof root.Bokeh === "undefined") {
+          if (error == null) {
+            return "BokehJS is loading ...";
+          } else {
+            return "BokehJS failed to load.";
+          }
+        } else {
+          const prefix = `BokehJS ${root.Bokeh.version}`;
+          if (error == null) {
+            return `${prefix} successfully loaded.`;
+          } else {
+            return `${prefix} <b>encountered errors</b> while loading and may not function as expected.`;
+          }
+        }
+      })();
+      el.innerHTML = html;
+
+      if (error != null) {
+        const wrapper = document.createElement("div");
+        wrapper.style.overflow = "auto";
+        wrapper.style.height = "5em";
+        wrapper.style.resize = "vertical";
+        const content = document.createElement("div");
+        content.style.fontFamily = "monospace";
+        content.style.whiteSpace = "pre-wrap";
+        content.style.backgroundColor = "rgb(255, 221, 221)";
+        content.textContent = error.stack ?? error.toString();
+        wrapper.append(content);
+        el.append(wrapper);
+      }
+    } else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(() => display_loaded(error), 100);
+    }
+  }
+
+  function run_callbacks() {
+    try {
+      root._bokeh_onload_callbacks.forEach(function(callback) {
+        if (callback != null)
+          callback();
+      });
+    } finally {
+      delete root._bokeh_onload_callbacks
+    }
+    console.debug("Bokeh: all callbacks have finished");
+  }
+
+  function load_libs(css_urls, js_urls, callback) {
+    if (css_urls == null) css_urls = [];
+    if (js_urls == null) js_urls = [];
+
+    root._bokeh_onload_callbacks.push(callback);
+    if (root._bokeh_is_loading > 0) {
+      console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+      return null;
+    }
+    if (js_urls == null || js_urls.length === 0) {
+      run_callbacks();
+      return null;
+    }
+    console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+    root._bokeh_is_loading = css_urls.length + js_urls.length;
+
+    function on_load() {
+      root._bokeh_is_loading--;
+      if (root._bokeh_is_loading === 0) {
+        console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
+        run_callbacks()
+      }
+    }
+
+    function on_error(url) {
+      console.error("failed to load " + url);
+    }
+
+    for (let i = 0; i < css_urls.length; i++) {
+      const url = css_urls[i];
+      const element = document.createElement("link");
+      element.onload = on_load;
+      element.onerror = on_error.bind(null, url);
+      element.rel = "stylesheet";
+      element.type = "text/css";
+      element.href = url;
+      console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
+      document.body.appendChild(element);
+    }
+
+    for (let i = 0; i < js_urls.length; i++) {
+      const url = js_urls[i];
+      const element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error.bind(null, url);
+      element.async = false;
+      element.src = url;
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+  };
+
+  function inject_raw_css(css) {
+    const element = document.createElement("style");
+    element.appendChild(document.createTextNode(css));
+    document.body.appendChild(element);
+  }
+
+  const js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-3.4.1.min.js"];
+  const css_urls = [];
+
+  const inline_js = [    function(Bokeh) {
+      Bokeh.set_log_level("info");
+    },
+function(Bokeh) {
+    }
+  ];
+
+  function run_inline_js() {
+    if (root.Bokeh !== undefined || force === true) {
+      try {
+            for (let i = 0; i < inline_js.length; i++) {
+      inline_js[i].call(root, root.Bokeh);
+    }
+
+      } catch (error) {display_loaded(error);throw error;
+      }if (force === true) {
+        display_loaded();
+      }} else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(run_inline_js, 100);
+    } else if (!root._bokeh_failed_load) {
+      console.log("Bokeh: BokehJS failed to load within specified timeout.");
+      root._bokeh_failed_load = true;
+    } else if (force !== true) {
+      const cell = $(document.getElementById("ff797414-181b-414e-9159-bf16529db95f")).parents('.cell').data().cell;
+      cell.output_area.append_execute_result(NB_LOAD_WARNING)
+    }
+  }
+
+  if (root._bokeh_is_loading === 0) {
+    console.debug("Bokeh: BokehJS loaded, going straight to plotting");
+    run_inline_js();
+  } else {
+    load_libs(css_urls, js_urls, function() {
+      console.debug("Bokeh: BokehJS plotting callback run at", now());
+      run_inline_js();
+    });
+  }
+}(window));</script></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -480,7 +812,7 @@ check the success rate.</p>
     </style>
     <div>
         <a href="https://bokeh.org" target="_blank" class="bk-notebook-logo"></a>
-        <span id="e244d60e-ea1a-404e-a224-4338f3cfb0bc">Loading BokehJS ...</span>
+        <span id="a3b9719a-350d-4ef2-9d3b-5d37e6bfe6fc">Loading BokehJS ...</span>
     </div>
 </div><script type="application/javascript">'use strict';
 (function(root) {
@@ -645,7 +977,7 @@ const JS_MIME_TYPE = 'application/javascript';
      "</div>"}};
 
   function display_loaded(error = null) {
-    const el = document.getElementById("e244d60e-ea1a-404e-a224-4338f3cfb0bc");
+    const el = document.getElementById("a3b9719a-350d-4ef2-9d3b-5d37e6bfe6fc");
     if (el != null) {
       const html = (() => {
         if (typeof root.Bokeh === "undefined") {
@@ -779,330 +1111,7 @@ function(Bokeh) {
       console.log("Bokeh: BokehJS failed to load within specified timeout.");
       root._bokeh_failed_load = true;
     } else if (force !== true) {
-      const cell = $(document.getElementById("e244d60e-ea1a-404e-a224-4338f3cfb0bc")).parents('.cell').data().cell;
-      cell.output_area.append_execute_result(NB_LOAD_WARNING)
-    }
-  }
-
-  if (root._bokeh_is_loading === 0) {
-    console.debug("Bokeh: BokehJS loaded, going straight to plotting");
-    run_inline_js();
-  } else {
-    load_libs(css_urls, js_urls, function() {
-      console.debug("Bokeh: BokehJS plotting callback run at", now());
-      run_inline_js();
-    });
-  }
-}(window));</script><div class="output text_html">    <style>
-        .bk-notebook-logo {
-            display: block;
-            width: 20px;
-            height: 20px;
-            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAOkSURBVDiNjZRtaJVlGMd/1/08zzln5zjP1LWcU9N0NkN8m2CYjpgQYQXqSs0I84OLIC0hkEKoPtiH3gmKoiJDU7QpLgoLjLIQCpEsNJ1vqUOdO7ppbuec5+V+rj4ctwzd8IIbbi6u+8f1539dt3A78eXC7QizUF7gyV1fD1Yqg4JWz84yffhm0qkFqBogB9rM8tZdtwVsPUhWhGcFJngGeWrPzHm5oaMmkfEg1usvLFyc8jLRqDOMru7AyC8saQr7GG7f5fvDeH7Ej8CM66nIF+8yngt6HWaKh7k49Soy9nXurCi1o3qUbS3zWfrYeQDTB/Qj6kX6Ybhw4B+bOYoLKCC9H3Nu/leUTZ1JdRWkkn2ldcCamzrcf47KKXdAJllSlxAOkRgyHsGC/zRday5Qld9DyoM4/q/rUoy/CXh3jzOu3bHUVZeU+DEn8FInkPBFlu3+nW3Nw0mk6vCDiWg8CeJaxEwuHS3+z5RgY+YBR6V1Z1nxSOfoaPa4LASWxxdNp+VWTk7+4vzaou8v8PN+xo+KY2xsw6une2frhw05CTYOmQvsEhjhWjn0bmXPjpE1+kplmmkP3suftwTubK9Vq22qKmrBhpY4jvd5afdRA3wGjFAgcnTK2s4hY0/GPNIb0nErGMCRxWOOX64Z8RAC4oCXdklmEvcL8o0BfkNK4lUg9HTl+oPlQxdNo3Mg4Nv175e/1LDGzZen30MEjRUtmXSfiTVu1kK8W4txyV6BMKlbgk3lMwYCiusNy9fVfvvwMxv8Ynl6vxoByANLTWplvuj/nF9m2+PDtt1eiHPBr1oIfhCChQMBw6Aw0UulqTKZdfVvfG7VcfIqLG9bcldL/+pdWTLxLUy8Qq38heUIjh4XlzZxzQm19lLFlr8vdQ97rjZVOLf8nclzckbcD4wxXMidpX30sFd37Fv/GtwwhzhxGVAprjbg0gCAEeIgwCZyTV2Z1REEW8O4py0wsjeloKoMr6iCY6dP92H6Vw/oTyICIthibxjm/DfN9lVz8IqtqKYLUXfoKVMVQVVJOElGjrnnUt9T9wbgp8AyYKaGlqingHZU/uG2NTZSVqwHQTWkx9hxjkpWDaCg6Ckj5qebgBVbT3V3NNXMSiWSDdGV3hrtzla7J+duwPOToIg42ChPQOQjspnSlp1V+Gjdged7+8UN5CRAV7a5EdFNwCjEaBR27b3W890TE7g24NAP/mMDXRWrGoFPQI9ls/MWO2dWFAar/xcOIImbbpA3zgAAAABJRU5ErkJggg==);
-        }
-    </style>
-    <div>
-        <a href="https://bokeh.org" target="_blank" class="bk-notebook-logo"></a>
-        <span id="d516b1da-d0e5-4e9c-961b-ba837bfb2fa4">Loading BokehJS ...</span>
-    </div>
-</div><script type="application/javascript">'use strict';
-(function(root) {
-  function now() {
-    return new Date();
-  }
-
-  const force = true;
-
-  if (typeof root._bokeh_onload_callbacks === "undefined" || force === true) {
-    root._bokeh_onload_callbacks = [];
-    root._bokeh_is_loading = undefined;
-  }
-
-const JS_MIME_TYPE = 'application/javascript';
-  const HTML_MIME_TYPE = 'text/html';
-  const EXEC_MIME_TYPE = 'application/vnd.bokehjs_exec.v0+json';
-  const CLASS_NAME = 'output_bokeh rendered_html';
-
-  /**
-   * Render data to the DOM node
-   */
-  function render(props, node) {
-    const script = document.createElement("script");
-    node.appendChild(script);
-  }
-
-  /**
-   * Handle when an output is cleared or removed
-   */
-  function handleClearOutput(event, handle) {
-    function drop(id) {
-      const view = Bokeh.index.get_by_id(id)
-      if (view != null) {
-        view.model.document.clear()
-        Bokeh.index.delete(view)
-      }
-    }
-
-    const cell = handle.cell;
-
-    const id = cell.output_area._bokeh_element_id;
-    const server_id = cell.output_area._bokeh_server_id;
-
-    // Clean up Bokeh references
-    if (id != null) {
-      drop(id)
-    }
-
-    if (server_id !== undefined) {
-      // Clean up Bokeh references
-      const cmd_clean = "from bokeh.io.state import curstate; print(curstate().uuid_to_server['" + server_id + "'].get_sessions()[0].document.roots[0]._id)";
-      cell.notebook.kernel.execute(cmd_clean, {
-        iopub: {
-          output: function(msg) {
-            const id = msg.content.text.trim()
-            drop(id)
-          }
-        }
-      });
-      // Destroy server and session
-      const cmd_destroy = "import bokeh.io.notebook as ion; ion.destroy_server('" + server_id + "')";
-      cell.notebook.kernel.execute(cmd_destroy);
-    }
-  }
-
-  /**
-   * Handle when a new output is added
-   */
-  function handleAddOutput(event, handle) {
-    const output_area = handle.output_area;
-    const output = handle.output;
-
-    // limit handleAddOutput to display_data with EXEC_MIME_TYPE content only
-    if ((output.output_type != "display_data") || (!Object.prototype.hasOwnProperty.call(output.data, EXEC_MIME_TYPE))) {
-      return
-    }
-
-    const toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
-
-    if (output.metadata[EXEC_MIME_TYPE]["id"] !== undefined) {
-      toinsert[toinsert.length - 1].firstChild.textContent = output.data[JS_MIME_TYPE];
-      // store reference to embed id on output_area
-      output_area._bokeh_element_id = output.metadata[EXEC_MIME_TYPE]["id"];
-    }
-    if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
-      const bk_div = document.createElement("div");
-      bk_div.innerHTML = output.data[HTML_MIME_TYPE];
-      const script_attrs = bk_div.children[0].attributes;
-      for (let i = 0; i < script_attrs.length; i++) {
-        toinsert[toinsert.length - 1].firstChild.setAttribute(script_attrs[i].name, script_attrs[i].value);
-        toinsert[toinsert.length - 1].firstChild.textContent = bk_div.children[0].textContent
-      }
-      // store reference to server id on output_area
-      output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
-    }
-  }
-
-  function register_renderer(events, OutputArea) {
-
-    function append_mime(data, metadata, element) {
-      // create a DOM node to render to
-      const toinsert = this.create_output_subarea(
-        metadata,
-        CLASS_NAME,
-        EXEC_MIME_TYPE
-      );
-      this.keyboard_manager.register_events(toinsert);
-      // Render to node
-      const props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
-      render(props, toinsert[toinsert.length - 1]);
-      element.append(toinsert);
-      return toinsert
-    }
-
-    /* Handle when an output is cleared or removed */
-    events.on('clear_output.CodeCell', handleClearOutput);
-    events.on('delete.Cell', handleClearOutput);
-
-    /* Handle when a new output is added */
-    events.on('output_added.OutputArea', handleAddOutput);
-
-    /**
-     * Register the mime type and append_mime function with output_area
-     */
-    OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
-      /* Is output safe? */
-      safe: true,
-      /* Index of renderer in `output_area.display_order` */
-      index: 0
-    });
-  }
-
-  // register the mime type if in Jupyter Notebook environment and previously unregistered
-  if (root.Jupyter !== undefined) {
-    const events = require('base/js/events');
-    const OutputArea = require('notebook/js/outputarea').OutputArea;
-
-    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
-      register_renderer(events, OutputArea);
-    }
-  }
-  if (typeof (root._bokeh_timeout) === "undefined" || force === true) {
-    root._bokeh_timeout = Date.now() + 5000;
-    root._bokeh_failed_load = false;
-  }
-
-  const NB_LOAD_WARNING = {'data': {'text/html':
-     "<div style='background-color: #fdd'>\n"+
-     "<p>\n"+
-     "BokehJS does not appear to have successfully loaded. If loading BokehJS from CDN, this \n"+
-     "may be due to a slow or bad network connection. Possible fixes:\n"+
-     "</p>\n"+
-     "<ul>\n"+
-     "<li>re-rerun `output_notebook()` to attempt to load from CDN again, or</li>\n"+
-     "<li>use INLINE resources instead, as so:</li>\n"+
-     "</ul>\n"+
-     "<code>\n"+
-     "from bokeh.resources import INLINE\n"+
-     "output_notebook(resources=INLINE)\n"+
-     "</code>\n"+
-     "</div>"}};
-
-  function display_loaded(error = null) {
-    const el = document.getElementById("d516b1da-d0e5-4e9c-961b-ba837bfb2fa4");
-    if (el != null) {
-      const html = (() => {
-        if (typeof root.Bokeh === "undefined") {
-          if (error == null) {
-            return "BokehJS is loading ...";
-          } else {
-            return "BokehJS failed to load.";
-          }
-        } else {
-          const prefix = `BokehJS ${root.Bokeh.version}`;
-          if (error == null) {
-            return `${prefix} successfully loaded.`;
-          } else {
-            return `${prefix} <b>encountered errors</b> while loading and may not function as expected.`;
-          }
-        }
-      })();
-      el.innerHTML = html;
-
-      if (error != null) {
-        const wrapper = document.createElement("div");
-        wrapper.style.overflow = "auto";
-        wrapper.style.height = "5em";
-        wrapper.style.resize = "vertical";
-        const content = document.createElement("div");
-        content.style.fontFamily = "monospace";
-        content.style.whiteSpace = "pre-wrap";
-        content.style.backgroundColor = "rgb(255, 221, 221)";
-        content.textContent = error.stack ?? error.toString();
-        wrapper.append(content);
-        el.append(wrapper);
-      }
-    } else if (Date.now() < root._bokeh_timeout) {
-      setTimeout(() => display_loaded(error), 100);
-    }
-  }
-
-  function run_callbacks() {
-    try {
-      root._bokeh_onload_callbacks.forEach(function(callback) {
-        if (callback != null)
-          callback();
-      });
-    } finally {
-      delete root._bokeh_onload_callbacks
-    }
-    console.debug("Bokeh: all callbacks have finished");
-  }
-
-  function load_libs(css_urls, js_urls, callback) {
-    if (css_urls == null) css_urls = [];
-    if (js_urls == null) js_urls = [];
-
-    root._bokeh_onload_callbacks.push(callback);
-    if (root._bokeh_is_loading > 0) {
-      console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
-      return null;
-    }
-    if (js_urls == null || js_urls.length === 0) {
-      run_callbacks();
-      return null;
-    }
-    console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
-    root._bokeh_is_loading = css_urls.length + js_urls.length;
-
-    function on_load() {
-      root._bokeh_is_loading--;
-      if (root._bokeh_is_loading === 0) {
-        console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
-        run_callbacks()
-      }
-    }
-
-    function on_error(url) {
-      console.error("failed to load " + url);
-    }
-
-    for (let i = 0; i < css_urls.length; i++) {
-      const url = css_urls[i];
-      const element = document.createElement("link");
-      element.onload = on_load;
-      element.onerror = on_error.bind(null, url);
-      element.rel = "stylesheet";
-      element.type = "text/css";
-      element.href = url;
-      console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
-      document.body.appendChild(element);
-    }
-
-    for (let i = 0; i < js_urls.length; i++) {
-      const url = js_urls[i];
-      const element = document.createElement('script');
-      element.onload = on_load;
-      element.onerror = on_error.bind(null, url);
-      element.async = false;
-      element.src = url;
-      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
-      document.head.appendChild(element);
-    }
-  };
-
-  function inject_raw_css(css) {
-    const element = document.createElement("style");
-    element.appendChild(document.createTextNode(css));
-    document.body.appendChild(element);
-  }
-
-  const js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-3.4.1.min.js"];
-  const css_urls = [];
-
-  const inline_js = [    function(Bokeh) {
-      Bokeh.set_log_level("info");
-    },
-function(Bokeh) {
-    }
-  ];
-
-  function run_inline_js() {
-    if (root.Bokeh !== undefined || force === true) {
-      try {
-            for (let i = 0; i < inline_js.length; i++) {
-      inline_js[i].call(root, root.Bokeh);
-    }
-
-      } catch (error) {display_loaded(error);throw error;
-      }if (force === true) {
-        display_loaded();
-      }} else if (Date.now() < root._bokeh_timeout) {
-      setTimeout(run_inline_js, 100);
-    } else if (!root._bokeh_failed_load) {
-      console.log("Bokeh: BokehJS failed to load within specified timeout.");
-      root._bokeh_failed_load = true;
-    } else if (force !== true) {
-      const cell = $(document.getElementById("d516b1da-d0e5-4e9c-961b-ba837bfb2fa4")).parents('.cell').data().cell;
+      const cell = $(document.getElementById("a3b9719a-350d-4ef2-9d3b-5d37e6bfe6fc")).parents('.cell').data().cell;
       cell.output_area.append_execute_result(NB_LOAD_WARNING)
     }
   }
@@ -1505,7 +1514,7 @@ PnL calculation for each trade and close the trade as soon as a certain
       <td>24.571985</td>
       <td>22.147636</td>
       <td>25.048953</td>
-      <td>18.579251</td>
+      <td>18.579117</td>
       <td>27.747521</td>
       <td>20.557584</td>
       <td>19.746788</td>
@@ -1528,7 +1537,7 @@ PnL calculation for each trade and close the trade as soon as a certain
       <td>1.205543</td>
       <td>1.255842</td>
       <td>1.102266</td>
-      <td>1.41145</td>
+      <td>1.41146</td>
       <td>0.924585</td>
       <td>1.237466</td>
       <td>1.28713</td>
@@ -1551,7 +1560,7 @@ PnL calculation for each trade and close the trade as soon as a certain
       <td>2.528924</td>
       <td>2.629561</td>
       <td>2.206561</td>
-      <td>3.211712</td>
+      <td>3.211786</td>
       <td>1.821937</td>
       <td>2.569899</td>
       <td>2.736665</td>
@@ -2346,7 +2355,7 @@ Name: Win Rate [%], dtype: float64
       <td>168.066923</td>
       <td>105.912882</td>
       <td>26.223685</td>
-      <td>18.579251</td>
+      <td>18.579117</td>
       <td>-11.229906</td>
       <td>-1.849857</td>
       <td>...</td>
@@ -3042,7 +3051,7 @@ Name: Win Rate [%], dtype: float64
       <td>61.623980</td>
       <td>197.758262</td>
       <td>12.006727</td>
-      <td>12.479414</td>
+      <td>12.479442</td>
       <td>-12.352436</td>
       <td>-1.940760</td>
       <td>...</td>
@@ -3326,22 +3335,1237 @@ Name: Win Rate [%], dtype: float64
 <p>49 rows × 21 columns</p>
 </div></div></div>
 </div>
+<p>Now Executing minute level strategy on all 52 stocks.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drs_df</span><span class="p">[</span><span class="s1">&#39;Avg. Trade Duration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="mf">.05</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.95</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drs_df</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.05              12 days 00:00:00
-0.50              57 days 00:00:00
-0.95   124 days 23:59:59.999999996
-Name: Avg. Trade Duration, dtype: timedelta64[ns]
-</pre></div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>stock</th>
+      <th>Exposure Time [%]</th>
+      <th>Equity Final [$]</th>
+      <th>Equity Peak [$]</th>
+      <th>Return [%]</th>
+      <th>Buy &amp; Hold Return [%]</th>
+      <th>Return (Ann.) [%]</th>
+      <th>Volatility (Ann.) [%]</th>
+      <th>Max. Drawdown [%]</th>
+      <th>Avg. Drawdown [%]</th>
+      <th>...</th>
+      <th>Avg. Drawdown Duration</th>
+      <th># Trades</th>
+      <th>Win Rate [%]</th>
+      <th>Avg. Trade [%]</th>
+      <th>Max. Trade Duration</th>
+      <th>Avg. Trade Duration</th>
+      <th>fast_ma</th>
+      <th>slow_ma</th>
+      <th>profit_threshold</th>
+      <th>loss_threshold</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>16</th>
+      <td>GRASIM</td>
+      <td>96.719775</td>
+      <td>351033.76180</td>
+      <td>353913.70180</td>
+      <td>251.033762</td>
+      <td>213.305572</td>
+      <td>34.523583</td>
+      <td>23.313766</td>
+      <td>-20.370249</td>
+      <td>-2.212919</td>
+      <td>...</td>
+      <td>19 days</td>
+      <td>147</td>
+      <td>75.510204</td>
+      <td>6.796384</td>
+      <td>337 days</td>
+      <td>84 days</td>
+      <td>6</td>
+      <td>8</td>
+      <td>0.200000</td>
+      <td>-0.157778</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>MAHMAH</td>
+      <td>96.626054</td>
+      <td>339958.32630</td>
+      <td>343723.32630</td>
+      <td>239.958326</td>
+      <td>292.560976</td>
+      <td>33.508862</td>
+      <td>28.367965</td>
+      <td>-20.803311</td>
+      <td>-2.805563</td>
+      <td>...</td>
+      <td>23 days</td>
+      <td>176</td>
+      <td>74.431818</td>
+      <td>6.940137</td>
+      <td>343 days</td>
+      <td>93 days</td>
+      <td>9</td>
+      <td>10</td>
+      <td>0.200000</td>
+      <td>-0.178889</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>MARUTI</td>
+      <td>96.810507</td>
+      <td>315728.36130</td>
+      <td>316445.09130</td>
+      <td>215.728361</td>
+      <td>78.016923</td>
+      <td>31.231052</td>
+      <td>22.562498</td>
+      <td>-13.118961</td>
+      <td>-2.423227</td>
+      <td>...</td>
+      <td>24 days</td>
+      <td>170</td>
+      <td>70.000000</td>
+      <td>5.220510</td>
+      <td>326 days</td>
+      <td>74 days</td>
+      <td>9</td>
+      <td>10</td>
+      <td>0.157778</td>
+      <td>-0.136667</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>BAJFI</td>
+      <td>79.831144</td>
+      <td>310493.46720</td>
+      <td>344184.62920</td>
+      <td>210.493467</td>
+      <td>74.333002</td>
+      <td>30.713395</td>
+      <td>20.613808</td>
+      <td>-12.434147</td>
+      <td>-2.098147</td>
+      <td>...</td>
+      <td>19 days</td>
+      <td>90</td>
+      <td>70.000000</td>
+      <td>5.018469</td>
+      <td>208 days</td>
+      <td>46 days</td>
+      <td>14</td>
+      <td>16</td>
+      <td>0.115556</td>
+      <td>-0.157778</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>ULTCEM</td>
+      <td>96.710526</td>
+      <td>307083.90370</td>
+      <td>316304.40370</td>
+      <td>207.083904</td>
+      <td>134.011358</td>
+      <td>30.437656</td>
+      <td>23.987754</td>
+      <td>-22.234646</td>
+      <td>-2.775511</td>
+      <td>...</td>
+      <td>22 days</td>
+      <td>188</td>
+      <td>76.063830</td>
+      <td>6.011931</td>
+      <td>208 days</td>
+      <td>70 days</td>
+      <td>7</td>
+      <td>8</td>
+      <td>0.200000</td>
+      <td>-0.136667</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>LARTOU</td>
+      <td>98.031865</td>
+      <td>299988.18840</td>
+      <td>312953.40700</td>
+      <td>199.988188</td>
+      <td>172.808989</td>
+      <td>29.622575</td>
+      <td>24.571985</td>
+      <td>-26.193525</td>
+      <td>-2.759887</td>
+      <td>...</td>
+      <td>22 days</td>
+      <td>145</td>
+      <td>75.862069</td>
+      <td>7.882396</td>
+      <td>266 days</td>
+      <td>99 days</td>
+      <td>3</td>
+      <td>8</td>
+      <td>0.200000</td>
+      <td>-0.178889</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>BHAAIR</td>
+      <td>97.656982</td>
+      <td>282660.72380</td>
+      <td>285317.62380</td>
+      <td>182.660724</td>
+      <td>192.846987</td>
+      <td>27.813922</td>
+      <td>22.147636</td>
+      <td>-15.876013</td>
+      <td>-2.111294</td>
+      <td>...</td>
+      <td>21 days</td>
+      <td>106</td>
+      <td>71.698113</td>
+      <td>7.666849</td>
+      <td>329 days</td>
+      <td>116 days</td>
+      <td>6</td>
+      <td>10</td>
+      <td>0.200000</td>
+      <td>-0.178889</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>TITIND</td>
+      <td>96.525822</td>
+      <td>280219.09810</td>
+      <td>298096.23370</td>
+      <td>180.219098</td>
+      <td>208.547969</td>
+      <td>27.610611</td>
+      <td>25.048953</td>
+      <td>-27.994236</td>
+      <td>-3.072359</td>
+      <td>...</td>
+      <td>28 days</td>
+      <td>142</td>
+      <td>61.267606</td>
+      <td>4.123258</td>
+      <td>288 days</td>
+      <td>86 days</td>
+      <td>11</td>
+      <td>12</td>
+      <td>0.200000</td>
+      <td>-0.200000</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>ICIBAN</td>
+      <td>92.877226</td>
+      <td>268066.92250</td>
+      <td>271057.02130</td>
+      <td>168.066923</td>
+      <td>105.912882</td>
+      <td>26.223685</td>
+      <td>18.579117</td>
+      <td>-11.229906</td>
+      <td>-1.849857</td>
+      <td>...</td>
+      <td>22 days</td>
+      <td>134</td>
+      <td>67.910448</td>
+      <td>4.632727</td>
+      <td>227 days</td>
+      <td>53 days</td>
+      <td>6</td>
+      <td>8</td>
+      <td>0.157778</td>
+      <td>-0.136667</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>UNIP</td>
+      <td>95.774648</td>
+      <td>262513.67690</td>
+      <td>277416.79690</td>
+      <td>162.513677</td>
+      <td>-13.274488</td>
+      <td>25.654953</td>
+      <td>27.747521</td>
+      <td>-23.893161</td>
+      <td>-4.083335</td>
+      <td>...</td>
+      <td>33 days</td>
+      <td>177</td>
+      <td>65.536723</td>
+      <td>4.520337</td>
+      <td>345 days</td>
+      <td>93 days</td>
+      <td>7</td>
+      <td>8</td>
+      <td>0.200000</td>
+      <td>-0.200000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>APOHOS</td>
+      <td>86.610487</td>
+      <td>261319.15770</td>
+      <td>265279.15770</td>
+      <td>161.319158</td>
+      <td>329.120842</td>
+      <td>25.439313</td>
+      <td>20.557584</td>
+      <td>-15.489302</td>
+      <td>-2.432210</td>
+      <td>...</td>
+      <td>26 days</td>
+      <td>125</td>
+      <td>67.200000</td>
+      <td>4.595588</td>
+      <td>246 days</td>
+      <td>45 days</td>
+      <td>10</td>
+      <td>12</td>
+      <td>0.200000</td>
+      <td>-0.052222</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>SUNPHA</td>
+      <td>94.189316</td>
+      <td>260884.89220</td>
+      <td>261312.89220</td>
+      <td>160.884892</td>
+      <td>241.935484</td>
+      <td>25.416687</td>
+      <td>19.746788</td>
+      <td>-14.517353</td>
+      <td>-2.005412</td>
+      <td>...</td>
+      <td>20 days</td>
+      <td>74</td>
+      <td>74.324324</td>
+      <td>7.903041</td>
+      <td>237 days</td>
+      <td>95 days</td>
+      <td>8</td>
+      <td>14</td>
+      <td>0.178889</td>
+      <td>-0.200000</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>SBILIF</td>
+      <td>94.189316</td>
+      <td>255562.77420</td>
+      <td>268109.22410</td>
+      <td>155.562774</td>
+      <td>48.129165</td>
+      <td>24.807657</td>
+      <td>21.301487</td>
+      <td>-13.436207</td>
+      <td>-2.726640</td>
+      <td>...</td>
+      <td>24 days</td>
+      <td>173</td>
+      <td>64.739884</td>
+      <td>3.628985</td>
+      <td>167 days</td>
+      <td>56 days</td>
+      <td>13</td>
+      <td>14</td>
+      <td>0.115556</td>
+      <td>-0.115556</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>AXIBAN</td>
+      <td>94.564199</td>
+      <td>245206.01330</td>
+      <td>252159.22120</td>
+      <td>145.206013</td>
+      <td>51.886792</td>
+      <td>23.594168</td>
+      <td>23.624807</td>
+      <td>-21.395871</td>
+      <td>-2.859322</td>
+      <td>...</td>
+      <td>29 days</td>
+      <td>120</td>
+      <td>65.000000</td>
+      <td>4.876916</td>
+      <td>440 days</td>
+      <td>113 days</td>
+      <td>7</td>
+      <td>10</td>
+      <td>0.200000</td>
+      <td>-0.200000</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>BAAUTO</td>
+      <td>89.971884</td>
+      <td>242183.28610</td>
+      <td>254688.95090</td>
+      <td>142.183286</td>
+      <td>184.777502</td>
+      <td>23.232627</td>
+      <td>18.034354</td>
+      <td>-9.031458</td>
+      <td>-1.984479</td>
+      <td>...</td>
+      <td>20 days</td>
+      <td>126</td>
+      <td>69.047619</td>
+      <td>4.134790</td>
+      <td>155 days</td>
+      <td>47 days</td>
+      <td>10</td>
+      <td>12</td>
+      <td>0.115556</td>
+      <td>-0.136667</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>BAFINS</td>
+      <td>89.493433</td>
+      <td>238107.81370</td>
+      <td>257147.90140</td>
+      <td>138.107814</td>
+      <td>-82.313944</td>
+      <td>22.763268</td>
+      <td>27.520569</td>
+      <td>-41.839350</td>
+      <td>-3.030714</td>
+      <td>...</td>
+      <td>32 days</td>
+      <td>92</td>
+      <td>52.173913</td>
+      <td>3.027165</td>
+      <td>267 days</td>
+      <td>61 days</td>
+      <td>9</td>
+      <td>12</td>
+      <td>0.200000</td>
+      <td>-0.178889</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>HCLTEC</td>
+      <td>81.911903</td>
+      <td>236425.79040</td>
+      <td>238666.39040</td>
+      <td>136.425790</td>
+      <td>158.058419</td>
+      <td>22.534343</td>
+      <td>14.589914</td>
+      <td>-8.469600</td>
+      <td>-1.721796</td>
+      <td>...</td>
+      <td>22 days</td>
+      <td>37</td>
+      <td>75.675676</td>
+      <td>9.822959</td>
+      <td>253 days</td>
+      <td>89 days</td>
+      <td>11</td>
+      <td>24</td>
+      <td>0.200000</td>
+      <td>-0.073333</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>NESIND</td>
+      <td>75.257732</td>
+      <td>236174.46310</td>
+      <td>241625.46310</td>
+      <td>136.174463</td>
+      <td>-82.421398</td>
+      <td>22.503567</td>
+      <td>46.993858</td>
+      <td>-12.498695</td>
+      <td>-1.720416</td>
+      <td>...</td>
+      <td>27 days</td>
+      <td>53</td>
+      <td>67.924528</td>
+      <td>5.384383</td>
+      <td>165 days</td>
+      <td>56 days</td>
+      <td>3</td>
+      <td>28</td>
+      <td>0.073333</td>
+      <td>-0.200000</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>RELIND</td>
+      <td>97.844424</td>
+      <td>235785.36910</td>
+      <td>241693.20590</td>
+      <td>135.785369</td>
+      <td>89.954427</td>
+      <td>22.455871</td>
+      <td>25.350155</td>
+      <td>-20.045909</td>
+      <td>-3.001828</td>
+      <td>...</td>
+      <td>32 days</td>
+      <td>143</td>
+      <td>64.335664</td>
+      <td>5.797886</td>
+      <td>573 days</td>
+      <td>192 days</td>
+      <td>5</td>
+      <td>8</td>
+      <td>0.200000</td>
+      <td>-0.200000</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>EICMOT</td>
+      <td>98.031865</td>
+      <td>226209.12714</td>
+      <td>226209.12714</td>
+      <td>126.209127</td>
+      <td>116.482791</td>
+      <td>21.262593</td>
+      <td>27.536745</td>
+      <td>-21.452816</td>
+      <td>-4.005791</td>
+      <td>...</td>
+      <td>39 days</td>
+      <td>171</td>
+      <td>57.894737</td>
+      <td>4.270459</td>
+      <td>227 days</td>
+      <td>80 days</td>
+      <td>9</td>
+      <td>10</td>
+      <td>0.200000</td>
+      <td>-0.178889</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>INDBA</td>
+      <td>90.440487</td>
+      <td>223964.64830</td>
+      <td>247615.92590</td>
+      <td>123.964648</td>
+      <td>-2.102681</td>
+      <td>20.977347</td>
+      <td>29.431081</td>
+      <td>-25.329718</td>
+      <td>-3.578711</td>
+      <td>...</td>
+      <td>39 days</td>
+      <td>122</td>
+      <td>68.032787</td>
+      <td>4.957899</td>
+      <td>234 days</td>
+      <td>81 days</td>
+      <td>12</td>
+      <td>14</td>
+      <td>0.200000</td>
+      <td>-0.200000</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>HINLEV</td>
+      <td>96.626054</td>
+      <td>217354.23220</td>
+      <td>220282.82370</td>
+      <td>117.354232</td>
+      <td>15.662526</td>
+      <td>20.124358</td>
+      <td>18.006847</td>
+      <td>-12.187184</td>
+      <td>-2.366151</td>
+      <td>...</td>
+      <td>27 days</td>
+      <td>120</td>
+      <td>78.333333</td>
+      <td>5.615658</td>
+      <td>531 days</td>
+      <td>135 days</td>
+      <td>7</td>
+      <td>10</td>
+      <td>0.136667</td>
+      <td>-0.157778</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>HERHON</td>
+      <td>92.970947</td>
+      <td>217256.59230</td>
+      <td>224286.59230</td>
+      <td>117.256592</td>
+      <td>84.706969</td>
+      <td>20.111611</td>
+      <td>18.579236</td>
+      <td>-19.045757</td>
+      <td>-3.190069</td>
+      <td>...</td>
+      <td>31 days</td>
+      <td>117</td>
+      <td>66.666667</td>
+      <td>3.602247</td>
+      <td>356 days</td>
+      <td>80 days</td>
+      <td>9</td>
+      <td>12</td>
+      <td>0.136667</td>
+      <td>-0.200000</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>ADAENT</td>
+      <td>57.958801</td>
+      <td>207132.71440</td>
+      <td>213282.34430</td>
+      <td>107.132714</td>
+      <td>1394.168467</td>
+      <td>18.746407</td>
+      <td>15.421113</td>
+      <td>-12.727030</td>
+      <td>-2.288406</td>
+      <td>...</td>
+      <td>36 days</td>
+      <td>101</td>
+      <td>53.465347</td>
+      <td>1.887846</td>
+      <td>58 days</td>
+      <td>12 days</td>
+      <td>3</td>
+      <td>10</td>
+      <td>0.073333</td>
+      <td>-0.031111</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>JSWSTE</td>
+      <td>89.409560</td>
+      <td>205990.12270</td>
+      <td>206454.01890</td>
+      <td>105.990123</td>
+      <td>231.778104</td>
+      <td>18.610476</td>
+      <td>25.579286</td>
+      <td>-24.139118</td>
+      <td>-3.528290</td>
+      <td>...</td>
+      <td>34 days</td>
+      <td>133</td>
+      <td>66.165414</td>
+      <td>4.307701</td>
+      <td>340 days</td>
+      <td>97 days</td>
+      <td>6</td>
+      <td>8</td>
+      <td>0.200000</td>
+      <td>-0.157778</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>BRIIND</td>
+      <td>95.590994</td>
+      <td>202254.05790</td>
+      <td>207767.15790</td>
+      <td>102.254058</td>
+      <td>58.899698</td>
+      <td>18.117275</td>
+      <td>16.125926</td>
+      <td>-14.850612</td>
+      <td>-1.699188</td>
+      <td>...</td>
+      <td>27 days</td>
+      <td>121</td>
+      <td>55.371901</td>
+      <td>3.254459</td>
+      <td>296 days</td>
+      <td>68 days</td>
+      <td>12</td>
+      <td>14</td>
+      <td>0.157778</td>
+      <td>-0.115556</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>LTINFO</td>
+      <td>71.696345</td>
+      <td>196334.48050</td>
+      <td>196785.58050</td>
+      <td>96.334481</td>
+      <td>155.475056</td>
+      <td>17.273211</td>
+      <td>15.457956</td>
+      <td>-11.741587</td>
+      <td>-2.172566</td>
+      <td>...</td>
+      <td>30 days</td>
+      <td>44</td>
+      <td>65.909091</td>
+      <td>5.450763</td>
+      <td>235 days</td>
+      <td>57 days</td>
+      <td>10</td>
+      <td>22</td>
+      <td>0.200000</td>
+      <td>-0.073333</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>TCS</td>
+      <td>96.719775</td>
+      <td>195855.33930</td>
+      <td>254555.92240</td>
+      <td>95.855339</td>
+      <td>74.965925</td>
+      <td>17.205555</td>
+      <td>21.331478</td>
+      <td>-30.212225</td>
+      <td>-2.664446</td>
+      <td>...</td>
+      <td>27 days</td>
+      <td>117</td>
+      <td>72.649573</td>
+      <td>3.842022</td>
+      <td>552 days</td>
+      <td>129 days</td>
+      <td>9</td>
+      <td>10</td>
+      <td>0.178889</td>
+      <td>-0.178889</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ADAPOR</td>
+      <td>82.022472</td>
+      <td>195768.71920</td>
+      <td>206118.56920</td>
+      <td>95.768719</td>
+      <td>248.638743</td>
+      <td>17.175902</td>
+      <td>23.935222</td>
+      <td>-29.087898</td>
+      <td>-2.913807</td>
+      <td>...</td>
+      <td>39 days</td>
+      <td>143</td>
+      <td>59.440559</td>
+      <td>3.377024</td>
+      <td>182 days</td>
+      <td>41 days</td>
+      <td>11</td>
+      <td>12</td>
+      <td>0.200000</td>
+      <td>-0.073333</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>INFTEC</td>
+      <td>88.566073</td>
+      <td>192934.05020</td>
+      <td>198029.75020</td>
+      <td>92.934050</td>
+      <td>92.982692</td>
+      <td>16.790303</td>
+      <td>16.473148</td>
+      <td>-12.407667</td>
+      <td>-2.423084</td>
+      <td>...</td>
+      <td>37 days</td>
+      <td>90</td>
+      <td>60.000000</td>
+      <td>4.517500</td>
+      <td>207 days</td>
+      <td>51 days</td>
+      <td>13</td>
+      <td>16</td>
+      <td>0.200000</td>
+      <td>-0.073333</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>CIPLA</td>
+      <td>89.222118</td>
+      <td>187706.28650</td>
+      <td>211897.75650</td>
+      <td>87.706286</td>
+      <td>197.673430</td>
+      <td>16.035048</td>
+      <td>16.243865</td>
+      <td>-13.033934</td>
+      <td>-1.831738</td>
+      <td>...</td>
+      <td>25 days</td>
+      <td>61</td>
+      <td>65.573770</td>
+      <td>4.003106</td>
+      <td>290 days</td>
+      <td>88 days</td>
+      <td>13</td>
+      <td>18</td>
+      <td>0.157778</td>
+      <td>-0.136667</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ASIPAI</td>
+      <td>92.509363</td>
+      <td>185387.51050</td>
+      <td>190829.12550</td>
+      <td>85.387511</td>
+      <td>63.362857</td>
+      <td>15.679111</td>
+      <td>16.476164</td>
+      <td>-19.402911</td>
+      <td>-2.245322</td>
+      <td>...</td>
+      <td>31 days</td>
+      <td>109</td>
+      <td>52.293578</td>
+      <td>2.056429</td>
+      <td>141 days</td>
+      <td>44 days</td>
+      <td>5</td>
+      <td>10</td>
+      <td>0.094444</td>
+      <td>-0.200000</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>TATGLO</td>
+      <td>85.473290</td>
+      <td>184756.21050</td>
+      <td>190126.92650</td>
+      <td>84.756210</td>
+      <td>247.218730</td>
+      <td>15.601734</td>
+      <td>12.629439</td>
+      <td>-8.728511</td>
+      <td>-1.989707</td>
+      <td>...</td>
+      <td>30 days</td>
+      <td>112</td>
+      <td>52.678571</td>
+      <td>3.101622</td>
+      <td>124 days</td>
+      <td>30 days</td>
+      <td>12</td>
+      <td>14</td>
+      <td>0.200000</td>
+      <td>-0.031111</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>STABAN</td>
+      <td>89.315839</td>
+      <td>184641.78670</td>
+      <td>186384.78060</td>
+      <td>84.641787</td>
+      <td>143.113772</td>
+      <td>15.584821</td>
+      <td>16.112946</td>
+      <td>-13.511125</td>
+      <td>-2.575684</td>
+      <td>...</td>
+      <td>38 days</td>
+      <td>116</td>
+      <td>66.379310</td>
+      <td>4.935850</td>
+      <td>297 days</td>
+      <td>76 days</td>
+      <td>13</td>
+      <td>14</td>
+      <td>0.178889</td>
+      <td>-0.178889</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>KOTMAH</td>
+      <td>92.783505</td>
+      <td>183898.99840</td>
+      <td>183898.99840</td>
+      <td>83.898998</td>
+      <td>-0.799035</td>
+      <td>15.474834</td>
+      <td>20.522651</td>
+      <td>-14.883240</td>
+      <td>-2.720861</td>
+      <td>...</td>
+      <td>33 days</td>
+      <td>188</td>
+      <td>60.638298</td>
+      <td>1.135271</td>
+      <td>218 days</td>
+      <td>67 days</td>
+      <td>9</td>
+      <td>10</td>
+      <td>0.073333</td>
+      <td>-0.178889</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>TECMAH</td>
+      <td>89.971884</td>
+      <td>177300.59010</td>
+      <td>206802.66130</td>
+      <td>77.300590</td>
+      <td>53.645161</td>
+      <td>14.482584</td>
+      <td>21.644697</td>
+      <td>-17.264379</td>
+      <td>-2.792066</td>
+      <td>...</td>
+      <td>34 days</td>
+      <td>207</td>
+      <td>56.521739</td>
+      <td>2.909263</td>
+      <td>278 days</td>
+      <td>56 days</td>
+      <td>7</td>
+      <td>8</td>
+      <td>0.178889</td>
+      <td>-0.052222</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>DRREDD</td>
+      <td>51.265230</td>
+      <td>171083.98890</td>
+      <td>171083.98890</td>
+      <td>71.083989</td>
+      <td>116.487703</td>
+      <td>13.521599</td>
+      <td>9.763677</td>
+      <td>-7.803166</td>
+      <td>-1.141735</td>
+      <td>...</td>
+      <td>29 days</td>
+      <td>75</td>
+      <td>61.333333</td>
+      <td>1.524948</td>
+      <td>74 days</td>
+      <td>19 days</td>
+      <td>3</td>
+      <td>22</td>
+      <td>0.031111</td>
+      <td>-0.115556</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>HINDAL</td>
+      <td>73.102156</td>
+      <td>161623.97960</td>
+      <td>168560.12960</td>
+      <td>61.623980</td>
+      <td>197.758262</td>
+      <td>12.006727</td>
+      <td>12.479442</td>
+      <td>-12.352436</td>
+      <td>-1.940760</td>
+      <td>...</td>
+      <td>32 days</td>
+      <td>95</td>
+      <td>49.473684</td>
+      <td>2.885144</td>
+      <td>69 days</td>
+      <td>20 days</td>
+      <td>4</td>
+      <td>8</td>
+      <td>0.200000</td>
+      <td>-0.073333</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>HDFSTA</td>
+      <td>93.158388</td>
+      <td>160568.60800</td>
+      <td>167015.68300</td>
+      <td>60.568608</td>
+      <td>-5.898654</td>
+      <td>11.833559</td>
+      <td>20.302274</td>
+      <td>-24.678488</td>
+      <td>-2.804721</td>
+      <td>...</td>
+      <td>34 days</td>
+      <td>87</td>
+      <td>63.218391</td>
+      <td>3.752367</td>
+      <td>373 days</td>
+      <td>119 days</td>
+      <td>4</td>
+      <td>12</td>
+      <td>0.200000</td>
+      <td>-0.200000</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>TATMOT</td>
+      <td>68.134958</td>
+      <td>157258.33130</td>
+      <td>166175.96250</td>
+      <td>57.258331</td>
+      <td>424.614177</td>
+      <td>11.284702</td>
+      <td>11.294883</td>
+      <td>-8.545298</td>
+      <td>-2.150887</td>
+      <td>...</td>
+      <td>38 days</td>
+      <td>73</td>
+      <td>53.424658</td>
+      <td>3.329408</td>
+      <td>125 days</td>
+      <td>30 days</td>
+      <td>11</td>
+      <td>14</td>
+      <td>0.200000</td>
+      <td>-0.094444</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>WIPRO</td>
+      <td>53.521127</td>
+      <td>156516.84200</td>
+      <td>157977.07200</td>
+      <td>56.516842</td>
+      <td>83.171264</td>
+      <td>11.182641</td>
+      <td>7.591031</td>
+      <td>-4.745728</td>
+      <td>-1.175906</td>
+      <td>...</td>
+      <td>29 days</td>
+      <td>31</td>
+      <td>54.838710</td>
+      <td>5.381323</td>
+      <td>105 days</td>
+      <td>34 days</td>
+      <td>11</td>
+      <td>26</td>
+      <td>0.200000</td>
+      <td>-0.031111</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>DIVLAB</td>
+      <td>74.390244</td>
+      <td>151457.62900</td>
+      <td>152076.01250</td>
+      <td>51.457629</td>
+      <td>108.820491</td>
+      <td>10.311407</td>
+      <td>13.800020</td>
+      <td>-13.828612</td>
+      <td>-3.157335</td>
+      <td>...</td>
+      <td>78 days</td>
+      <td>103</td>
+      <td>52.427184</td>
+      <td>0.427623</td>
+      <td>119 days</td>
+      <td>26 days</td>
+      <td>9</td>
+      <td>12</td>
+      <td>0.052222</td>
+      <td>-0.094444</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>BHAPET</td>
+      <td>65.698219</td>
+      <td>150491.12900</td>
+      <td>154034.59900</td>
+      <td>50.491129</td>
+      <td>24.829016</td>
+      <td>10.134618</td>
+      <td>10.309844</td>
+      <td>-9.652703</td>
+      <td>-2.088175</td>
+      <td>...</td>
+      <td>49 days</td>
+      <td>40</td>
+      <td>55.000000</td>
+      <td>3.526317</td>
+      <td>134 days</td>
+      <td>45 days</td>
+      <td>10</td>
+      <td>24</td>
+      <td>0.178889</td>
+      <td>-0.178889</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>TATSTE</td>
+      <td>59.418932</td>
+      <td>148868.46400</td>
+      <td>161637.01350</td>
+      <td>48.868464</td>
+      <td>-65.436693</td>
+      <td>9.852991</td>
+      <td>9.477955</td>
+      <td>-10.665193</td>
+      <td>-1.467283</td>
+      <td>...</td>
+      <td>49 days</td>
+      <td>71</td>
+      <td>54.929577</td>
+      <td>1.526573</td>
+      <td>49 days</td>
+      <td>16 days</td>
+      <td>12</td>
+      <td>14</td>
+      <td>0.178889</td>
+      <td>-0.073333</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>ITC</td>
+      <td>74.108818</td>
+      <td>121009.23260</td>
+      <td>124338.08930</td>
+      <td>21.009233</td>
+      <td>83.644370</td>
+      <td>4.611182</td>
+      <td>6.506275</td>
+      <td>-14.064461</td>
+      <td>-1.945073</td>
+      <td>...</td>
+      <td>99 days</td>
+      <td>74</td>
+      <td>45.945946</td>
+      <td>1.932498</td>
+      <td>127 days</td>
+      <td>29 days</td>
+      <td>13</td>
+      <td>16</td>
+      <td>0.200000</td>
+      <td>-0.052222</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>COALIN</td>
+      <td>63.261481</td>
+      <td>119951.38320</td>
+      <td>123116.33120</td>
+      <td>19.951383</td>
+      <td>115.461465</td>
+      <td>4.390063</td>
+      <td>6.164051</td>
+      <td>-5.185983</td>
+      <td>-1.721928</td>
+      <td>...</td>
+      <td>91 days</td>
+      <td>121</td>
+      <td>47.107438</td>
+      <td>0.706254</td>
+      <td>44 days</td>
+      <td>8 days</td>
+      <td>7</td>
+      <td>8</td>
+      <td>0.200000</td>
+      <td>-0.115556</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>NTPC</td>
+      <td>44.517338</td>
+      <td>115232.78000</td>
+      <td>116827.78000</td>
+      <td>15.232780</td>
+      <td>201.467505</td>
+      <td>3.405299</td>
+      <td>2.827010</td>
+      <td>-3.238898</td>
+      <td>-0.688407</td>
+      <td>...</td>
+      <td>47 days</td>
+      <td>53</td>
+      <td>37.735849</td>
+      <td>1.681758</td>
+      <td>40 days</td>
+      <td>12 days</td>
+      <td>5</td>
+      <td>18</td>
+      <td>0.115556</td>
+      <td>-0.010000</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>ONGC</td>
+      <td>59.887535</td>
+      <td>113503.63000</td>
+      <td>114146.63000</td>
+      <td>13.503630</td>
+      <td>120.374707</td>
+      <td>3.036713</td>
+      <td>3.551963</td>
+      <td>-3.280519</td>
+      <td>-0.660907</td>
+      <td>...</td>
+      <td>50 days</td>
+      <td>47</td>
+      <td>48.936170</td>
+      <td>1.408875</td>
+      <td>73 days</td>
+      <td>19 days</td>
+      <td>14</td>
+      <td>18</td>
+      <td>0.200000</td>
+      <td>-0.052222</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>POWGRI</td>
+      <td>58.669166</td>
+      <td>110614.06000</td>
+      <td>111040.79000</td>
+      <td>10.614060</td>
+      <td>101.817428</td>
+      <td>2.411083</td>
+      <td>3.692369</td>
+      <td>-5.390339</td>
+      <td>-0.728055</td>
+      <td>...</td>
+      <td>62 days</td>
+      <td>98</td>
+      <td>45.918367</td>
+      <td>0.296214</td>
+      <td>22 days</td>
+      <td>9 days</td>
+      <td>3</td>
+      <td>8</td>
+      <td>0.052222</td>
+      <td>-0.031111</td>
+    </tr>
+  </tbody>
+</table>
+<p>49 rows × 21 columns</p>
+</div></div></div>
 </div>
-</div>
-</div>
-<p>Now Executing minute level strategy on all 52 stocks.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># run_stats = []</span>
