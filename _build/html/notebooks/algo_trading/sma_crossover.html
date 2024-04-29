@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -386,6 +386,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#backtesting-py">Backtesting.py</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
             </nav>
         </div>
@@ -424,342 +425,18 @@ check the success rate.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">backtesting</span> <span class="kn">import</span> <span class="n">set_bokeh_output</span>
-<span class="n">set_bokeh_output</span><span class="p">(</span><span class="n">notebook</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/workspace/learning_by_failure/.venv/lib/python3.11/site-packages/backtesting/_plotting.py:50: UserWarning: Jupyter Notebook detected. Setting Bokeh output to notebook. This may not work in Jupyter clients without JavaScript support (e.g. PyCharm, Spyder IDE). Reset with `backtesting.set_bokeh_output(notebook=False)`.
-  warnings.warn(&#39;Jupyter Notebook detected. &#39;
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">backtesting</span> <span class="kn">import</span> <span class="n">set_bokeh_output</span>
+<span class="n">set_bokeh_output</span><span class="p">(</span><span class="n">notebook</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="output text_html">    <style>
-        .bk-notebook-logo {
-            display: block;
-            width: 20px;
-            height: 20px;
-            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAOkSURBVDiNjZRtaJVlGMd/1/08zzln5zjP1LWcU9N0NkN8m2CYjpgQYQXqSs0I84OLIC0hkEKoPtiH3gmKoiJDU7QpLgoLjLIQCpEsNJ1vqUOdO7ppbuec5+V+rj4ctwzd8IIbbi6u+8f1539dt3A78eXC7QizUF7gyV1fD1Yqg4JWz84yffhm0qkFqBogB9rM8tZdtwVsPUhWhGcFJngGeWrPzHm5oaMmkfEg1usvLFyc8jLRqDOMru7AyC8saQr7GG7f5fvDeH7Ej8CM66nIF+8yngt6HWaKh7k49Soy9nXurCi1o3qUbS3zWfrYeQDTB/Qj6kX6Ybhw4B+bOYoLKCC9H3Nu/leUTZ1JdRWkkn2ldcCamzrcf47KKXdAJllSlxAOkRgyHsGC/zRday5Qld9DyoM4/q/rUoy/CXh3jzOu3bHUVZeU+DEn8FInkPBFlu3+nW3Nw0mk6vCDiWg8CeJaxEwuHS3+z5RgY+YBR6V1Z1nxSOfoaPa4LASWxxdNp+VWTk7+4vzaou8v8PN+xo+KY2xsw6une2frhw05CTYOmQvsEhjhWjn0bmXPjpE1+kplmmkP3suftwTubK9Vq22qKmrBhpY4jvd5afdRA3wGjFAgcnTK2s4hY0/GPNIb0nErGMCRxWOOX64Z8RAC4oCXdklmEvcL8o0BfkNK4lUg9HTl+oPlQxdNo3Mg4Nv175e/1LDGzZen30MEjRUtmXSfiTVu1kK8W4txyV6BMKlbgk3lMwYCiusNy9fVfvvwMxv8Ynl6vxoByANLTWplvuj/nF9m2+PDtt1eiHPBr1oIfhCChQMBw6Aw0UulqTKZdfVvfG7VcfIqLG9bcldL/+pdWTLxLUy8Qq38heUIjh4XlzZxzQm19lLFlr8vdQ97rjZVOLf8nclzckbcD4wxXMidpX30sFd37Fv/GtwwhzhxGVAprjbg0gCAEeIgwCZyTV2Z1REEW8O4py0wsjeloKoMr6iCY6dP92H6Vw/oTyICIthibxjm/DfN9lVz8IqtqKYLUXfoKVMVQVVJOElGjrnnUt9T9wbgp8AyYKaGlqingHZU/uG2NTZSVqwHQTWkx9hxjkpWDaCg6Ckj5qebgBVbT3V3NNXMSiWSDdGV3hrtzla7J+duwPOToIg42ChPQOQjspnSlp1V+Gjdged7+8UN5CRAV7a5EdFNwCjEaBR27b3W890TE7g24NAP/mMDXRWrGoFPQI9ls/MWO2dWFAar/xcOIImbbpA3zgAAAABJRU5ErkJggg==);
-        }
-    </style>
-    <div>
-        <a href="https://bokeh.org" target="_blank" class="bk-notebook-logo"></a>
-        <span id="ff797414-181b-414e-9159-bf16529db95f">Loading BokehJS ...</span>
-    </div>
-</div><script type="application/javascript">'use strict';
-(function(root) {
-  function now() {
-    return new Date();
-  }
-
-  const force = true;
-
-  if (typeof root._bokeh_onload_callbacks === "undefined" || force === true) {
-    root._bokeh_onload_callbacks = [];
-    root._bokeh_is_loading = undefined;
-  }
-
-const JS_MIME_TYPE = 'application/javascript';
-  const HTML_MIME_TYPE = 'text/html';
-  const EXEC_MIME_TYPE = 'application/vnd.bokehjs_exec.v0+json';
-  const CLASS_NAME = 'output_bokeh rendered_html';
-
-  /**
-   * Render data to the DOM node
-   */
-  function render(props, node) {
-    const script = document.createElement("script");
-    node.appendChild(script);
-  }
-
-  /**
-   * Handle when an output is cleared or removed
-   */
-  function handleClearOutput(event, handle) {
-    function drop(id) {
-      const view = Bokeh.index.get_by_id(id)
-      if (view != null) {
-        view.model.document.clear()
-        Bokeh.index.delete(view)
-      }
-    }
-
-    const cell = handle.cell;
-
-    const id = cell.output_area._bokeh_element_id;
-    const server_id = cell.output_area._bokeh_server_id;
-
-    // Clean up Bokeh references
-    if (id != null) {
-      drop(id)
-    }
-
-    if (server_id !== undefined) {
-      // Clean up Bokeh references
-      const cmd_clean = "from bokeh.io.state import curstate; print(curstate().uuid_to_server['" + server_id + "'].get_sessions()[0].document.roots[0]._id)";
-      cell.notebook.kernel.execute(cmd_clean, {
-        iopub: {
-          output: function(msg) {
-            const id = msg.content.text.trim()
-            drop(id)
-          }
-        }
-      });
-      // Destroy server and session
-      const cmd_destroy = "import bokeh.io.notebook as ion; ion.destroy_server('" + server_id + "')";
-      cell.notebook.kernel.execute(cmd_destroy);
-    }
-  }
-
-  /**
-   * Handle when a new output is added
-   */
-  function handleAddOutput(event, handle) {
-    const output_area = handle.output_area;
-    const output = handle.output;
-
-    // limit handleAddOutput to display_data with EXEC_MIME_TYPE content only
-    if ((output.output_type != "display_data") || (!Object.prototype.hasOwnProperty.call(output.data, EXEC_MIME_TYPE))) {
-      return
-    }
-
-    const toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
-
-    if (output.metadata[EXEC_MIME_TYPE]["id"] !== undefined) {
-      toinsert[toinsert.length - 1].firstChild.textContent = output.data[JS_MIME_TYPE];
-      // store reference to embed id on output_area
-      output_area._bokeh_element_id = output.metadata[EXEC_MIME_TYPE]["id"];
-    }
-    if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
-      const bk_div = document.createElement("div");
-      bk_div.innerHTML = output.data[HTML_MIME_TYPE];
-      const script_attrs = bk_div.children[0].attributes;
-      for (let i = 0; i < script_attrs.length; i++) {
-        toinsert[toinsert.length - 1].firstChild.setAttribute(script_attrs[i].name, script_attrs[i].value);
-        toinsert[toinsert.length - 1].firstChild.textContent = bk_div.children[0].textContent
-      }
-      // store reference to server id on output_area
-      output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
-    }
-  }
-
-  function register_renderer(events, OutputArea) {
-
-    function append_mime(data, metadata, element) {
-      // create a DOM node to render to
-      const toinsert = this.create_output_subarea(
-        metadata,
-        CLASS_NAME,
-        EXEC_MIME_TYPE
-      );
-      this.keyboard_manager.register_events(toinsert);
-      // Render to node
-      const props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
-      render(props, toinsert[toinsert.length - 1]);
-      element.append(toinsert);
-      return toinsert
-    }
-
-    /* Handle when an output is cleared or removed */
-    events.on('clear_output.CodeCell', handleClearOutput);
-    events.on('delete.Cell', handleClearOutput);
-
-    /* Handle when a new output is added */
-    events.on('output_added.OutputArea', handleAddOutput);
-
-    /**
-     * Register the mime type and append_mime function with output_area
-     */
-    OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
-      /* Is output safe? */
-      safe: true,
-      /* Index of renderer in `output_area.display_order` */
-      index: 0
-    });
-  }
-
-  // register the mime type if in Jupyter Notebook environment and previously unregistered
-  if (root.Jupyter !== undefined) {
-    const events = require('base/js/events');
-    const OutputArea = require('notebook/js/outputarea').OutputArea;
-
-    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
-      register_renderer(events, OutputArea);
-    }
-  }
-  if (typeof (root._bokeh_timeout) === "undefined" || force === true) {
-    root._bokeh_timeout = Date.now() + 5000;
-    root._bokeh_failed_load = false;
-  }
-
-  const NB_LOAD_WARNING = {'data': {'text/html':
-     "<div style='background-color: #fdd'>\n"+
-     "<p>\n"+
-     "BokehJS does not appear to have successfully loaded. If loading BokehJS from CDN, this \n"+
-     "may be due to a slow or bad network connection. Possible fixes:\n"+
-     "</p>\n"+
-     "<ul>\n"+
-     "<li>re-rerun `output_notebook()` to attempt to load from CDN again, or</li>\n"+
-     "<li>use INLINE resources instead, as so:</li>\n"+
-     "</ul>\n"+
-     "<code>\n"+
-     "from bokeh.resources import INLINE\n"+
-     "output_notebook(resources=INLINE)\n"+
-     "</code>\n"+
-     "</div>"}};
-
-  function display_loaded(error = null) {
-    const el = document.getElementById("ff797414-181b-414e-9159-bf16529db95f");
-    if (el != null) {
-      const html = (() => {
-        if (typeof root.Bokeh === "undefined") {
-          if (error == null) {
-            return "BokehJS is loading ...";
-          } else {
-            return "BokehJS failed to load.";
-          }
-        } else {
-          const prefix = `BokehJS ${root.Bokeh.version}`;
-          if (error == null) {
-            return `${prefix} successfully loaded.`;
-          } else {
-            return `${prefix} <b>encountered errors</b> while loading and may not function as expected.`;
-          }
-        }
-      })();
-      el.innerHTML = html;
-
-      if (error != null) {
-        const wrapper = document.createElement("div");
-        wrapper.style.overflow = "auto";
-        wrapper.style.height = "5em";
-        wrapper.style.resize = "vertical";
-        const content = document.createElement("div");
-        content.style.fontFamily = "monospace";
-        content.style.whiteSpace = "pre-wrap";
-        content.style.backgroundColor = "rgb(255, 221, 221)";
-        content.textContent = error.stack ?? error.toString();
-        wrapper.append(content);
-        el.append(wrapper);
-      }
-    } else if (Date.now() < root._bokeh_timeout) {
-      setTimeout(() => display_loaded(error), 100);
-    }
-  }
-
-  function run_callbacks() {
-    try {
-      root._bokeh_onload_callbacks.forEach(function(callback) {
-        if (callback != null)
-          callback();
-      });
-    } finally {
-      delete root._bokeh_onload_callbacks
-    }
-    console.debug("Bokeh: all callbacks have finished");
-  }
-
-  function load_libs(css_urls, js_urls, callback) {
-    if (css_urls == null) css_urls = [];
-    if (js_urls == null) js_urls = [];
-
-    root._bokeh_onload_callbacks.push(callback);
-    if (root._bokeh_is_loading > 0) {
-      console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
-      return null;
-    }
-    if (js_urls == null || js_urls.length === 0) {
-      run_callbacks();
-      return null;
-    }
-    console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
-    root._bokeh_is_loading = css_urls.length + js_urls.length;
-
-    function on_load() {
-      root._bokeh_is_loading--;
-      if (root._bokeh_is_loading === 0) {
-        console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
-        run_callbacks()
-      }
-    }
-
-    function on_error(url) {
-      console.error("failed to load " + url);
-    }
-
-    for (let i = 0; i < css_urls.length; i++) {
-      const url = css_urls[i];
-      const element = document.createElement("link");
-      element.onload = on_load;
-      element.onerror = on_error.bind(null, url);
-      element.rel = "stylesheet";
-      element.type = "text/css";
-      element.href = url;
-      console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
-      document.body.appendChild(element);
-    }
-
-    for (let i = 0; i < js_urls.length; i++) {
-      const url = js_urls[i];
-      const element = document.createElement('script');
-      element.onload = on_load;
-      element.onerror = on_error.bind(null, url);
-      element.async = false;
-      element.src = url;
-      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
-      document.head.appendChild(element);
-    }
-  };
-
-  function inject_raw_css(css) {
-    const element = document.createElement("style");
-    element.appendChild(document.createTextNode(css));
-    document.body.appendChild(element);
-  }
-
-  const js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-3.4.1.min.js"];
-  const css_urls = [];
-
-  const inline_js = [    function(Bokeh) {
-      Bokeh.set_log_level("info");
-    },
-function(Bokeh) {
-    }
-  ];
-
-  function run_inline_js() {
-    if (root.Bokeh !== undefined || force === true) {
-      try {
-            for (let i = 0; i < inline_js.length; i++) {
-      inline_js[i].call(root, root.Bokeh);
-    }
-
-      } catch (error) {display_loaded(error);throw error;
-      }if (force === true) {
-        display_loaded();
-      }} else if (Date.now() < root._bokeh_timeout) {
-      setTimeout(run_inline_js, 100);
-    } else if (!root._bokeh_failed_load) {
-      console.log("Bokeh: BokehJS failed to load within specified timeout.");
-      root._bokeh_failed_load = true;
-    } else if (force !== true) {
-      const cell = $(document.getElementById("ff797414-181b-414e-9159-bf16529db95f")).parents('.cell').data().cell;
-      cell.output_area.append_execute_result(NB_LOAD_WARNING)
-    }
-  }
-
-  if (root._bokeh_is_loading === 0) {
-    console.debug("Bokeh: BokehJS loaded, going straight to plotting");
-    run_inline_js();
-  } else {
-    load_libs(css_urls, js_urls, function() {
-      console.debug("Bokeh: BokehJS plotting callback run at", now());
-      run_inline_js();
-    });
-  }
-}(window));</script></div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -803,12 +480,6 @@ function(Bokeh) {
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/workspace/learning_by_failure/.venv/lib/python3.11/site-packages/backtesting/test/__init__.py:8: FutureWarning: The argument &#39;infer_datetime_format&#39; is deprecated and will be removed in a future version. A strict version of it is now the default, see https://pandas.pydata.org/pdeps/0004-consistent-to-datetime-parsing.html. You can safely remove this argument.
-  return pd.read_csv(join(dirname(__file__), filename),
-/workspace/learning_by_failure/.venv/lib/python3.11/site-packages/backtesting/test/__init__.py:8: FutureWarning: The argument &#39;infer_datetime_format&#39; is deprecated and will be removed in a future version. A strict version of it is now the default, see https://pandas.pydata.org/pdeps/0004-consistent-to-datetime-parsing.html. You can safely remove this argument.
-  return pd.read_csv(join(dirname(__file__), filename),
-</pre></div>
-</div>
 <div class="output text_html">    <style>
         .bk-notebook-logo {
             display: block;
@@ -819,7 +490,7 @@ function(Bokeh) {
     </style>
     <div>
         <a href="https://bokeh.org" target="_blank" class="bk-notebook-logo"></a>
-        <span id="f5759573-1beb-409d-a76c-b7a968640751">Loading BokehJS ...</span>
+        <span id="bec67c1f-28cb-4be1-8bd1-d7cc74f3449b">Loading BokehJS ...</span>
     </div>
 </div><script type="application/javascript">'use strict';
 (function(root) {
@@ -984,7 +655,7 @@ const JS_MIME_TYPE = 'application/javascript';
      "</div>"}};
 
   function display_loaded(error = null) {
-    const el = document.getElementById("f5759573-1beb-409d-a76c-b7a968640751");
+    const el = document.getElementById("bec67c1f-28cb-4be1-8bd1-d7cc74f3449b");
     if (el != null) {
       const html = (() => {
         if (typeof root.Bokeh === "undefined") {
@@ -1118,7 +789,7 @@ function(Bokeh) {
       console.log("Bokeh: BokehJS failed to load within specified timeout.");
       root._bokeh_failed_load = true;
     } else if (force !== true) {
-      const cell = $(document.getElementById("f5759573-1beb-409d-a76c-b7a968640751")).parents('.cell').data().cell;
+      const cell = $(document.getElementById("bec67c1f-28cb-4be1-8bd1-d7cc74f3449b")).parents('.cell').data().cell;
       cell.output_area.append_execute_result(NB_LOAD_WARNING)
     }
   }
@@ -1222,7 +893,7 @@ PnL calculation for each trade and close the trade as soon as a certain
     <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">])</span>
 
     <span class="n">bt</span> <span class="o">=</span> <span class="n">Backtest</span><span class="p">(</span>
-        <span class="n">data</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">year</span><span class="o">&lt;</span><span class="mi">2024</span><span class="p">],</span>
         <span class="n">SmaCross</span><span class="p">,</span>
         <span class="n">cash</span><span class="o">=</span><span class="n">CASH</span><span class="p">,</span>
         <span class="n">commission</span><span class="o">=</span><span class="n">COMMISSION</span>
@@ -1282,25 +953,25 @@ PnL calculation for each trade and close the trade as soon as a certain
     <tr style="text-align: right;">
       <th></th>
       <th>33</th>
-      <th>61</th>
-      <th>63</th>
       <th>15</th>
       <th>93</th>
       <th>57</th>
-      <th>17</th>
+      <th>61</th>
       <th>91</th>
-      <th>45</th>
-      <th>95</th>
-      <th>5</th>
-      <th>79</th>
-      <th>75</th>
-      <th>9</th>
+      <th>63</th>
       <th>11</th>
+      <th>95</th>
+      <th>75</th>
+      <th>17</th>
+      <th>45</th>
+      <th>5</th>
+      <th>9</th>
       <th>13</th>
+      <th>47</th>
+      <th>79</th>
+      <th>1</th>
+      <th>39</th>
       <th>35</th>
-      <th>65</th>
-      <th>73</th>
-      <th>31</th>
     </tr>
   </thead>
   <tbody>
@@ -1308,14 +979,14 @@ PnL calculation for each trade and close the trade as soon as a certain
       <th>Start</th>
       <td>2020-01-03 00:00:00</td>
       <td>2020-01-03 00:00:00</td>
-      <td>2020-01-03 00:00:00</td>
-      <td>2020-01-03 00:00:00</td>
       <td>2020-01-06 00:00:00</td>
       <td>2020-01-03 00:00:00</td>
       <td>2020-01-03 00:00:00</td>
       <td>2020-01-06 00:00:00</td>
       <td>2020-01-03 00:00:00</td>
+      <td>2020-01-03 00:00:00</td>
       <td>2020-01-06 00:00:00</td>
+      <td>2020-01-03 00:00:00</td>
       <td>2020-01-03 00:00:00</td>
       <td>2020-01-03 00:00:00</td>
       <td>2020-01-03 00:00:00</td>
@@ -1329,624 +1000,624 @@ PnL calculation for each trade and close the trade as soon as a certain
     </tr>
     <tr>
       <th>End</th>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
-      <td>2024-04-25 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
+      <td>2023-12-29 00:00:00</td>
     </tr>
     <tr>
       <th>Duration</th>
-      <td>1574 days 00:00:00</td>
-      <td>1574 days 00:00:00</td>
-      <td>1574 days 00:00:00</td>
-      <td>1574 days 00:00:00</td>
-      <td>1571 days 00:00:00</td>
-      <td>1574 days 00:00:00</td>
-      <td>1574 days 00:00:00</td>
-      <td>1571 days 00:00:00</td>
-      <td>1574 days 00:00:00</td>
-      <td>1571 days 00:00:00</td>
-      <td>1574 days 00:00:00</td>
-      <td>1574 days 00:00:00</td>
-      <td>1574 days 00:00:00</td>
-      <td>1574 days 00:00:00</td>
-      <td>1574 days 00:00:00</td>
-      <td>1574 days 00:00:00</td>
-      <td>1574 days 00:00:00</td>
-      <td>1574 days 00:00:00</td>
-      <td>1574 days 00:00:00</td>
-      <td>1574 days 00:00:00</td>
+      <td>1456 days 00:00:00</td>
+      <td>1456 days 00:00:00</td>
+      <td>1453 days 00:00:00</td>
+      <td>1456 days 00:00:00</td>
+      <td>1456 days 00:00:00</td>
+      <td>1453 days 00:00:00</td>
+      <td>1456 days 00:00:00</td>
+      <td>1456 days 00:00:00</td>
+      <td>1453 days 00:00:00</td>
+      <td>1456 days 00:00:00</td>
+      <td>1456 days 00:00:00</td>
+      <td>1456 days 00:00:00</td>
+      <td>1456 days 00:00:00</td>
+      <td>1456 days 00:00:00</td>
+      <td>1456 days 00:00:00</td>
+      <td>1456 days 00:00:00</td>
+      <td>1456 days 00:00:00</td>
+      <td>1456 days 00:00:00</td>
+      <td>1456 days 00:00:00</td>
+      <td>1456 days 00:00:00</td>
     </tr>
     <tr>
       <th>Exposure Time [%]</th>
-      <td>96.719775</td>
-      <td>96.626054</td>
-      <td>96.810507</td>
-      <td>79.831144</td>
-      <td>96.710526</td>
-      <td>98.031865</td>
-      <td>97.656982</td>
-      <td>96.525822</td>
-      <td>92.877226</td>
-      <td>95.774648</td>
-      <td>86.610487</td>
-      <td>94.189316</td>
-      <td>94.189316</td>
-      <td>94.564199</td>
-      <td>89.971884</td>
-      <td>89.493433</td>
-      <td>81.911903</td>
-      <td>75.257732</td>
-      <td>97.844424</td>
-      <td>98.031865</td>
+      <td>96.45749</td>
+      <td>78.216819</td>
+      <td>96.446701</td>
+      <td>97.874494</td>
+      <td>96.558704</td>
+      <td>96.247465</td>
+      <td>96.555218</td>
+      <td>91.194332</td>
+      <td>95.436105</td>
+      <td>93.724696</td>
+      <td>92.813765</td>
+      <td>92.307692</td>
+      <td>86.046512</td>
+      <td>94.129555</td>
+      <td>88.753799</td>
+      <td>89.676113</td>
+      <td>96.761134</td>
+      <td>66.329626</td>
+      <td>93.218623</td>
+      <td>87.854251</td>
     </tr>
     <tr>
       <th>Equity Final [$]</th>
-      <td>351033.7618</td>
-      <td>339958.3263</td>
-      <td>315728.3613</td>
-      <td>310493.4672</td>
-      <td>307083.9037</td>
-      <td>299988.1884</td>
-      <td>282660.7238</td>
-      <td>280219.0981</td>
-      <td>268066.9225</td>
-      <td>262513.6769</td>
-      <td>261319.1577</td>
-      <td>260884.8922</td>
-      <td>255562.7742</td>
-      <td>245206.0133</td>
-      <td>242183.2861</td>
-      <td>238107.8137</td>
-      <td>236425.7904</td>
-      <td>236174.4631</td>
-      <td>235785.3691</td>
-      <td>226209.12714</td>
+      <td>323887.9802</td>
+      <td>313535.458</td>
+      <td>299609.8877</td>
+      <td>299224.8658</td>
+      <td>293760.9305</td>
+      <td>289943.5638</td>
+      <td>264551.3151</td>
+      <td>254688.9509</td>
+      <td>251429.6269</td>
+      <td>250851.3227</td>
+      <td>249296.326</td>
+      <td>247509.4912</td>
+      <td>245991.9076</td>
+      <td>245748.8212</td>
+      <td>244751.8532</td>
+      <td>237115.0259</td>
+      <td>235339.1258</td>
+      <td>232395.1984</td>
+      <td>221085.1461</td>
+      <td>217018.722</td>
     </tr>
     <tr>
       <th>Equity Peak [$]</th>
-      <td>353913.7018</td>
-      <td>343723.3263</td>
-      <td>316445.0913</td>
-      <td>344184.6292</td>
-      <td>316304.4037</td>
-      <td>312953.407</td>
-      <td>285317.6238</td>
-      <td>298096.2337</td>
-      <td>271057.0213</td>
-      <td>277416.7969</td>
-      <td>265279.1577</td>
-      <td>261312.8922</td>
-      <td>268109.2241</td>
-      <td>252159.2212</td>
+      <td>326202.749</td>
+      <td>321513.1888</td>
+      <td>299609.8877</td>
+      <td>299681.2658</td>
+      <td>294562.1505</td>
+      <td>290280.7376</td>
+      <td>274104.7725</td>
       <td>254688.9509</td>
-      <td>257147.9014</td>
-      <td>238666.3904</td>
-      <td>241625.4631</td>
-      <td>241693.2059</td>
-      <td>226209.12714</td>
+      <td>264884.6969</td>
+      <td>255195.6227</td>
+      <td>251539.7822</td>
+      <td>254341.3412</td>
+      <td>246483.3876</td>
+      <td>251504.8212</td>
+      <td>251340.4532</td>
+      <td>237115.0259</td>
+      <td>235445.5258</td>
+      <td>233847.0184</td>
+      <td>221085.1461</td>
+      <td>218521.222</td>
     </tr>
     <tr>
       <th>Return [%]</th>
-      <td>251.033762</td>
-      <td>239.958326</td>
-      <td>215.728361</td>
-      <td>210.493467</td>
-      <td>207.083904</td>
-      <td>199.988188</td>
-      <td>182.660724</td>
-      <td>180.219098</td>
-      <td>168.066923</td>
-      <td>162.513677</td>
-      <td>161.319158</td>
-      <td>160.884892</td>
-      <td>155.562774</td>
-      <td>145.206013</td>
-      <td>142.183286</td>
-      <td>138.107814</td>
-      <td>136.42579</td>
-      <td>136.174463</td>
-      <td>135.785369</td>
-      <td>126.209127</td>
+      <td>223.88798</td>
+      <td>213.535458</td>
+      <td>199.609888</td>
+      <td>199.224866</td>
+      <td>193.760931</td>
+      <td>189.943564</td>
+      <td>164.551315</td>
+      <td>154.688951</td>
+      <td>151.429627</td>
+      <td>150.851323</td>
+      <td>149.296326</td>
+      <td>147.509491</td>
+      <td>145.991908</td>
+      <td>145.748821</td>
+      <td>144.751853</td>
+      <td>137.115026</td>
+      <td>135.339126</td>
+      <td>132.395198</td>
+      <td>121.085146</td>
+      <td>117.018722</td>
     </tr>
     <tr>
       <th>Buy &amp; Hold Return [%]</th>
-      <td>213.305572</td>
-      <td>292.560976</td>
-      <td>78.016923</td>
-      <td>74.333002</td>
-      <td>134.011358</td>
-      <td>172.808989</td>
-      <td>192.846987</td>
-      <td>208.547969</td>
-      <td>105.912882</td>
-      <td>-13.274488</td>
-      <td>329.120842</td>
-      <td>241.935484</td>
-      <td>48.129165</td>
-      <td>51.886792</td>
-      <td>184.777502</td>
-      <td>-82.313944</td>
-      <td>158.058419</td>
-      <td>-82.421398</td>
-      <td>89.954427</td>
-      <td>116.482791</td>
+      <td>181.902307</td>
+      <td>74.836465</td>
+      <td>152.778615</td>
+      <td>163.670412</td>
+      <td>224.390244</td>
+      <td>218.573898</td>
+      <td>42.087623</td>
+      <td>122.497716</td>
+      <td>0.745565</td>
+      <td>46.806766</td>
+      <td>125.30898</td>
+      <td>85.060241</td>
+      <td>285.129209</td>
+      <td>48.261456</td>
+      <td>-81.950385</td>
+      <td>4.375409</td>
+      <td>184.243176</td>
+      <td>1267.434605</td>
+      <td>70.171405</td>
+      <td>152.319588</td>
     </tr>
     <tr>
       <th>Return (Ann.) [%]</th>
-      <td>34.523583</td>
-      <td>33.508862</td>
-      <td>31.231052</td>
-      <td>30.713395</td>
-      <td>30.437656</td>
-      <td>29.622575</td>
-      <td>27.813922</td>
-      <td>27.610611</td>
-      <td>26.223685</td>
-      <td>25.654953</td>
-      <td>25.439313</td>
-      <td>25.416687</td>
-      <td>24.807657</td>
-      <td>23.594168</td>
-      <td>23.232627</td>
-      <td>22.763268</td>
-      <td>22.534343</td>
-      <td>22.503567</td>
-      <td>22.455871</td>
-      <td>21.262593</td>
+      <td>34.952731</td>
+      <td>33.878701</td>
+      <td>32.410054</td>
+      <td>32.253848</td>
+      <td>31.633643</td>
+      <td>31.267494</td>
+      <td>28.196118</td>
+      <td>26.92794</td>
+      <td>26.572009</td>
+      <td>26.437365</td>
+      <td>26.236993</td>
+      <td>26.005594</td>
+      <td>25.778882</td>
+      <td>25.776363</td>
+      <td>25.675085</td>
+      <td>24.63423</td>
+      <td>24.395473</td>
+      <td>23.969747</td>
+      <td>22.428806</td>
+      <td>21.850474</td>
     </tr>
     <tr>
       <th>Volatility (Ann.) [%]</th>
-      <td>23.313766</td>
-      <td>28.367965</td>
-      <td>22.562498</td>
-      <td>20.613808</td>
-      <td>23.987754</td>
-      <td>24.571985</td>
-      <td>22.147636</td>
-      <td>25.048953</td>
-      <td>18.579117</td>
-      <td>27.747521</td>
-      <td>20.557584</td>
-      <td>19.746788</td>
-      <td>21.301487</td>
-      <td>23.624807</td>
-      <td>18.034354</td>
-      <td>27.520569</td>
-      <td>14.589914</td>
-      <td>46.993858</td>
-      <td>25.350155</td>
-      <td>27.536745</td>
+      <td>23.046562</td>
+      <td>20.855573</td>
+      <td>24.748891</td>
+      <td>25.44124</td>
+      <td>25.729616</td>
+      <td>26.224624</td>
+      <td>21.963264</td>
+      <td>19.013161</td>
+      <td>28.732169</td>
+      <td>21.736342</td>
+      <td>18.533412</td>
+      <td>18.379002</td>
+      <td>22.729167</td>
+      <td>23.643842</td>
+      <td>31.270721</td>
+      <td>30.717393</td>
+      <td>19.924262</td>
+      <td>20.536432</td>
+      <td>19.059653</td>
+      <td>17.64846</td>
     </tr>
     <tr>
       <th>Sharpe Ratio</th>
-      <td>1.480824</td>
-      <td>1.181222</td>
-      <td>1.384202</td>
-      <td>1.489943</td>
-      <td>1.268883</td>
-      <td>1.205543</td>
-      <td>1.255842</td>
-      <td>1.102266</td>
-      <td>1.41146</td>
-      <td>0.924585</td>
-      <td>1.237466</td>
-      <td>1.28713</td>
-      <td>1.164597</td>
-      <td>0.998703</td>
-      <td>1.288243</td>
-      <td>0.827137</td>
-      <td>1.544515</td>
-      <td>0.478862</td>
-      <td>0.885828</td>
-      <td>0.772153</td>
+      <td>1.516614</td>
+      <td>1.624444</td>
+      <td>1.309556</td>
+      <td>1.267778</td>
+      <td>1.229464</td>
+      <td>1.192295</td>
+      <td>1.283785</td>
+      <td>1.416279</td>
+      <td>0.924817</td>
+      <td>1.216275</td>
+      <td>1.415659</td>
+      <td>1.414962</td>
+      <td>1.134176</td>
+      <td>1.090194</td>
+      <td>0.821058</td>
+      <td>0.801964</td>
+      <td>1.22441</td>
+      <td>1.167182</td>
+      <td>1.176769</td>
+      <td>1.238095</td>
     </tr>
     <tr>
       <th>Sortino Ratio</th>
-      <td>3.318245</td>
-      <td>2.636345</td>
-      <td>3.150378</td>
-      <td>3.320838</td>
-      <td>2.68005</td>
-      <td>2.528924</td>
-      <td>2.629561</td>
-      <td>2.206561</td>
-      <td>3.211786</td>
-      <td>1.821937</td>
-      <td>2.569899</td>
-      <td>2.736665</td>
-      <td>2.405995</td>
-      <td>1.936881</td>
-      <td>2.50083</td>
-      <td>1.786238</td>
-      <td>3.143087</td>
-      <td>3.916972</td>
-      <td>1.679994</td>
-      <td>1.472779</td>
+      <td>3.404179</td>
+      <td>3.776202</td>
+      <td>2.828502</td>
+      <td>2.725987</td>
+      <td>2.741966</td>
+      <td>2.4733</td>
+      <td>2.817962</td>
+      <td>2.848515</td>
+      <td>1.835441</td>
+      <td>2.550983</td>
+      <td>2.983935</td>
+      <td>3.300792</td>
+      <td>2.456923</td>
+      <td>2.158871</td>
+      <td>2.325201</td>
+      <td>1.530971</td>
+      <td>2.561002</td>
+      <td>2.647167</td>
+      <td>2.285466</td>
+      <td>2.66425</td>
     </tr>
     <tr>
       <th>Calmar Ratio</th>
-      <td>1.694804</td>
-      <td>1.610747</td>
-      <td>2.380604</td>
-      <td>2.470085</td>
-      <td>1.368929</td>
-      <td>1.130912</td>
-      <td>1.751946</td>
-      <td>0.986296</td>
-      <td>2.335165</td>
-      <td>1.073736</td>
-      <td>1.64238</td>
-      <td>1.75078</td>
-      <td>1.846329</td>
-      <td>1.102744</td>
-      <td>2.572412</td>
-      <td>0.544064</td>
-      <td>2.660615</td>
-      <td>1.800473</td>
-      <td>1.120222</td>
-      <td>0.991133</td>
+      <td>1.715872</td>
+      <td>2.72465</td>
+      <td>1.457638</td>
+      <td>1.231367</td>
+      <td>1.824567</td>
+      <td>1.116926</td>
+      <td>2.149265</td>
+      <td>2.981572</td>
+      <td>1.112118</td>
+      <td>1.967621</td>
+      <td>1.881635</td>
+      <td>2.315745</td>
+      <td>1.210794</td>
+      <td>1.204735</td>
+      <td>0.970092</td>
+      <td>0.972543</td>
+      <td>1.680435</td>
+      <td>1.673457</td>
+      <td>1.177627</td>
+      <td>1.163761</td>
     </tr>
     <tr>
       <th>Max. Drawdown [%]</th>
       <td>-20.370249</td>
-      <td>-20.803311</td>
-      <td>-13.118961</td>
       <td>-12.434147</td>
       <td>-22.234646</td>
       <td>-26.193525</td>
-      <td>-15.876013</td>
+      <td>-17.337613</td>
       <td>-27.994236</td>
-      <td>-11.229906</td>
-      <td>-23.893161</td>
-      <td>-15.489302</td>
-      <td>-14.517353</td>
-      <td>-13.436207</td>
-      <td>-21.395871</td>
+      <td>-13.118961</td>
       <td>-9.031458</td>
-      <td>-41.83935</td>
-      <td>-8.4696</td>
-      <td>-12.498695</td>
-      <td>-20.045909</td>
-      <td>-21.452816</td>
+      <td>-23.893161</td>
+      <td>-13.436207</td>
+      <td>-13.943717</td>
+      <td>-11.229906</td>
+      <td>-21.290895</td>
+      <td>-21.395871</td>
+      <td>-26.466653</td>
+      <td>-25.329718</td>
+      <td>-14.517353</td>
+      <td>-14.323491</td>
+      <td>-19.045757</td>
+      <td>-18.775737</td>
     </tr>
     <tr>
       <th>Avg. Drawdown [%]</th>
-      <td>-2.212919</td>
-      <td>-2.805563</td>
-      <td>-2.423227</td>
-      <td>-2.098147</td>
-      <td>-2.775511</td>
-      <td>-2.759887</td>
-      <td>-2.111294</td>
-      <td>-3.072359</td>
-      <td>-1.849857</td>
-      <td>-4.083335</td>
-      <td>-2.43221</td>
-      <td>-2.005412</td>
-      <td>-2.72664</td>
-      <td>-2.859322</td>
-      <td>-1.984479</td>
-      <td>-3.030714</td>
-      <td>-1.721796</td>
-      <td>-1.720416</td>
-      <td>-3.001828</td>
-      <td>-4.005791</td>
+      <td>-2.19797</td>
+      <td>-2.096592</td>
+      <td>-2.817131</td>
+      <td>-2.665659</td>
+      <td>-3.237331</td>
+      <td>-3.06526</td>
+      <td>-2.523349</td>
+      <td>-1.906631</td>
+      <td>-4.124036</td>
+      <td>-2.710786</td>
+      <td>-1.846082</td>
+      <td>-1.89117</td>
+      <td>-3.044139</td>
+      <td>-2.694728</td>
+      <td>-2.830306</td>
+      <td>-3.449002</td>
+      <td>-2.207267</td>
+      <td>-2.372624</td>
+      <td>-3.106875</td>
+      <td>-1.927735</td>
     </tr>
     <tr>
       <th>Max. Drawdown Duration</th>
       <td>448 days 00:00:00</td>
-      <td>241 days 00:00:00</td>
-      <td>273 days 00:00:00</td>
-      <td>165 days 00:00:00</td>
+      <td>135 days 00:00:00</td>
       <td>319 days 00:00:00</td>
       <td>324 days 00:00:00</td>
-      <td>200 days 00:00:00</td>
+      <td>241 days 00:00:00</td>
       <td>469 days 00:00:00</td>
-      <td>231 days 00:00:00</td>
-      <td>281 days 00:00:00</td>
-      <td>309 days 00:00:00</td>
-      <td>149 days 00:00:00</td>
-      <td>158 days 00:00:00</td>
-      <td>358 days 00:00:00</td>
+      <td>273 days 00:00:00</td>
       <td>150 days 00:00:00</td>
-      <td>603 days 00:00:00</td>
-      <td>168 days 00:00:00</td>
-      <td>196 days 00:00:00</td>
-      <td>403 days 00:00:00</td>
-      <td>382 days 00:00:00</td>
+      <td>281 days 00:00:00</td>
+      <td>158 days 00:00:00</td>
+      <td>185 days 00:00:00</td>
+      <td>231 days 00:00:00</td>
+      <td>434 days 00:00:00</td>
+      <td>358 days 00:00:00</td>
+      <td>556 days 00:00:00</td>
+      <td>551 days 00:00:00</td>
+      <td>149 days 00:00:00</td>
+      <td>301 days 00:00:00</td>
+      <td>322 days 00:00:00</td>
+      <td>724 days 00:00:00</td>
     </tr>
     <tr>
       <th>Avg. Drawdown Duration</th>
       <td>19 days 00:00:00</td>
-      <td>23 days 00:00:00</td>
-      <td>24 days 00:00:00</td>
       <td>19 days 00:00:00</td>
-      <td>22 days 00:00:00</td>
-      <td>22 days 00:00:00</td>
-      <td>21 days 00:00:00</td>
-      <td>28 days 00:00:00</td>
-      <td>22 days 00:00:00</td>
-      <td>33 days 00:00:00</td>
-      <td>26 days 00:00:00</td>
-      <td>20 days 00:00:00</td>
-      <td>24 days 00:00:00</td>
-      <td>29 days 00:00:00</td>
-      <td>20 days 00:00:00</td>
-      <td>32 days 00:00:00</td>
+      <td>23 days 00:00:00</td>
       <td>22 days 00:00:00</td>
       <td>27 days 00:00:00</td>
+      <td>27 days 00:00:00</td>
+      <td>25 days 00:00:00</td>
+      <td>19 days 00:00:00</td>
       <td>32 days 00:00:00</td>
+      <td>23 days 00:00:00</td>
+      <td>20 days 00:00:00</td>
+      <td>23 days 00:00:00</td>
+      <td>34 days 00:00:00</td>
+      <td>27 days 00:00:00</td>
+      <td>30 days 00:00:00</td>
       <td>39 days 00:00:00</td>
+      <td>22 days 00:00:00</td>
+      <td>35 days 00:00:00</td>
+      <td>30 days 00:00:00</td>
+      <td>32 days 00:00:00</td>
     </tr>
     <tr>
       <th># Trades</th>
-      <td>147</td>
-      <td>176</td>
-      <td>170</td>
-      <td>90</td>
-      <td>188</td>
-      <td>145</td>
-      <td>106</td>
-      <td>142</td>
-      <td>134</td>
-      <td>177</td>
-      <td>125</td>
-      <td>74</td>
-      <td>173</td>
+      <td>131</td>
+      <td>80</td>
+      <td>167</td>
+      <td>135</td>
+      <td>132</td>
+      <td>133</td>
+      <td>151</td>
+      <td>119</td>
+      <td>161</td>
+      <td>152</td>
+      <td>66</td>
       <td>120</td>
-      <td>126</td>
-      <td>92</td>
-      <td>37</td>
-      <td>53</td>
-      <td>143</td>
-      <td>171</td>
+      <td>107</td>
+      <td>110</td>
+      <td>97</td>
+      <td>113</td>
+      <td>71</td>
+      <td>156</td>
+      <td>110</td>
+      <td>137</td>
     </tr>
     <tr>
       <th>Win Rate [%]</th>
-      <td>75.510204</td>
-      <td>74.431818</td>
-      <td>70.0</td>
-      <td>70.0</td>
-      <td>76.06383</td>
-      <td>75.862069</td>
-      <td>71.698113</td>
-      <td>61.267606</td>
-      <td>67.910448</td>
-      <td>65.536723</td>
-      <td>67.2</td>
-      <td>74.324324</td>
-      <td>64.739884</td>
-      <td>65.0</td>
-      <td>69.047619</td>
-      <td>52.173913</td>
-      <td>75.675676</td>
-      <td>67.924528</td>
-      <td>64.335664</td>
-      <td>57.894737</td>
+      <td>73.282443</td>
+      <td>72.5</td>
+      <td>77.245509</td>
+      <td>78.518519</td>
+      <td>68.939394</td>
+      <td>63.157895</td>
+      <td>66.225166</td>
+      <td>71.428571</td>
+      <td>66.459627</td>
+      <td>67.105263</td>
+      <td>78.787879</td>
+      <td>65.833333</td>
+      <td>67.28972</td>
+      <td>63.636364</td>
+      <td>62.886598</td>
+      <td>69.911504</td>
+      <td>74.647887</td>
+      <td>56.410256</td>
+      <td>68.181818</td>
+      <td>57.664234</td>
     </tr>
     <tr>
       <th>Best Trade [%]</th>
       <td>30.943227</td>
-      <td>26.134509</td>
-      <td>24.379307</td>
       <td>22.819217</td>
       <td>25.199743</td>
       <td>27.554031</td>
-      <td>25.895269</td>
+      <td>38.409313</td>
       <td>29.361206</td>
-      <td>26.898247</td>
-      <td>29.999791</td>
-      <td>33.714173</td>
-      <td>28.695381</td>
-      <td>24.793153</td>
-      <td>30.942012</td>
+      <td>24.379307</td>
       <td>23.541135</td>
-      <td>89.982791</td>
-      <td>26.518616</td>
-      <td>88.835645</td>
-      <td>27.370114</td>
-      <td>27.057407</td>
+      <td>29.999791</td>
+      <td>24.793153</td>
+      <td>28.193719</td>
+      <td>26.898247</td>
+      <td>30.784095</td>
+      <td>30.942012</td>
+      <td>88.72857</td>
+      <td>35.30631</td>
+      <td>28.695381</td>
+      <td>25.969887</td>
+      <td>17.822527</td>
+      <td>26.497383</td>
     </tr>
     <tr>
       <th>Worst Trade [%]</th>
       <td>-17.330005</td>
-      <td>-21.356811</td>
-      <td>-15.273068</td>
       <td>-18.987205</td>
       <td>-14.965246</td>
       <td>-19.155732</td>
-      <td>-15.356435</td>
+      <td>-15.935739</td>
       <td>-24.418455</td>
-      <td>-14.558598</td>
+      <td>-15.273068</td>
+      <td>-13.733955</td>
       <td>-20.969567</td>
-      <td>-14.309013</td>
-      <td>-7.462108</td>
       <td>-13.269062</td>
+      <td>-11.582736</td>
+      <td>-14.558598</td>
+      <td>-12.07792</td>
       <td>-20.178393</td>
-      <td>-14.263035</td>
-      <td>-21.952238</td>
-      <td>-8.57812</td>
-      <td>-11.123001</td>
-      <td>-19.784195</td>
-      <td>-19.028672</td>
+      <td>-16.866795</td>
+      <td>-28.023037</td>
+      <td>-7.462108</td>
+      <td>-12.589857</td>
+      <td>-21.622723</td>
+      <td>-7.731706</td>
     </tr>
     <tr>
       <th>Avg. Trade [%]</th>
-      <td>6.796384</td>
-      <td>6.940137</td>
-      <td>5.22051</td>
-      <td>5.018469</td>
-      <td>6.011931</td>
-      <td>7.882396</td>
-      <td>7.666849</td>
-      <td>4.123258</td>
-      <td>4.632727</td>
-      <td>4.520337</td>
-      <td>4.595588</td>
-      <td>7.903041</td>
-      <td>3.628985</td>
-      <td>4.876916</td>
-      <td>4.13479</td>
-      <td>3.027165</td>
-      <td>9.822959</td>
-      <td>5.384383</td>
-      <td>5.797886</td>
-      <td>4.270459</td>
+      <td>6.964447</td>
+      <td>5.538885</td>
+      <td>6.591439</td>
+      <td>8.521757</td>
+      <td>6.228533</td>
+      <td>4.437322</td>
+      <td>4.61778</td>
+      <td>4.670631</td>
+      <td>4.847332</td>
+      <td>4.067912</td>
+      <td>8.426372</td>
+      <td>4.114482</td>
+      <td>5.163588</td>
+      <td>5.089554</td>
+      <td>3.964293</td>
+      <td>5.918841</td>
+      <td>7.576968</td>
+      <td>1.849731</td>
+      <td>4.092776</td>
+      <td>4.154845</td>
     </tr>
     <tr>
       <th>Max. Trade Duration</th>
       <td>337 days 00:00:00</td>
-      <td>343 days 00:00:00</td>
-      <td>326 days 00:00:00</td>
-      <td>208 days 00:00:00</td>
+      <td>148 days 00:00:00</td>
       <td>208 days 00:00:00</td>
       <td>266 days 00:00:00</td>
-      <td>329 days 00:00:00</td>
+      <td>274 days 00:00:00</td>
       <td>288 days 00:00:00</td>
-      <td>227 days 00:00:00</td>
-      <td>345 days 00:00:00</td>
-      <td>246 days 00:00:00</td>
-      <td>237 days 00:00:00</td>
-      <td>167 days 00:00:00</td>
-      <td>440 days 00:00:00</td>
+      <td>326 days 00:00:00</td>
       <td>155 days 00:00:00</td>
-      <td>267 days 00:00:00</td>
-      <td>253 days 00:00:00</td>
-      <td>165 days 00:00:00</td>
-      <td>573 days 00:00:00</td>
-      <td>227 days 00:00:00</td>
+      <td>345 days 00:00:00</td>
+      <td>167 days 00:00:00</td>
+      <td>462 days 00:00:00</td>
+      <td>166 days 00:00:00</td>
+      <td>155 days 00:00:00</td>
+      <td>440 days 00:00:00</td>
+      <td>214 days 00:00:00</td>
+      <td>234 days 00:00:00</td>
+      <td>237 days 00:00:00</td>
+      <td>42 days 00:00:00</td>
+      <td>356 days 00:00:00</td>
+      <td>182 days 00:00:00</td>
     </tr>
     <tr>
       <th>Avg. Trade Duration</th>
-      <td>84 days 00:00:00</td>
-      <td>93 days 00:00:00</td>
-      <td>74 days 00:00:00</td>
-      <td>46 days 00:00:00</td>
-      <td>70 days 00:00:00</td>
-      <td>99 days 00:00:00</td>
-      <td>116 days 00:00:00</td>
       <td>86 days 00:00:00</td>
-      <td>53 days 00:00:00</td>
-      <td>93 days 00:00:00</td>
-      <td>45 days 00:00:00</td>
-      <td>95 days 00:00:00</td>
-      <td>56 days 00:00:00</td>
-      <td>113 days 00:00:00</td>
-      <td>47 days 00:00:00</td>
-      <td>61 days 00:00:00</td>
-      <td>89 days 00:00:00</td>
-      <td>56 days 00:00:00</td>
-      <td>192 days 00:00:00</td>
-      <td>80 days 00:00:00</td>
+      <td>42 days 00:00:00</td>
+      <td>74 days 00:00:00</td>
+      <td>103 days 00:00:00</td>
+      <td>71 days 00:00:00</td>
+      <td>85 days 00:00:00</td>
+      <td>73 days 00:00:00</td>
+      <td>49 days 00:00:00</td>
+      <td>99 days 00:00:00</td>
+      <td>60 days 00:00:00</td>
+      <td>126 days 00:00:00</td>
+      <td>42 days 00:00:00</td>
+      <td>57 days 00:00:00</td>
+      <td>110 days 00:00:00</td>
+      <td>48 days 00:00:00</td>
+      <td>72 days 00:00:00</td>
+      <td>96 days 00:00:00</td>
+      <td>11 days 00:00:00</td>
+      <td>81 days 00:00:00</td>
+      <td>38 days 00:00:00</td>
     </tr>
     <tr>
       <th>Profit Factor</th>
-      <td>6.573906</td>
-      <td>5.07158</td>
-      <td>5.003938</td>
-      <td>4.448888</td>
-      <td>5.745999</td>
-      <td>8.393702</td>
-      <td>6.688814</td>
-      <td>2.489078</td>
-      <td>5.578386</td>
-      <td>3.138497</td>
-      <td>3.998681</td>
-      <td>11.241517</td>
-      <td>4.570528</td>
-      <td>3.577732</td>
-      <td>5.100732</td>
-      <td>2.123343</td>
-      <td>8.763141</td>
-      <td>5.556812</td>
-      <td>4.92205</td>
-      <td>2.785862</td>
+      <td>6.120754</td>
+      <td>5.676763</td>
+      <td>5.722173</td>
+      <td>9.143903</td>
+      <td>5.097556</td>
+      <td>2.586782</td>
+      <td>4.20639</td>
+      <td>6.880553</td>
+      <td>3.260881</td>
+      <td>4.927521</td>
+      <td>10.373883</td>
+      <td>4.714367</td>
+      <td>3.912087</td>
+      <td>3.50509</td>
+      <td>2.817715</td>
+      <td>3.880024</td>
+      <td>11.115095</td>
+      <td>2.123883</td>
+      <td>3.475692</td>
+      <td>3.940158</td>
     </tr>
     <tr>
       <th>Expectancy [%]</th>
-      <td>7.259608</td>
-      <td>7.588774</td>
-      <td>5.609995</td>
-      <td>5.378047</td>
-      <td>6.498046</td>
-      <td>8.369172</td>
-      <td>8.223166</td>
-      <td>4.994382</td>
-      <td>4.945816</td>
-      <td>5.143329</td>
-      <td>5.075206</td>
-      <td>8.295682</td>
-      <td>3.87198</td>
-      <td>5.49204</td>
-      <td>4.379134</td>
-      <td>4.222977</td>
-      <td>10.414286</td>
-      <td>6.421292</td>
-      <td>6.335629</td>
-      <td>4.962938</td>
+      <td>7.476193</td>
+      <td>5.875261</td>
+      <td>7.124009</td>
+      <td>9.015446</td>
+      <td>6.804792</td>
+      <td>5.341364</td>
+      <td>5.017209</td>
+      <td>4.891935</td>
+      <td>5.503114</td>
+      <td>4.328989</td>
+      <td>8.860553</td>
+      <td>4.433923</td>
+      <td>5.729088</td>
+      <td>5.754725</td>
+      <td>4.831628</td>
+      <td>6.700415</td>
+      <td>7.943494</td>
+      <td>2.10513</td>
+      <td>4.520277</td>
+      <td>4.552849</td>
     </tr>
     <tr>
       <th>SQN</th>
-      <td>5.655649</td>
-      <td>6.369417</td>
-      <td>6.900011</td>
-      <td>4.821684</td>
-      <td>5.556602</td>
-      <td>6.096605</td>
-      <td>5.929168</td>
-      <td>5.066278</td>
-      <td>4.968637</td>
-      <td>5.525185</td>
-      <td>3.689009</td>
-      <td>5.364182</td>
-      <td>6.186556</td>
-      <td>4.696699</td>
-      <td>5.146673</td>
-      <td>2.546962</td>
-      <td>4.026131</td>
-      <td>2.324595</td>
-      <td>5.253312</td>
-      <td>4.305431</td>
+      <td>5.168439</td>
+      <td>5.620387</td>
+      <td>5.420866</td>
+      <td>6.222859</td>
+      <td>5.440461</td>
+      <td>5.440364</td>
+      <td>5.466154</td>
+      <td>6.203302</td>
+      <td>5.286017</td>
+      <td>6.484766</td>
+      <td>5.531033</td>
+      <td>4.507487</td>
+      <td>4.056306</td>
+      <td>4.724107</td>
+      <td>2.756577</td>
+      <td>3.411925</td>
+      <td>5.486029</td>
+      <td>3.551978</td>
+      <td>4.750134</td>
+      <td>3.42451</td>
     </tr>
     <tr>
       <th>stock</th>
       <td>GRASIM</td>
-      <td>MAHMAH</td>
-      <td>MARUTI</td>
       <td>BAJFI</td>
       <td>ULTCEM</td>
       <td>LARTOU</td>
-      <td>BHAAIR</td>
+      <td>MAHMAH</td>
       <td>TITIND</td>
-      <td>ICIBAN</td>
-      <td>UNIP</td>
-      <td>APOHOS</td>
-      <td>SUNPHA</td>
-      <td>SBILIF</td>
-      <td>AXIBAN</td>
+      <td>MARUTI</td>
       <td>BAAUTO</td>
+      <td>UNIP</td>
+      <td>SBILIF</td>
+      <td>BHAAIR</td>
+      <td>ICIBAN</td>
+      <td>APOHOS</td>
+      <td>AXIBAN</td>
       <td>BAFINS</td>
+      <td>INDBA</td>
+      <td>SUNPHA</td>
+      <td>ADAENT</td>
+      <td>HERHON</td>
       <td>HCLTEC</td>
-      <td>NESIND</td>
-      <td>RELIND</td>
-      <td>EICMOT</td>
     </tr>
     <tr>
       <th>run</th>
@@ -1974,94 +1645,94 @@ PnL calculation for each trade and close the trade as soon as a certain
     <tr>
       <th>fast_ma</th>
       <td>6</td>
-      <td>9</td>
-      <td>9</td>
       <td>14</td>
       <td>7</td>
       <td>3</td>
-      <td>6</td>
-      <td>11</td>
-      <td>6</td>
-      <td>7</td>
-      <td>10</td>
-      <td>8</td>
-      <td>13</td>
-      <td>7</td>
-      <td>10</td>
-      <td>9</td>
-      <td>11</td>
-      <td>3</td>
       <td>5</td>
+      <td>11</td>
       <td>9</td>
+      <td>10</td>
+      <td>7</td>
+      <td>13</td>
+      <td>9</td>
+      <td>6</td>
+      <td>12</td>
+      <td>7</td>
+      <td>5</td>
+      <td>12</td>
+      <td>8</td>
+      <td>7</td>
+      <td>9</td>
+      <td>13</td>
     </tr>
     <tr>
       <th>slow_ma</th>
       <td>8</td>
-      <td>10</td>
-      <td>10</td>
       <td>16</td>
       <td>8</td>
       <td>8</td>
+      <td>8</td>
+      <td>12</td>
       <td>10</td>
       <td>12</td>
       <td>8</td>
+      <td>14</td>
+      <td>16</td>
+      <td>8</td>
+      <td>14</td>
+      <td>10</td>
+      <td>10</td>
+      <td>14</td>
+      <td>14</td>
       <td>8</td>
       <td>12</td>
       <td>14</td>
-      <td>14</td>
-      <td>10</td>
-      <td>12</td>
-      <td>12</td>
-      <td>24</td>
-      <td>28</td>
-      <td>8</td>
-      <td>10</td>
     </tr>
     <tr>
       <th>profit_threshold</th>
+      <td>0.2</td>
+      <td>0.115556</td>
+      <td>0.2</td>
+      <td>0.2</td>
       <td>0.2</td>
       <td>0.2</td>
       <td>0.157778</td>
       <td>0.115556</td>
       <td>0.2</td>
-      <td>0.2</td>
-      <td>0.2</td>
+      <td>0.115556</td>
       <td>0.2</td>
       <td>0.157778</td>
       <td>0.2</td>
       <td>0.2</td>
       <td>0.178889</td>
-      <td>0.115556</td>
       <td>0.2</td>
-      <td>0.115556</td>
-      <td>0.2</td>
-      <td>0.2</td>
+      <td>0.178889</td>
       <td>0.073333</td>
-      <td>0.2</td>
+      <td>0.136667</td>
       <td>0.2</td>
     </tr>
     <tr>
       <th>loss_threshold</th>
       <td>-0.157778</td>
-      <td>-0.178889</td>
-      <td>-0.136667</td>
       <td>-0.157778</td>
       <td>-0.136667</td>
       <td>-0.178889</td>
-      <td>-0.178889</td>
-      <td>-0.2</td>
-      <td>-0.136667</td>
-      <td>-0.2</td>
-      <td>-0.052222</td>
-      <td>-0.2</td>
       <td>-0.115556</td>
       <td>-0.2</td>
       <td>-0.136667</td>
+      <td>-0.136667</td>
+      <td>-0.2</td>
+      <td>-0.115556</td>
       <td>-0.178889</td>
-      <td>-0.073333</td>
+      <td>-0.136667</td>
+      <td>-0.094444</td>
+      <td>-0.2</td>
+      <td>-0.136667</td>
       <td>-0.2</td>
       <td>-0.2</td>
-      <td>-0.178889</td>
+      <td>-0.052222</td>
+      <td>-0.2</td>
+      <td>-0.052222</td>
     </tr>
   </tbody>
 </table>
@@ -2079,7 +1750,7 @@ PnL calculation for each trade and close the trade as soon as a certain
     <span class="s1">&#39;Avg. Drawdown [%]&#39;</span><span class="p">,</span> <span class="s1">&#39;Max. Drawdown Duration&#39;</span><span class="p">,</span> <span class="s1">&#39;Avg. Drawdown Duration&#39;</span><span class="p">,</span>
     <span class="s1">&#39;# Trades&#39;</span><span class="p">,</span> <span class="s1">&#39;Win Rate [%]&#39;</span><span class="p">,</span> <span class="s1">&#39;Avg. Trade [%]&#39;</span><span class="p">,</span> <span class="s1">&#39;Max. Trade Duration&#39;</span><span class="p">,</span>
     <span class="s1">&#39;Avg. Trade Duration&#39;</span><span class="p">,</span> <span class="s1">&#39;fast_ma&#39;</span><span class="p">,</span> <span class="s1">&#39;slow_ma&#39;</span><span class="p">,</span> <span class="s1">&#39;profit_threshold&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;loss_threshold&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;loss_threshold&#39;</span><span class="p">,</span> <span class="s1">&#39;_strategy&#39;</span>
 <span class="p">]</span>
 
 <span class="n">filters</span> <span class="o">=</span> <span class="o">~</span><span class="n">daily_run_stats_df</span><span class="o">.</span><span class="n">stock</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">stocks_to_ignore</span><span class="p">)</span>
@@ -2098,7 +1769,7 @@ PnL calculation for each trade and close the trade as soon as a certain
 
 <span class="nb">print</span><span class="p">(</span><span class="n">drs_df</span><span class="p">[</span><span class="s1">&#39;Win Rate [%]&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="mf">.05</span><span class="p">,</span> <span class="mf">.25</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.75</span><span class="p">,</span> <span class="mf">.95</span><span class="p">]))</span>
 
-<span class="n">drs_df</span>
+<span class="n">drs_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;_strategy&#39;</span><span class="p">)</span>
 
 <span class="c1"># .sort_values(</span>
 <span class="c1">#     &#39;Return [%]&#39;,</span>
@@ -2109,13 +1780,13 @@ PnL calculation for each trade and close the trade as soon as a certain
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;TimedeltaArray&gt;
-[&#39;1574 days&#39;, &#39;1571 days&#39;]
+[&#39;1456 days&#39;, &#39;1453 days&#39;]
 Length: 2, dtype: timedelta64[ns]
-0.05    46.410543
-0.25    54.838710
-0.50    64.335664
-0.75    68.032787
-0.95    75.787512
+0.05    48.089664
+0.25    57.664234
+0.50    64.761905
+0.75    67.796610
+0.95    76.823496
 Name: Win Rate [%], dtype: float64
 </pre></div>
 </div>
@@ -2164,94 +1835,46 @@ Name: Win Rate [%], dtype: float64
     <tr>
       <th>16</th>
       <td>GRASIM</td>
-      <td>96.719775</td>
-      <td>351033.76180</td>
-      <td>353913.70180</td>
-      <td>251.033762</td>
-      <td>213.305572</td>
-      <td>34.523583</td>
-      <td>23.313766</td>
+      <td>96.457490</td>
+      <td>323887.98020</td>
+      <td>326202.74900</td>
+      <td>223.887980</td>
+      <td>181.902307</td>
+      <td>34.952731</td>
+      <td>23.046562</td>
       <td>-20.370249</td>
-      <td>-2.212919</td>
+      <td>-2.197970</td>
       <td>...</td>
       <td>19 days</td>
-      <td>147</td>
-      <td>75.510204</td>
-      <td>6.796384</td>
+      <td>131</td>
+      <td>73.282443</td>
+      <td>6.964447</td>
       <td>337 days</td>
-      <td>84 days</td>
+      <td>86 days</td>
       <td>6</td>
       <td>8</td>
       <td>0.200000</td>
       <td>-0.157778</td>
     </tr>
     <tr>
-      <th>30</th>
-      <td>MAHMAH</td>
-      <td>96.626054</td>
-      <td>339958.32630</td>
-      <td>343723.32630</td>
-      <td>239.958326</td>
-      <td>292.560976</td>
-      <td>33.508862</td>
-      <td>28.367965</td>
-      <td>-20.803311</td>
-      <td>-2.805563</td>
-      <td>...</td>
-      <td>23 days</td>
-      <td>176</td>
-      <td>74.431818</td>
-      <td>6.940137</td>
-      <td>343 days</td>
-      <td>93 days</td>
-      <td>9</td>
-      <td>10</td>
-      <td>0.200000</td>
-      <td>-0.178889</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>MARUTI</td>
-      <td>96.810507</td>
-      <td>315728.36130</td>
-      <td>316445.09130</td>
-      <td>215.728361</td>
-      <td>78.016923</td>
-      <td>31.231052</td>
-      <td>22.562498</td>
-      <td>-13.118961</td>
-      <td>-2.423227</td>
-      <td>...</td>
-      <td>24 days</td>
-      <td>170</td>
-      <td>70.000000</td>
-      <td>5.220510</td>
-      <td>326 days</td>
-      <td>74 days</td>
-      <td>9</td>
-      <td>10</td>
-      <td>0.157778</td>
-      <td>-0.136667</td>
-    </tr>
-    <tr>
       <th>7</th>
       <td>BAJFI</td>
-      <td>79.831144</td>
-      <td>310493.46720</td>
-      <td>344184.62920</td>
-      <td>210.493467</td>
-      <td>74.333002</td>
-      <td>30.713395</td>
-      <td>20.613808</td>
+      <td>78.216819</td>
+      <td>313535.45800</td>
+      <td>321513.18880</td>
+      <td>213.535458</td>
+      <td>74.836465</td>
+      <td>33.878701</td>
+      <td>20.855573</td>
       <td>-12.434147</td>
-      <td>-2.098147</td>
+      <td>-2.096592</td>
       <td>...</td>
       <td>19 days</td>
-      <td>90</td>
-      <td>70.000000</td>
-      <td>5.018469</td>
-      <td>208 days</td>
-      <td>46 days</td>
+      <td>80</td>
+      <td>72.500000</td>
+      <td>5.538885</td>
+      <td>148 days</td>
+      <td>42 days</td>
       <td>14</td>
       <td>16</td>
       <td>0.115556</td>
@@ -2260,22 +1883,22 @@ Name: Win Rate [%], dtype: float64
     <tr>
       <th>46</th>
       <td>ULTCEM</td>
-      <td>96.710526</td>
-      <td>307083.90370</td>
-      <td>316304.40370</td>
-      <td>207.083904</td>
-      <td>134.011358</td>
-      <td>30.437656</td>
-      <td>23.987754</td>
+      <td>96.446701</td>
+      <td>299609.88770</td>
+      <td>299609.88770</td>
+      <td>199.609888</td>
+      <td>152.778615</td>
+      <td>32.410054</td>
+      <td>24.748891</td>
       <td>-22.234646</td>
-      <td>-2.775511</td>
+      <td>-2.817131</td>
       <td>...</td>
-      <td>22 days</td>
-      <td>188</td>
-      <td>76.063830</td>
-      <td>6.011931</td>
+      <td>23 days</td>
+      <td>167</td>
+      <td>77.245509</td>
+      <td>6.591439</td>
       <td>208 days</td>
-      <td>70 days</td>
+      <td>74 days</td>
       <td>7</td>
       <td>8</td>
       <td>0.200000</td>
@@ -2284,476 +1907,500 @@ Name: Win Rate [%], dtype: float64
     <tr>
       <th>28</th>
       <td>LARTOU</td>
-      <td>98.031865</td>
-      <td>299988.18840</td>
-      <td>312953.40700</td>
-      <td>199.988188</td>
-      <td>172.808989</td>
-      <td>29.622575</td>
-      <td>24.571985</td>
+      <td>97.874494</td>
+      <td>299224.86580</td>
+      <td>299681.26580</td>
+      <td>199.224866</td>
+      <td>163.670412</td>
+      <td>32.253848</td>
+      <td>25.441240</td>
       <td>-26.193525</td>
-      <td>-2.759887</td>
+      <td>-2.665659</td>
       <td>...</td>
       <td>22 days</td>
-      <td>145</td>
-      <td>75.862069</td>
-      <td>7.882396</td>
+      <td>135</td>
+      <td>78.518519</td>
+      <td>8.521757</td>
       <td>266 days</td>
-      <td>99 days</td>
+      <td>103 days</td>
       <td>3</td>
       <td>8</td>
       <td>0.200000</td>
       <td>-0.178889</td>
     </tr>
     <tr>
-      <th>8</th>
-      <td>BHAAIR</td>
-      <td>97.656982</td>
-      <td>282660.72380</td>
-      <td>285317.62380</td>
-      <td>182.660724</td>
-      <td>192.846987</td>
-      <td>27.813922</td>
-      <td>22.147636</td>
-      <td>-15.876013</td>
-      <td>-2.111294</td>
+      <th>30</th>
+      <td>MAHMAH</td>
+      <td>96.558704</td>
+      <td>293760.93050</td>
+      <td>294562.15050</td>
+      <td>193.760931</td>
+      <td>224.390244</td>
+      <td>31.633643</td>
+      <td>25.729616</td>
+      <td>-17.337613</td>
+      <td>-3.237331</td>
       <td>...</td>
-      <td>21 days</td>
-      <td>106</td>
-      <td>71.698113</td>
-      <td>7.666849</td>
-      <td>329 days</td>
-      <td>116 days</td>
-      <td>6</td>
-      <td>10</td>
+      <td>27 days</td>
+      <td>132</td>
+      <td>68.939394</td>
+      <td>6.228533</td>
+      <td>274 days</td>
+      <td>71 days</td>
+      <td>5</td>
+      <td>8</td>
       <td>0.200000</td>
-      <td>-0.178889</td>
+      <td>-0.115556</td>
     </tr>
     <tr>
       <th>45</th>
       <td>TITIND</td>
-      <td>96.525822</td>
-      <td>280219.09810</td>
-      <td>298096.23370</td>
-      <td>180.219098</td>
-      <td>208.547969</td>
-      <td>27.610611</td>
-      <td>25.048953</td>
+      <td>96.247465</td>
+      <td>289943.56380</td>
+      <td>290280.73760</td>
+      <td>189.943564</td>
+      <td>218.573898</td>
+      <td>31.267494</td>
+      <td>26.224624</td>
       <td>-27.994236</td>
-      <td>-3.072359</td>
+      <td>-3.065260</td>
       <td>...</td>
-      <td>28 days</td>
-      <td>142</td>
-      <td>61.267606</td>
-      <td>4.123258</td>
+      <td>27 days</td>
+      <td>133</td>
+      <td>63.157895</td>
+      <td>4.437322</td>
       <td>288 days</td>
-      <td>86 days</td>
+      <td>85 days</td>
       <td>11</td>
       <td>12</td>
       <td>0.200000</td>
       <td>-0.200000</td>
     </tr>
     <tr>
-      <th>22</th>
-      <td>ICIBAN</td>
-      <td>92.877226</td>
-      <td>268066.92250</td>
-      <td>271057.02130</td>
-      <td>168.066923</td>
-      <td>105.912882</td>
-      <td>26.223685</td>
-      <td>18.579117</td>
-      <td>-11.229906</td>
-      <td>-1.849857</td>
+      <th>31</th>
+      <td>MARUTI</td>
+      <td>96.555218</td>
+      <td>264551.31510</td>
+      <td>274104.77250</td>
+      <td>164.551315</td>
+      <td>42.087623</td>
+      <td>28.196118</td>
+      <td>21.963264</td>
+      <td>-13.118961</td>
+      <td>-2.523349</td>
       <td>...</td>
-      <td>22 days</td>
-      <td>134</td>
-      <td>67.910448</td>
-      <td>4.632727</td>
-      <td>227 days</td>
-      <td>53 days</td>
-      <td>6</td>
-      <td>8</td>
+      <td>25 days</td>
+      <td>151</td>
+      <td>66.225166</td>
+      <td>4.617780</td>
+      <td>326 days</td>
+      <td>73 days</td>
+      <td>9</td>
+      <td>10</td>
       <td>0.157778</td>
+      <td>-0.136667</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>BAAUTO</td>
+      <td>91.194332</td>
+      <td>254688.95090</td>
+      <td>254688.95090</td>
+      <td>154.688951</td>
+      <td>122.497716</td>
+      <td>26.927940</td>
+      <td>19.013161</td>
+      <td>-9.031458</td>
+      <td>-1.906631</td>
+      <td>...</td>
+      <td>19 days</td>
+      <td>119</td>
+      <td>71.428571</td>
+      <td>4.670631</td>
+      <td>155 days</td>
+      <td>49 days</td>
+      <td>10</td>
+      <td>12</td>
+      <td>0.115556</td>
       <td>-0.136667</td>
     </tr>
     <tr>
       <th>47</th>
       <td>UNIP</td>
-      <td>95.774648</td>
-      <td>262513.67690</td>
-      <td>277416.79690</td>
-      <td>162.513677</td>
-      <td>-13.274488</td>
-      <td>25.654953</td>
-      <td>27.747521</td>
+      <td>95.436105</td>
+      <td>251429.62690</td>
+      <td>264884.69690</td>
+      <td>151.429627</td>
+      <td>0.745565</td>
+      <td>26.572009</td>
+      <td>28.732169</td>
       <td>-23.893161</td>
-      <td>-4.083335</td>
+      <td>-4.124036</td>
       <td>...</td>
-      <td>33 days</td>
-      <td>177</td>
-      <td>65.536723</td>
-      <td>4.520337</td>
+      <td>32 days</td>
+      <td>161</td>
+      <td>66.459627</td>
+      <td>4.847332</td>
       <td>345 days</td>
-      <td>93 days</td>
+      <td>99 days</td>
       <td>7</td>
       <td>8</td>
       <td>0.200000</td>
       <td>-0.200000</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>APOHOS</td>
-      <td>86.610487</td>
-      <td>261319.15770</td>
-      <td>265279.15770</td>
-      <td>161.319158</td>
-      <td>329.120842</td>
-      <td>25.439313</td>
-      <td>20.557584</td>
-      <td>-15.489302</td>
-      <td>-2.432210</td>
-      <td>...</td>
-      <td>26 days</td>
-      <td>125</td>
-      <td>67.200000</td>
-      <td>4.595588</td>
-      <td>246 days</td>
-      <td>45 days</td>
-      <td>10</td>
-      <td>12</td>
-      <td>0.200000</td>
-      <td>-0.052222</td>
-    </tr>
-    <tr>
-      <th>39</th>
-      <td>SUNPHA</td>
-      <td>94.189316</td>
-      <td>260884.89220</td>
-      <td>261312.89220</td>
-      <td>160.884892</td>
-      <td>241.935484</td>
-      <td>25.416687</td>
-      <td>19.746788</td>
-      <td>-14.517353</td>
-      <td>-2.005412</td>
-      <td>...</td>
-      <td>20 days</td>
-      <td>74</td>
-      <td>74.324324</td>
-      <td>7.903041</td>
-      <td>237 days</td>
-      <td>95 days</td>
-      <td>8</td>
-      <td>14</td>
-      <td>0.178889</td>
-      <td>-0.200000</td>
-    </tr>
-    <tr>
       <th>37</th>
       <td>SBILIF</td>
-      <td>94.189316</td>
-      <td>255562.77420</td>
-      <td>268109.22410</td>
-      <td>155.562774</td>
-      <td>48.129165</td>
-      <td>24.807657</td>
-      <td>21.301487</td>
+      <td>93.724696</td>
+      <td>250851.32270</td>
+      <td>255195.62270</td>
+      <td>150.851323</td>
+      <td>46.806766</td>
+      <td>26.437365</td>
+      <td>21.736342</td>
       <td>-13.436207</td>
-      <td>-2.726640</td>
+      <td>-2.710786</td>
       <td>...</td>
-      <td>24 days</td>
-      <td>173</td>
-      <td>64.739884</td>
-      <td>3.628985</td>
+      <td>23 days</td>
+      <td>152</td>
+      <td>67.105263</td>
+      <td>4.067912</td>
       <td>167 days</td>
-      <td>56 days</td>
+      <td>60 days</td>
       <td>13</td>
       <td>14</td>
       <td>0.115556</td>
       <td>-0.115556</td>
     </tr>
     <tr>
+      <th>8</th>
+      <td>BHAAIR</td>
+      <td>92.813765</td>
+      <td>249296.32600</td>
+      <td>251539.78220</td>
+      <td>149.296326</td>
+      <td>125.308980</td>
+      <td>26.236993</td>
+      <td>18.533412</td>
+      <td>-13.943717</td>
+      <td>-1.846082</td>
+      <td>...</td>
+      <td>20 days</td>
+      <td>66</td>
+      <td>78.787879</td>
+      <td>8.426372</td>
+      <td>462 days</td>
+      <td>126 days</td>
+      <td>9</td>
+      <td>16</td>
+      <td>0.200000</td>
+      <td>-0.178889</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>ICIBAN</td>
+      <td>92.307692</td>
+      <td>247509.49120</td>
+      <td>254341.34120</td>
+      <td>147.509491</td>
+      <td>85.060241</td>
+      <td>26.005594</td>
+      <td>18.379002</td>
+      <td>-11.229906</td>
+      <td>-1.891170</td>
+      <td>...</td>
+      <td>23 days</td>
+      <td>120</td>
+      <td>65.833333</td>
+      <td>4.114482</td>
+      <td>166 days</td>
+      <td>42 days</td>
+      <td>6</td>
+      <td>8</td>
+      <td>0.157778</td>
+      <td>-0.136667</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>APOHOS</td>
+      <td>86.046512</td>
+      <td>245991.90760</td>
+      <td>246483.38760</td>
+      <td>145.991908</td>
+      <td>285.129209</td>
+      <td>25.778882</td>
+      <td>22.729167</td>
+      <td>-21.290895</td>
+      <td>-3.044139</td>
+      <td>...</td>
+      <td>34 days</td>
+      <td>107</td>
+      <td>67.289720</td>
+      <td>5.163588</td>
+      <td>155 days</td>
+      <td>57 days</td>
+      <td>12</td>
+      <td>14</td>
+      <td>0.200000</td>
+      <td>-0.094444</td>
+    </tr>
+    <tr>
       <th>4</th>
       <td>AXIBAN</td>
-      <td>94.564199</td>
-      <td>245206.01330</td>
-      <td>252159.22120</td>
-      <td>145.206013</td>
-      <td>51.886792</td>
-      <td>23.594168</td>
-      <td>23.624807</td>
+      <td>94.129555</td>
+      <td>245748.82120</td>
+      <td>251504.82120</td>
+      <td>145.748821</td>
+      <td>48.261456</td>
+      <td>25.776363</td>
+      <td>23.643842</td>
       <td>-21.395871</td>
-      <td>-2.859322</td>
+      <td>-2.694728</td>
       <td>...</td>
-      <td>29 days</td>
-      <td>120</td>
-      <td>65.000000</td>
-      <td>4.876916</td>
+      <td>27 days</td>
+      <td>110</td>
+      <td>63.636364</td>
+      <td>5.089554</td>
       <td>440 days</td>
-      <td>113 days</td>
+      <td>110 days</td>
       <td>7</td>
       <td>10</td>
       <td>0.200000</td>
       <td>-0.200000</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>BAAUTO</td>
-      <td>89.971884</td>
-      <td>242183.28610</td>
-      <td>254688.95090</td>
-      <td>142.183286</td>
-      <td>184.777502</td>
-      <td>23.232627</td>
-      <td>18.034354</td>
-      <td>-9.031458</td>
-      <td>-1.984479</td>
-      <td>...</td>
-      <td>20 days</td>
-      <td>126</td>
-      <td>69.047619</td>
-      <td>4.134790</td>
-      <td>155 days</td>
-      <td>47 days</td>
-      <td>10</td>
-      <td>12</td>
-      <td>0.115556</td>
-      <td>-0.136667</td>
-    </tr>
-    <tr>
       <th>6</th>
       <td>BAFINS</td>
-      <td>89.493433</td>
-      <td>238107.81370</td>
-      <td>257147.90140</td>
-      <td>138.107814</td>
-      <td>-82.313944</td>
-      <td>22.763268</td>
-      <td>27.520569</td>
-      <td>-41.839350</td>
-      <td>-3.030714</td>
+      <td>88.753799</td>
+      <td>244751.85320</td>
+      <td>251340.45320</td>
+      <td>144.751853</td>
+      <td>-81.950385</td>
+      <td>25.675085</td>
+      <td>31.270721</td>
+      <td>-26.466653</td>
+      <td>-2.830306</td>
       <td>...</td>
-      <td>32 days</td>
-      <td>92</td>
-      <td>52.173913</td>
-      <td>3.027165</td>
-      <td>267 days</td>
-      <td>61 days</td>
-      <td>9</td>
-      <td>12</td>
-      <td>0.200000</td>
-      <td>-0.178889</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>HCLTEC</td>
-      <td>81.911903</td>
-      <td>236425.79040</td>
-      <td>238666.39040</td>
-      <td>136.425790</td>
-      <td>158.058419</td>
-      <td>22.534343</td>
-      <td>14.589914</td>
-      <td>-8.469600</td>
-      <td>-1.721796</td>
-      <td>...</td>
-      <td>22 days</td>
-      <td>37</td>
-      <td>75.675676</td>
-      <td>9.822959</td>
-      <td>253 days</td>
-      <td>89 days</td>
-      <td>11</td>
-      <td>24</td>
-      <td>0.200000</td>
-      <td>-0.073333</td>
-    </tr>
-    <tr>
-      <th>32</th>
-      <td>NESIND</td>
-      <td>75.257732</td>
-      <td>236174.46310</td>
-      <td>241625.46310</td>
-      <td>136.174463</td>
-      <td>-82.421398</td>
-      <td>22.503567</td>
-      <td>46.993858</td>
-      <td>-12.498695</td>
-      <td>-1.720416</td>
-      <td>...</td>
-      <td>27 days</td>
-      <td>53</td>
-      <td>67.924528</td>
-      <td>5.384383</td>
-      <td>165 days</td>
-      <td>56 days</td>
-      <td>3</td>
-      <td>28</td>
-      <td>0.073333</td>
-      <td>-0.200000</td>
-    </tr>
-    <tr>
-      <th>36</th>
-      <td>RELIND</td>
-      <td>97.844424</td>
-      <td>235785.36910</td>
-      <td>241693.20590</td>
-      <td>135.785369</td>
-      <td>89.954427</td>
-      <td>22.455871</td>
-      <td>25.350155</td>
-      <td>-20.045909</td>
-      <td>-3.001828</td>
-      <td>...</td>
-      <td>32 days</td>
-      <td>143</td>
-      <td>64.335664</td>
-      <td>5.797886</td>
-      <td>573 days</td>
-      <td>192 days</td>
+      <td>30 days</td>
+      <td>97</td>
+      <td>62.886598</td>
+      <td>3.964293</td>
+      <td>214 days</td>
+      <td>48 days</td>
       <td>5</td>
-      <td>8</td>
-      <td>0.200000</td>
-      <td>-0.200000</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>EICMOT</td>
-      <td>98.031865</td>
-      <td>226209.12714</td>
-      <td>226209.12714</td>
-      <td>126.209127</td>
-      <td>116.482791</td>
-      <td>21.262593</td>
-      <td>27.536745</td>
-      <td>-21.452816</td>
-      <td>-4.005791</td>
-      <td>...</td>
-      <td>39 days</td>
-      <td>171</td>
-      <td>57.894737</td>
-      <td>4.270459</td>
-      <td>227 days</td>
-      <td>80 days</td>
-      <td>9</td>
       <td>10</td>
-      <td>0.200000</td>
-      <td>-0.178889</td>
+      <td>0.178889</td>
+      <td>-0.136667</td>
     </tr>
     <tr>
       <th>23</th>
       <td>INDBA</td>
-      <td>90.440487</td>
-      <td>223964.64830</td>
-      <td>247615.92590</td>
-      <td>123.964648</td>
-      <td>-2.102681</td>
-      <td>20.977347</td>
-      <td>29.431081</td>
+      <td>89.676113</td>
+      <td>237115.02590</td>
+      <td>237115.02590</td>
+      <td>137.115026</td>
+      <td>4.375409</td>
+      <td>24.634230</td>
+      <td>30.717393</td>
       <td>-25.329718</td>
-      <td>-3.578711</td>
+      <td>-3.449002</td>
       <td>...</td>
       <td>39 days</td>
-      <td>122</td>
-      <td>68.032787</td>
-      <td>4.957899</td>
+      <td>113</td>
+      <td>69.911504</td>
+      <td>5.918841</td>
       <td>234 days</td>
-      <td>81 days</td>
+      <td>72 days</td>
       <td>12</td>
       <td>14</td>
       <td>0.200000</td>
       <td>-0.200000</td>
     </tr>
     <tr>
-      <th>21</th>
-      <td>HINLEV</td>
-      <td>96.626054</td>
-      <td>217354.23220</td>
-      <td>220282.82370</td>
-      <td>117.354232</td>
-      <td>15.662526</td>
-      <td>20.124358</td>
-      <td>18.006847</td>
-      <td>-12.187184</td>
-      <td>-2.366151</td>
+      <th>39</th>
+      <td>SUNPHA</td>
+      <td>96.761134</td>
+      <td>235339.12580</td>
+      <td>235445.52580</td>
+      <td>135.339126</td>
+      <td>184.243176</td>
+      <td>24.395473</td>
+      <td>19.924262</td>
+      <td>-14.517353</td>
+      <td>-2.207267</td>
       <td>...</td>
-      <td>27 days</td>
-      <td>120</td>
-      <td>78.333333</td>
-      <td>5.615658</td>
-      <td>531 days</td>
-      <td>135 days</td>
+      <td>22 days</td>
+      <td>71</td>
+      <td>74.647887</td>
+      <td>7.576968</td>
+      <td>237 days</td>
+      <td>96 days</td>
+      <td>8</td>
+      <td>14</td>
+      <td>0.178889</td>
+      <td>-0.200000</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>ADAENT</td>
+      <td>66.329626</td>
+      <td>232395.19840</td>
+      <td>233847.01840</td>
+      <td>132.395198</td>
+      <td>1267.434605</td>
+      <td>23.969747</td>
+      <td>20.536432</td>
+      <td>-14.323491</td>
+      <td>-2.372624</td>
+      <td>...</td>
+      <td>35 days</td>
+      <td>156</td>
+      <td>56.410256</td>
+      <td>1.849731</td>
+      <td>42 days</td>
+      <td>11 days</td>
       <td>7</td>
-      <td>10</td>
-      <td>0.136667</td>
-      <td>-0.157778</td>
+      <td>8</td>
+      <td>0.073333</td>
+      <td>-0.052222</td>
     </tr>
     <tr>
       <th>19</th>
       <td>HERHON</td>
-      <td>92.970947</td>
-      <td>217256.59230</td>
-      <td>224286.59230</td>
-      <td>117.256592</td>
-      <td>84.706969</td>
-      <td>20.111611</td>
-      <td>18.579236</td>
+      <td>93.218623</td>
+      <td>221085.14610</td>
+      <td>221085.14610</td>
+      <td>121.085146</td>
+      <td>70.171405</td>
+      <td>22.428806</td>
+      <td>19.059653</td>
       <td>-19.045757</td>
-      <td>-3.190069</td>
+      <td>-3.106875</td>
       <td>...</td>
-      <td>31 days</td>
-      <td>117</td>
-      <td>66.666667</td>
-      <td>3.602247</td>
+      <td>30 days</td>
+      <td>110</td>
+      <td>68.181818</td>
+      <td>4.092776</td>
       <td>356 days</td>
-      <td>80 days</td>
+      <td>81 days</td>
       <td>9</td>
       <td>12</td>
       <td>0.136667</td>
       <td>-0.200000</td>
     </tr>
     <tr>
-      <th>0</th>
-      <td>ADAENT</td>
-      <td>57.958801</td>
-      <td>207132.71440</td>
-      <td>213282.34430</td>
-      <td>107.132714</td>
-      <td>1394.168467</td>
-      <td>18.746407</td>
-      <td>15.421113</td>
-      <td>-12.727030</td>
-      <td>-2.288406</td>
+      <th>17</th>
+      <td>HCLTEC</td>
+      <td>87.854251</td>
+      <td>217018.72200</td>
+      <td>218521.22200</td>
+      <td>117.018722</td>
+      <td>152.319588</td>
+      <td>21.850474</td>
+      <td>17.648460</td>
+      <td>-18.775737</td>
+      <td>-1.927735</td>
       <td>...</td>
-      <td>36 days</td>
-      <td>101</td>
-      <td>53.465347</td>
-      <td>1.887846</td>
-      <td>58 days</td>
-      <td>12 days</td>
-      <td>3</td>
-      <td>10</td>
-      <td>0.073333</td>
-      <td>-0.031111</td>
+      <td>32 days</td>
+      <td>137</td>
+      <td>57.664234</td>
+      <td>4.154845</td>
+      <td>182 days</td>
+      <td>38 days</td>
+      <td>13</td>
+      <td>14</td>
+      <td>0.200000</td>
+      <td>-0.052222</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>RELIND</td>
+      <td>97.672065</td>
+      <td>215221.41770</td>
+      <td>224188.92590</td>
+      <td>115.221418</td>
+      <td>68.294271</td>
+      <td>21.592284</td>
+      <td>25.477648</td>
+      <td>-20.045909</td>
+      <td>-3.197224</td>
+      <td>...</td>
+      <td>35 days</td>
+      <td>130</td>
+      <td>65.384615</td>
+      <td>5.377014</td>
+      <td>573 days</td>
+      <td>200 days</td>
+      <td>5</td>
+      <td>8</td>
+      <td>0.200000</td>
+      <td>-0.200000</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>HINLEV</td>
+      <td>96.356275</td>
+      <td>205741.46850</td>
+      <td>215286.69440</td>
+      <td>105.741468</td>
+      <td>37.556936</td>
+      <td>20.203218</td>
+      <td>19.912294</td>
+      <td>-16.993132</td>
+      <td>-2.758939</td>
+      <td>...</td>
+      <td>30 days</td>
+      <td>207</td>
+      <td>55.555556</td>
+      <td>2.105925</td>
+      <td>480 days</td>
+      <td>117 days</td>
+      <td>7</td>
+      <td>8</td>
+      <td>0.115556</td>
+      <td>-0.200000</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>LTINFO</td>
+      <td>82.894737</td>
+      <td>204682.51140</td>
+      <td>204873.01140</td>
+      <td>104.682511</td>
+      <td>245.720504</td>
+      <td>20.045112</td>
+      <td>24.740521</td>
+      <td>-33.163099</td>
+      <td>-2.927871</td>
+      <td>...</td>
+      <td>32 days</td>
+      <td>118</td>
+      <td>67.796610</td>
+      <td>4.482635</td>
+      <td>259 days</td>
+      <td>69 days</td>
+      <td>13</td>
+      <td>14</td>
+      <td>0.200000</td>
+      <td>-0.136667</td>
     </tr>
     <tr>
       <th>26</th>
       <td>JSWSTE</td>
-      <td>89.409560</td>
-      <td>205990.12270</td>
-      <td>206454.01890</td>
-      <td>105.990123</td>
-      <td>231.778104</td>
-      <td>18.610476</td>
-      <td>25.579286</td>
+      <td>88.562753</td>
+      <td>203780.58820</td>
+      <td>203990.34420</td>
+      <td>103.780588</td>
+      <td>222.740632</td>
+      <td>19.909969</td>
+      <td>25.762960</td>
       <td>-24.139118</td>
-      <td>-3.528290</td>
+      <td>-3.368534</td>
       <td>...</td>
-      <td>34 days</td>
-      <td>133</td>
-      <td>66.165414</td>
-      <td>4.307701</td>
+      <td>32 days</td>
+      <td>117</td>
+      <td>67.521368</td>
+      <td>4.990634</td>
       <td>340 days</td>
       <td>97 days</td>
       <td>6</td>
@@ -2764,308 +2411,308 @@ Name: Win Rate [%], dtype: float64
     <tr>
       <th>10</th>
       <td>BRIIND</td>
-      <td>95.590994</td>
-      <td>202254.05790</td>
-      <td>207767.15790</td>
-      <td>102.254058</td>
-      <td>58.899698</td>
-      <td>18.117275</td>
-      <td>16.125926</td>
-      <td>-14.850612</td>
-      <td>-1.699188</td>
+      <td>93.009119</td>
+      <td>202971.76790</td>
+      <td>202971.76790</td>
+      <td>102.971768</td>
+      <td>75.522545</td>
+      <td>19.810313</td>
+      <td>16.946215</td>
+      <td>-15.293477</td>
+      <td>-1.805081</td>
       <td>...</td>
       <td>27 days</td>
-      <td>121</td>
-      <td>55.371901</td>
-      <td>3.254459</td>
-      <td>296 days</td>
-      <td>68 days</td>
-      <td>12</td>
-      <td>14</td>
-      <td>0.157778</td>
-      <td>-0.115556</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>LTINFO</td>
-      <td>71.696345</td>
-      <td>196334.48050</td>
-      <td>196785.58050</td>
-      <td>96.334481</td>
-      <td>155.475056</td>
-      <td>17.273211</td>
-      <td>15.457956</td>
-      <td>-11.741587</td>
-      <td>-2.172566</td>
-      <td>...</td>
-      <td>30 days</td>
-      <td>44</td>
-      <td>65.909091</td>
-      <td>5.450763</td>
-      <td>235 days</td>
-      <td>57 days</td>
+      <td>105</td>
+      <td>65.714286</td>
+      <td>2.501511</td>
+      <td>222 days</td>
+      <td>63 days</td>
+      <td>7</td>
       <td>10</td>
-      <td>22</td>
-      <td>0.200000</td>
-      <td>-0.073333</td>
-    </tr>
-    <tr>
-      <th>43</th>
-      <td>TCS</td>
-      <td>96.719775</td>
-      <td>195855.33930</td>
-      <td>254555.92240</td>
-      <td>95.855339</td>
-      <td>74.965925</td>
-      <td>17.205555</td>
-      <td>21.331478</td>
-      <td>-30.212225</td>
-      <td>-2.664446</td>
-      <td>...</td>
-      <td>27 days</td>
-      <td>117</td>
-      <td>72.649573</td>
-      <td>3.842022</td>
-      <td>552 days</td>
-      <td>129 days</td>
-      <td>9</td>
-      <td>10</td>
-      <td>0.178889</td>
-      <td>-0.178889</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>ADAPOR</td>
-      <td>82.022472</td>
-      <td>195768.71920</td>
-      <td>206118.56920</td>
-      <td>95.768719</td>
-      <td>248.638743</td>
-      <td>17.175902</td>
-      <td>23.935222</td>
-      <td>-29.087898</td>
-      <td>-2.913807</td>
-      <td>...</td>
-      <td>39 days</td>
-      <td>143</td>
-      <td>59.440559</td>
-      <td>3.377024</td>
-      <td>182 days</td>
-      <td>41 days</td>
-      <td>11</td>
-      <td>12</td>
-      <td>0.200000</td>
-      <td>-0.073333</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>INFTEC</td>
-      <td>88.566073</td>
-      <td>192934.05020</td>
-      <td>198029.75020</td>
-      <td>92.934050</td>
-      <td>92.982692</td>
-      <td>16.790303</td>
-      <td>16.473148</td>
-      <td>-12.407667</td>
-      <td>-2.423084</td>
-      <td>...</td>
-      <td>37 days</td>
-      <td>90</td>
-      <td>60.000000</td>
-      <td>4.517500</td>
-      <td>207 days</td>
-      <td>51 days</td>
-      <td>13</td>
-      <td>16</td>
-      <td>0.200000</td>
-      <td>-0.073333</td>
+      <td>0.094444</td>
+      <td>-0.200000</td>
     </tr>
     <tr>
       <th>11</th>
       <td>CIPLA</td>
-      <td>89.222118</td>
-      <td>187706.28650</td>
+      <td>92.408907</td>
+      <td>201346.12650</td>
       <td>211897.75650</td>
-      <td>87.706286</td>
-      <td>197.673430</td>
-      <td>16.035048</td>
-      <td>16.243865</td>
-      <td>-13.033934</td>
-      <td>-1.831738</td>
+      <td>101.346126</td>
+      <td>165.590141</td>
+      <td>19.542957</td>
+      <td>16.883735</td>
+      <td>-11.586801</td>
+      <td>-1.697499</td>
       <td>...</td>
-      <td>25 days</td>
-      <td>61</td>
-      <td>65.573770</td>
-      <td>4.003106</td>
+      <td>23 days</td>
+      <td>58</td>
+      <td>65.517241</td>
+      <td>4.658190</td>
       <td>290 days</td>
-      <td>88 days</td>
+      <td>90 days</td>
       <td>13</td>
       <td>18</td>
       <td>0.157778</td>
       <td>-0.136667</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>ASIPAI</td>
-      <td>92.509363</td>
-      <td>185387.51050</td>
-      <td>190829.12550</td>
-      <td>85.387511</td>
-      <td>63.362857</td>
-      <td>15.679111</td>
-      <td>16.476164</td>
-      <td>-19.402911</td>
-      <td>-2.245322</td>
-      <td>...</td>
-      <td>31 days</td>
-      <td>109</td>
-      <td>52.293578</td>
-      <td>2.056429</td>
-      <td>141 days</td>
-      <td>44 days</td>
-      <td>5</td>
-      <td>10</td>
-      <td>0.094444</td>
-      <td>-0.200000</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>TATGLO</td>
-      <td>85.473290</td>
-      <td>184756.21050</td>
-      <td>190126.92650</td>
-      <td>84.756210</td>
-      <td>247.218730</td>
-      <td>15.601734</td>
-      <td>12.629439</td>
-      <td>-8.728511</td>
-      <td>-1.989707</td>
-      <td>...</td>
-      <td>30 days</td>
-      <td>112</td>
-      <td>52.678571</td>
-      <td>3.101622</td>
-      <td>124 days</td>
-      <td>30 days</td>
-      <td>12</td>
-      <td>14</td>
-      <td>0.200000</td>
-      <td>-0.031111</td>
-    </tr>
-    <tr>
-      <th>38</th>
-      <td>STABAN</td>
-      <td>89.315839</td>
-      <td>184641.78670</td>
-      <td>186384.78060</td>
-      <td>84.641787</td>
-      <td>143.113772</td>
-      <td>15.584821</td>
-      <td>16.112946</td>
-      <td>-13.511125</td>
-      <td>-2.575684</td>
+      <th>1</th>
+      <td>ADAPOR</td>
+      <td>80.586451</td>
+      <td>201012.05020</td>
+      <td>201378.92300</td>
+      <td>101.012050</td>
+      <td>167.931937</td>
+      <td>19.470821</td>
+      <td>24.810787</td>
+      <td>-29.087898</td>
+      <td>-2.710622</td>
       <td>...</td>
       <td>38 days</td>
-      <td>116</td>
-      <td>66.379310</td>
-      <td>4.935850</td>
-      <td>297 days</td>
-      <td>76 days</td>
-      <td>13</td>
-      <td>14</td>
-      <td>0.178889</td>
+      <td>134</td>
+      <td>59.701493</td>
+      <td>3.570084</td>
+      <td>182 days</td>
+      <td>40 days</td>
+      <td>11</td>
+      <td>12</td>
+      <td>0.200000</td>
+      <td>-0.073333</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>EICMOT</td>
+      <td>97.874494</td>
+      <td>198587.33944</td>
+      <td>198934.03104</td>
+      <td>98.587339</td>
+      <td>95.143800</td>
+      <td>19.123033</td>
+      <td>27.242463</td>
+      <td>-21.452816</td>
+      <td>-4.210551</td>
+      <td>...</td>
+      <td>43 days</td>
+      <td>156</td>
+      <td>58.333333</td>
+      <td>3.945915</td>
+      <td>227 days</td>
+      <td>82 days</td>
+      <td>9</td>
+      <td>10</td>
+      <td>0.200000</td>
       <td>-0.178889</td>
     </tr>
     <tr>
-      <th>27</th>
-      <td>KOTMAH</td>
-      <td>92.783505</td>
-      <td>183898.99840</td>
-      <td>183898.99840</td>
-      <td>83.898998</td>
-      <td>-0.799035</td>
-      <td>15.474834</td>
-      <td>20.522651</td>
-      <td>-14.883240</td>
-      <td>-2.720861</td>
+      <th>43</th>
+      <td>TCS</td>
+      <td>96.457490</td>
+      <td>197393.30960</td>
+      <td>254555.92240</td>
+      <td>97.393310</td>
+      <td>72.603362</td>
+      <td>18.939937</td>
+      <td>21.573335</td>
+      <td>-23.027435</td>
+      <td>-2.533814</td>
       <td>...</td>
-      <td>33 days</td>
-      <td>188</td>
-      <td>60.638298</td>
-      <td>1.135271</td>
-      <td>218 days</td>
-      <td>67 days</td>
+      <td>25 days</td>
+      <td>105</td>
+      <td>76.190476</td>
+      <td>4.571199</td>
+      <td>552 days</td>
+      <td>133 days</td>
       <td>9</td>
       <td>10</td>
-      <td>0.073333</td>
+      <td>0.178889</td>
       <td>-0.178889</td>
     </tr>
     <tr>
       <th>44</th>
       <td>TECMAH</td>
-      <td>89.971884</td>
-      <td>177300.59010</td>
-      <td>206802.66130</td>
-      <td>77.300590</td>
-      <td>53.645161</td>
-      <td>14.482584</td>
-      <td>21.644697</td>
+      <td>89.170040</td>
+      <td>191830.12530</td>
+      <td>194637.47530</td>
+      <td>91.830125</td>
+      <td>64.232258</td>
+      <td>18.075819</td>
+      <td>22.015747</td>
       <td>-17.264379</td>
-      <td>-2.792066</td>
+      <td>-2.540453</td>
       <td>...</td>
       <td>34 days</td>
-      <td>207</td>
-      <td>56.521739</td>
-      <td>2.909263</td>
+      <td>183</td>
+      <td>60.109290</td>
+      <td>3.478919</td>
       <td>278 days</td>
-      <td>56 days</td>
+      <td>52 days</td>
       <td>7</td>
       <td>8</td>
       <td>0.178889</td>
       <td>-0.052222</td>
     </tr>
     <tr>
+      <th>24</th>
+      <td>INFTEC</td>
+      <td>82.287449</td>
+      <td>191473.47480</td>
+      <td>193710.72480</td>
+      <td>91.473475</td>
+      <td>106.963639</td>
+      <td>18.019788</td>
+      <td>16.322753</td>
+      <td>-13.268284</td>
+      <td>-2.482171</td>
+      <td>...</td>
+      <td>40 days</td>
+      <td>128</td>
+      <td>58.593750</td>
+      <td>4.703352</td>
+      <td>207 days</td>
+      <td>35 days</td>
+      <td>13</td>
+      <td>14</td>
+      <td>0.200000</td>
+      <td>-0.031111</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>TATGLO</td>
+      <td>87.651822</td>
+      <td>187431.89850</td>
+      <td>187431.89850</td>
+      <td>87.431898</td>
+      <td>242.237586</td>
+      <td>17.379340</td>
+      <td>13.127077</td>
+      <td>-8.728511</td>
+      <td>-2.068943</td>
+      <td>...</td>
+      <td>30 days</td>
+      <td>104</td>
+      <td>54.807692</td>
+      <td>3.421184</td>
+      <td>124 days</td>
+      <td>32 days</td>
+      <td>12</td>
+      <td>14</td>
+      <td>0.200000</td>
+      <td>-0.031111</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ASIPAI</td>
+      <td>77.856421</td>
+      <td>177145.13420</td>
+      <td>181220.78420</td>
+      <td>77.145134</td>
+      <td>94.114286</td>
+      <td>15.684451</td>
+      <td>12.842020</td>
+      <td>-12.542620</td>
+      <td>-1.708672</td>
+      <td>...</td>
+      <td>25 days</td>
+      <td>46</td>
+      <td>60.869565</td>
+      <td>3.567024</td>
+      <td>125 days</td>
+      <td>49 days</td>
+      <td>8</td>
+      <td>24</td>
+      <td>0.115556</td>
+      <td>-0.178889</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>KOTMAH</td>
+      <td>91.396761</td>
+      <td>176852.38770</td>
+      <td>183221.47980</td>
+      <td>76.852388</td>
+      <td>14.819840</td>
+      <td>15.652713</td>
+      <td>20.049436</td>
+      <td>-15.085388</td>
+      <td>-3.576967</td>
+      <td>...</td>
+      <td>39 days</td>
+      <td>137</td>
+      <td>58.394161</td>
+      <td>2.079775</td>
+      <td>491 days</td>
+      <td>93 days</td>
+      <td>13</td>
+      <td>14</td>
+      <td>0.094444</td>
+      <td>-0.157778</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>NESIND</td>
+      <td>90.991903</td>
+      <td>174207.51000</td>
+      <td>174207.51000</td>
+      <td>74.207510</td>
+      <td>82.658952</td>
+      <td>15.209076</td>
+      <td>12.106091</td>
+      <td>-10.129937</td>
+      <td>-1.943887</td>
+      <td>...</td>
+      <td>31 days</td>
+      <td>90</td>
+      <td>65.555556</td>
+      <td>2.837654</td>
+      <td>152 days</td>
+      <td>42 days</td>
+      <td>3</td>
+      <td>8</td>
+      <td>0.094444</td>
+      <td>-0.094444</td>
+    </tr>
+    <tr>
       <th>14</th>
       <td>DRREDD</td>
-      <td>51.265230</td>
-      <td>171083.98890</td>
-      <td>171083.98890</td>
-      <td>71.083989</td>
-      <td>116.487703</td>
-      <td>13.521599</td>
-      <td>9.763677</td>
-      <td>-7.803166</td>
-      <td>-1.141735</td>
+      <td>58.906883</td>
+      <td>170061.53320</td>
+      <td>178929.18320</td>
+      <td>70.061533</td>
+      <td>100.945618</td>
+      <td>14.503446</td>
+      <td>9.710473</td>
+      <td>-5.553703</td>
+      <td>-1.193147</td>
       <td>...</td>
-      <td>29 days</td>
+      <td>18 days</td>
       <td>75</td>
       <td>61.333333</td>
-      <td>1.524948</td>
-      <td>74 days</td>
-      <td>19 days</td>
+      <td>1.687800</td>
+      <td>68 days</td>
+      <td>21 days</td>
       <td>3</td>
-      <td>22</td>
+      <td>16</td>
       <td>0.031111</td>
-      <td>-0.115556</td>
+      <td>-0.178889</td>
     </tr>
     <tr>
       <th>20</th>
       <td>HINDAL</td>
-      <td>73.102156</td>
-      <td>161623.97960</td>
-      <td>168560.12960</td>
-      <td>61.623980</td>
-      <td>197.758262</td>
-      <td>12.006727</td>
-      <td>12.479442</td>
+      <td>73.178138</td>
+      <td>163808.24960</td>
+      <td>163808.24960</td>
+      <td>63.808250</td>
+      <td>183.914953</td>
+      <td>13.414514</td>
+      <td>13.035403</td>
       <td>-12.352436</td>
-      <td>-1.940760</td>
+      <td>-2.005648</td>
       <td>...</td>
       <td>32 days</td>
-      <td>95</td>
-      <td>49.473684</td>
-      <td>2.885144</td>
+      <td>87</td>
+      <td>51.724138</td>
+      <td>3.282072</td>
       <td>69 days</td>
       <td>20 days</td>
       <td>4</td>
@@ -3074,282 +2721,382 @@ Name: Win Rate [%], dtype: float64
       <td>-0.073333</td>
     </tr>
     <tr>
-      <th>18</th>
-      <td>HDFSTA</td>
-      <td>93.158388</td>
-      <td>160568.60800</td>
-      <td>167015.68300</td>
-      <td>60.568608</td>
-      <td>-5.898654</td>
-      <td>11.833559</td>
-      <td>20.302274</td>
-      <td>-24.678488</td>
-      <td>-2.804721</td>
-      <td>...</td>
-      <td>34 days</td>
-      <td>87</td>
-      <td>63.218391</td>
-      <td>3.752367</td>
-      <td>373 days</td>
-      <td>119 days</td>
-      <td>4</td>
-      <td>12</td>
-      <td>0.200000</td>
-      <td>-0.200000</td>
-    </tr>
-    <tr>
       <th>41</th>
       <td>TATMOT</td>
-      <td>68.134958</td>
-      <td>157258.33130</td>
-      <td>166175.96250</td>
-      <td>57.258331</td>
-      <td>424.614177</td>
-      <td>11.284702</td>
-      <td>11.294883</td>
+      <td>70.242915</td>
+      <td>161721.96250</td>
+      <td>161721.96250</td>
+      <td>61.721962</td>
+      <td>307.585666</td>
+      <td>13.044327</td>
+      <td>11.757313</td>
       <td>-8.545298</td>
-      <td>-2.150887</td>
+      <td>-2.049394</td>
       <td>...</td>
-      <td>38 days</td>
-      <td>73</td>
-      <td>53.424658</td>
-      <td>3.329408</td>
+      <td>37 days</td>
+      <td>68</td>
+      <td>57.352941</td>
+      <td>3.704339</td>
       <td>125 days</td>
-      <td>30 days</td>
+      <td>31 days</td>
       <td>11</td>
       <td>14</td>
       <td>0.200000</td>
       <td>-0.094444</td>
     </tr>
     <tr>
+      <th>38</th>
+      <td>STABAN</td>
+      <td>88.663968</td>
+      <td>160868.61420</td>
+      <td>162340.71420</td>
+      <td>60.868614</td>
+      <td>92.185629</td>
+      <td>12.891885</td>
+      <td>15.751806</td>
+      <td>-13.511125</td>
+      <td>-3.165820</td>
+      <td>...</td>
+      <td>47 days</td>
+      <td>105</td>
+      <td>64.761905</td>
+      <td>4.285814</td>
+      <td>297 days</td>
+      <td>77 days</td>
+      <td>13</td>
+      <td>14</td>
+      <td>0.178889</td>
+      <td>-0.178889</td>
+    </tr>
+    <tr>
       <th>48</th>
       <td>WIPRO</td>
-      <td>53.521127</td>
-      <td>156516.84200</td>
-      <td>157977.07200</td>
-      <td>56.516842</td>
-      <td>83.171264</td>
-      <td>11.182641</td>
-      <td>7.591031</td>
-      <td>-4.745728</td>
-      <td>-1.175906</td>
+      <td>69.472617</td>
+      <td>156740.82580</td>
+      <td>159817.24580</td>
+      <td>56.740826</td>
+      <td>86.862473</td>
+      <td>12.171952</td>
+      <td>8.149937</td>
+      <td>-6.800324</td>
+      <td>-1.144563</td>
       <td>...</td>
-      <td>29 days</td>
-      <td>31</td>
-      <td>54.838710</td>
-      <td>5.381323</td>
-      <td>105 days</td>
-      <td>34 days</td>
-      <td>11</td>
-      <td>26</td>
+      <td>28 days</td>
+      <td>73</td>
+      <td>49.315068</td>
+      <td>2.307405</td>
+      <td>85 days</td>
+      <td>19 days</td>
+      <td>3</td>
+      <td>10</td>
       <td>0.200000</td>
       <td>-0.031111</td>
     </tr>
     <tr>
+      <th>18</th>
+      <td>HDFSTA</td>
+      <td>92.206478</td>
+      <td>153103.84480</td>
+      <td>157315.04480</td>
+      <td>53.103845</td>
+      <td>2.327791</td>
+      <td>11.476337</td>
+      <td>20.533096</td>
+      <td>-25.218570</td>
+      <td>-2.882654</td>
+      <td>...</td>
+      <td>35 days</td>
+      <td>65</td>
+      <td>66.153846</td>
+      <td>4.163207</td>
+      <td>391 days</td>
+      <td>133 days</td>
+      <td>5</td>
+      <td>14</td>
+      <td>0.200000</td>
+      <td>-0.200000</td>
+    </tr>
+    <tr>
       <th>13</th>
       <td>DIVLAB</td>
-      <td>74.390244</td>
-      <td>151457.62900</td>
-      <td>152076.01250</td>
-      <td>51.457629</td>
-      <td>108.820491</td>
-      <td>10.311407</td>
-      <td>13.800020</td>
-      <td>-13.828612</td>
-      <td>-3.157335</td>
+      <td>80.952381</td>
+      <td>151825.21900</td>
+      <td>153495.48900</td>
+      <td>51.825219</td>
+      <td>112.529229</td>
+      <td>11.250142</td>
+      <td>13.753408</td>
+      <td>-14.501913</td>
+      <td>-2.333614</td>
       <td>...</td>
-      <td>78 days</td>
-      <td>103</td>
-      <td>52.427184</td>
-      <td>0.427623</td>
-      <td>119 days</td>
-      <td>26 days</td>
+      <td>38 days</td>
+      <td>58</td>
+      <td>46.551724</td>
+      <td>2.705736</td>
+      <td>156 days</td>
+      <td>39 days</td>
       <td>9</td>
-      <td>12</td>
-      <td>0.052222</td>
-      <td>-0.094444</td>
+      <td>18</td>
+      <td>0.200000</td>
+      <td>-0.031111</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>TATSTE</td>
+      <td>50.809717</td>
+      <td>149441.09600</td>
+      <td>156135.78200</td>
+      <td>49.441096</td>
+      <td>-71.204134</td>
+      <td>10.789973</td>
+      <td>10.108102</td>
+      <td>-8.883283</td>
+      <td>-1.856469</td>
+      <td>...</td>
+      <td>58 days</td>
+      <td>63</td>
+      <td>41.269841</td>
+      <td>1.753847</td>
+      <td>49 days</td>
+      <td>14 days</td>
+      <td>11</td>
+      <td>14</td>
+      <td>0.178889</td>
+      <td>-0.031111</td>
     </tr>
     <tr>
       <th>9</th>
       <td>BHAPET</td>
-      <td>65.698219</td>
-      <td>150491.12900</td>
-      <td>154034.59900</td>
-      <td>50.491129</td>
-      <td>24.829016</td>
-      <td>10.134618</td>
-      <td>10.309844</td>
+      <td>67.307692</td>
+      <td>147690.40900</td>
+      <td>147690.40900</td>
+      <td>47.690409</td>
+      <td>-6.528497</td>
+      <td>10.457477</td>
+      <td>10.477283</td>
       <td>-9.652703</td>
-      <td>-2.088175</td>
+      <td>-2.135516</td>
       <td>...</td>
-      <td>49 days</td>
-      <td>40</td>
-      <td>55.000000</td>
-      <td>3.526317</td>
+      <td>51 days</td>
+      <td>35</td>
+      <td>54.285714</td>
+      <td>3.794302</td>
       <td>134 days</td>
-      <td>45 days</td>
+      <td>49 days</td>
       <td>10</td>
       <td>24</td>
       <td>0.178889</td>
       <td>-0.178889</td>
     </tr>
     <tr>
-      <th>42</th>
-      <td>TATSTE</td>
-      <td>59.418932</td>
-      <td>148868.46400</td>
-      <td>161637.01350</td>
-      <td>48.868464</td>
-      <td>-65.436693</td>
-      <td>9.852991</td>
-      <td>9.477955</td>
-      <td>-10.665193</td>
-      <td>-1.467283</td>
-      <td>...</td>
-      <td>49 days</td>
-      <td>71</td>
-      <td>54.929577</td>
-      <td>1.526573</td>
-      <td>49 days</td>
-      <td>16 days</td>
-      <td>12</td>
-      <td>14</td>
-      <td>0.178889</td>
-      <td>-0.073333</td>
-    </tr>
-    <tr>
       <th>25</th>
       <td>ITC</td>
-      <td>74.108818</td>
-      <td>121009.23260</td>
-      <td>124338.08930</td>
-      <td>21.009233</td>
-      <td>83.644370</td>
-      <td>4.611182</td>
-      <td>6.506275</td>
-      <td>-14.064461</td>
-      <td>-1.945073</td>
+      <td>74.670719</td>
+      <td>131119.37730</td>
+      <td>136181.91110</td>
+      <td>31.119377</td>
+      <td>93.856154</td>
+      <td>7.162443</td>
+      <td>8.538175</td>
+      <td>-15.808581</td>
+      <td>-1.998408</td>
       <td>...</td>
-      <td>99 days</td>
-      <td>74</td>
-      <td>45.945946</td>
-      <td>1.932498</td>
-      <td>127 days</td>
-      <td>29 days</td>
-      <td>13</td>
-      <td>16</td>
-      <td>0.200000</td>
-      <td>-0.052222</td>
+      <td>55 days</td>
+      <td>115</td>
+      <td>58.260870</td>
+      <td>2.593911</td>
+      <td>116 days</td>
+      <td>30 days</td>
+      <td>11</td>
+      <td>12</td>
+      <td>0.178889</td>
+      <td>-0.094444</td>
     </tr>
     <tr>
       <th>12</th>
       <td>COALIN</td>
-      <td>63.261481</td>
-      <td>119951.38320</td>
-      <td>123116.33120</td>
-      <td>19.951383</td>
-      <td>115.461465</td>
-      <td>4.390063</td>
-      <td>6.164051</td>
-      <td>-5.185983</td>
-      <td>-1.721928</td>
+      <td>51.821862</td>
+      <td>119536.44000</td>
+      <td>119727.72000</td>
+      <td>19.536440</td>
+      <td>78.972407</td>
+      <td>4.656760</td>
+      <td>3.566190</td>
+      <td>-3.655970</td>
+      <td>-0.704013</td>
       <td>...</td>
-      <td>91 days</td>
-      <td>121</td>
-      <td>47.107438</td>
-      <td>0.706254</td>
-      <td>44 days</td>
-      <td>8 days</td>
-      <td>7</td>
-      <td>8</td>
-      <td>0.200000</td>
-      <td>-0.115556</td>
+      <td>38 days</td>
+      <td>50</td>
+      <td>50.000000</td>
+      <td>1.959375</td>
+      <td>30 days</td>
+      <td>14 days</td>
+      <td>5</td>
+      <td>12</td>
+      <td>0.094444</td>
+      <td>-0.052222</td>
     </tr>
     <tr>
       <th>33</th>
       <td>NTPC</td>
-      <td>44.517338</td>
-      <td>115232.78000</td>
-      <td>116827.78000</td>
-      <td>15.232780</td>
-      <td>201.467505</td>
-      <td>3.405299</td>
-      <td>2.827010</td>
-      <td>-3.238898</td>
-      <td>-0.688407</td>
+      <td>56.983806</td>
+      <td>117152.56000</td>
+      <td>117152.56000</td>
+      <td>17.152560</td>
+      <td>161.090147</td>
+      <td>4.120412</td>
+      <td>2.826465</td>
+      <td>-2.476850</td>
+      <td>-0.714239</td>
       <td>...</td>
-      <td>47 days</td>
-      <td>53</td>
-      <td>37.735849</td>
-      <td>1.681758</td>
-      <td>40 days</td>
-      <td>12 days</td>
-      <td>5</td>
-      <td>18</td>
-      <td>0.115556</td>
-      <td>-0.010000</td>
-    </tr>
-    <tr>
-      <th>34</th>
-      <td>ONGC</td>
-      <td>59.887535</td>
-      <td>113503.63000</td>
-      <td>114146.63000</td>
-      <td>13.503630</td>
-      <td>120.374707</td>
-      <td>3.036713</td>
-      <td>3.551963</td>
-      <td>-3.280519</td>
-      <td>-0.660907</td>
-      <td>...</td>
-      <td>50 days</td>
-      <td>47</td>
-      <td>48.936170</td>
-      <td>1.408875</td>
-      <td>73 days</td>
-      <td>19 days</td>
-      <td>14</td>
-      <td>18</td>
-      <td>0.200000</td>
+      <td>46 days</td>
+      <td>55</td>
+      <td>47.272727</td>
+      <td>1.992138</td>
+      <td>41 days</td>
+      <td>14 days</td>
+      <td>9</td>
+      <td>12</td>
+      <td>0.157778</td>
       <td>-0.052222</td>
     </tr>
     <tr>
       <th>35</th>
       <td>POWGRI</td>
-      <td>58.669166</td>
-      <td>110614.06000</td>
-      <td>111040.79000</td>
-      <td>10.614060</td>
-      <td>101.817428</td>
-      <td>2.411083</td>
-      <td>3.692369</td>
-      <td>-5.390339</td>
-      <td>-0.728055</td>
+      <td>50.910931</td>
+      <td>109098.24800</td>
+      <td>110675.15800</td>
+      <td>9.098248</td>
+      <td>63.533964</td>
+      <td>2.245883</td>
+      <td>3.114878</td>
+      <td>-2.554645</td>
+      <td>-0.669631</td>
       <td>...</td>
-      <td>62 days</td>
-      <td>98</td>
-      <td>45.918367</td>
-      <td>0.296214</td>
-      <td>22 days</td>
+      <td>41 days</td>
+      <td>79</td>
+      <td>50.632911</td>
+      <td>0.547503</td>
+      <td>28 days</td>
       <td>9 days</td>
-      <td>3</td>
-      <td>8</td>
-      <td>0.052222</td>
+      <td>4</td>
+      <td>10</td>
+      <td>0.031111</td>
       <td>-0.031111</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>ONGC</td>
+      <td>42.712551</td>
+      <td>107966.89000</td>
+      <td>108669.93000</td>
+      <td>7.966890</td>
+      <td>60.421546</td>
+      <td>1.974392</td>
+      <td>2.515017</td>
+      <td>-3.776636</td>
+      <td>-0.595946</td>
+      <td>...</td>
+      <td>45 days</td>
+      <td>41</td>
+      <td>68.292683</td>
+      <td>1.508986</td>
+      <td>30 days</td>
+      <td>14 days</td>
+      <td>14</td>
+      <td>20</td>
+      <td>0.052222</td>
+      <td>-0.073333</td>
     </tr>
   </tbody>
 </table>
 <p>49 rows × 21 columns</p>
 </div></div></div>
 </div>
-<p>Now Executing minute level strategy on all 52 stocks.</p>
+<p>Now Testing the results on 2024 data for performance metrics.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drs_df</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_stats</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">class</span> <span class="nc">TestCross</span><span class="p">(</span><span class="n">Strategy</span><span class="p">):</span>
+    <span class="n">FAST_MA</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">SLOW_MA</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">PROFIT_THRESHOLD</span> <span class="o">=</span> <span class="mf">0.05</span>
+    <span class="n">LOSS_THRESHOLD</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.05</span>
+    <span class="n">QTY_THRESHOLD</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">CONSERVATIVE_FACTOR</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">price</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Close</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fast_ma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">I</span><span class="p">(</span><span class="n">SMA</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">FAST_MA</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slow_ma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">I</span><span class="p">(</span><span class="n">SMA</span><span class="p">,</span> <span class="n">price</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">SLOW_MA</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ltp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_broker</span><span class="o">.</span><span class="n">last_price</span>
+        <span class="n">margin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_broker</span><span class="o">.</span><span class="n">margin_available</span>
+        <span class="n">order_size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">QTY_THRESHOLD</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="n">margin</span><span class="o">//</span><span class="n">ltp</span><span class="p">)</span><span class="o">//</span><span class="bp">self</span><span class="o">.</span><span class="n">CONSERVATIVE_FACTOR</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">trade</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trades</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">PROFIT_THRESHOLD</span> <span class="o">&lt;</span> <span class="n">trade</span><span class="o">.</span><span class="n">pl_pct</span>
+                    <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">LOSS_THRESHOLD</span> <span class="o">&gt;</span> <span class="n">trade</span><span class="o">.</span><span class="n">pl_pct</span>
+            <span class="p">):</span>
+                <span class="n">trade</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">crossover</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fast_ma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">slow_ma</span><span class="p">)</span> <span class="ow">and</span> <span class="n">order_size</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">buy</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">order_size</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">crossover</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slow_ma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fast_ma</span><span class="p">)</span> <span class="ow">and</span> <span class="n">order_size</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sell</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">order_size</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">drs_df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">)[:]):</span>
+    <span class="c1"># print(row[&#39;stock&#39;], )</span>
+
+    <span class="n">test_data</span> <span class="o">=</span> <span class="n">get_stock_data</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;stock&#39;</span><span class="p">])</span>
+    <span class="c1"># test_data = get_stock_data(stock)</span>
+    <span class="n">test_data</span> <span class="o">=</span> <span class="n">test_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">test_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">date</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;Open&#39;</span><span class="p">:</span> <span class="s1">&#39;first&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;High&#39;</span><span class="p">:</span> <span class="s1">&#39;max&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Low&#39;</span><span class="p">:</span> <span class="s1">&#39;min&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Close&#39;</span><span class="p">:</span> <span class="s1">&#39;last&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>  <span class="c1"># converting minute test_data to daily test_data</span>
+    <span class="n">test_data</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">test_data</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">])</span>
+    <span class="n">test_data</span> <span class="o">=</span> <span class="n">test_data</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">])</span>
+    <span class="n">TestStrat</span> <span class="o">=</span> <span class="n">SmaCross</span>
+    
+    <span class="n">TestStrat</span><span class="o">.</span><span class="n">FAST_MA</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;_strategy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">FAST_MA</span>
+    <span class="n">TestStrat</span><span class="o">.</span><span class="n">SLOW_MA</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;_strategy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">SLOW_MA</span>
+    <span class="n">TestStrat</span><span class="o">.</span><span class="n">PROFIT_THRESHOLD</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;_strategy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">PROFIT_THRESHOLD</span>
+    <span class="n">TestStrat</span><span class="o">.</span><span class="n">LOSS_THRESHOLD</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;_strategy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">LOSS_THRESHOLD</span>
+    <span class="n">TestStrat</span><span class="o">.</span><span class="n">QTY_THRESHOLD</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="n">bt</span> <span class="o">=</span> <span class="n">Backtest</span><span class="p">(</span>
+        <span class="n">test_data</span><span class="p">[</span><span class="n">test_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">year</span><span class="o">==</span><span class="mi">2024</span><span class="p">],</span>
+        <span class="n">TestStrat</span><span class="p">,</span>
+        <span class="n">cash</span><span class="o">=</span><span class="n">CASH</span><span class="p">,</span>
+        <span class="n">commission</span><span class="o">=</span><span class="n">COMMISSION</span>
+    <span class="p">)</span>
+    <span class="n">stats</span> <span class="o">=</span> <span class="n">bt</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;stock&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;stock&#39;</span><span class="p">]</span>
+    <span class="n">test_stats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+
+<span class="n">res_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">test_stats</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;stock&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Equity Final [$]&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res_df</span><span class="p">[</span><span class="s1">&#39;Return [%]&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="mf">.05</span><span class="p">,</span> <span class="mf">.25</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.75</span><span class="p">,</span> <span class="mf">.95</span><span class="p">]))</span>
+
+<span class="n">res_df</span><span class="p">[</span><span class="n">metrics_columns</span><span class="p">[:</span><span class="o">-</span><span class="mi">5</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.05    -9.897149
+0.25    -4.398991
+0.50    -0.974389
+0.75     2.303910
+0.95    12.136562
+Name: Return [%], dtype: float64
+</pre></div>
+</div>
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -3368,7 +3115,6 @@ Name: Win Rate [%], dtype: float64
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>stock</th>
       <th>Exposure Time [%]</th>
       <th>Equity Final [$]</th>
       <th>Equity Peak [$]</th>
@@ -3378,1251 +3124,976 @@ Name: Win Rate [%], dtype: float64
       <th>Volatility (Ann.) [%]</th>
       <th>Max. Drawdown [%]</th>
       <th>Avg. Drawdown [%]</th>
-      <th>...</th>
+      <th>Max. Drawdown Duration</th>
       <th>Avg. Drawdown Duration</th>
       <th># Trades</th>
       <th>Win Rate [%]</th>
       <th>Avg. Trade [%]</th>
       <th>Max. Trade Duration</th>
       <th>Avg. Trade Duration</th>
-      <th>fast_ma</th>
-      <th>slow_ma</th>
-      <th>profit_threshold</th>
-      <th>loss_threshold</th>
+    </tr>
+    <tr>
+      <th>stock</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>16</th>
-      <td>GRASIM</td>
-      <td>96.719775</td>
-      <td>351033.76180</td>
-      <td>353913.70180</td>
-      <td>251.033762</td>
-      <td>213.305572</td>
-      <td>34.523583</td>
-      <td>23.313766</td>
-      <td>-20.370249</td>
-      <td>-2.212919</td>
-      <td>...</td>
-      <td>19 days</td>
-      <td>147</td>
-      <td>75.510204</td>
-      <td>6.796384</td>
-      <td>337 days</td>
-      <td>84 days</td>
-      <td>6</td>
-      <td>8</td>
-      <td>0.200000</td>
-      <td>-0.157778</td>
-    </tr>
-    <tr>
-      <th>30</th>
-      <td>MAHMAH</td>
-      <td>96.626054</td>
-      <td>339958.32630</td>
-      <td>343723.32630</td>
-      <td>239.958326</td>
-      <td>292.560976</td>
-      <td>33.508862</td>
-      <td>28.367965</td>
-      <td>-20.803311</td>
-      <td>-2.805563</td>
-      <td>...</td>
-      <td>23 days</td>
-      <td>176</td>
-      <td>74.431818</td>
-      <td>6.940137</td>
-      <td>343 days</td>
-      <td>93 days</td>
-      <td>9</td>
-      <td>10</td>
-      <td>0.200000</td>
-      <td>-0.178889</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>MARUTI</td>
-      <td>96.810507</td>
-      <td>315728.36130</td>
-      <td>316445.09130</td>
-      <td>215.728361</td>
-      <td>78.016923</td>
-      <td>31.231052</td>
-      <td>22.562498</td>
-      <td>-13.118961</td>
-      <td>-2.423227</td>
-      <td>...</td>
-      <td>24 days</td>
-      <td>170</td>
-      <td>70.000000</td>
-      <td>5.220510</td>
-      <td>326 days</td>
-      <td>74 days</td>
-      <td>9</td>
-      <td>10</td>
-      <td>0.157778</td>
-      <td>-0.136667</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>BAJFI</td>
-      <td>79.831144</td>
-      <td>310493.46720</td>
-      <td>344184.62920</td>
-      <td>210.493467</td>
-      <td>74.333002</td>
-      <td>30.713395</td>
-      <td>20.613808</td>
-      <td>-12.434147</td>
-      <td>-2.098147</td>
-      <td>...</td>
-      <td>19 days</td>
-      <td>90</td>
-      <td>70.000000</td>
-      <td>5.018469</td>
-      <td>208 days</td>
-      <td>46 days</td>
-      <td>14</td>
-      <td>16</td>
-      <td>0.115556</td>
-      <td>-0.157778</td>
-    </tr>
-    <tr>
-      <th>46</th>
-      <td>ULTCEM</td>
-      <td>96.710526</td>
-      <td>307083.90370</td>
-      <td>316304.40370</td>
-      <td>207.083904</td>
-      <td>134.011358</td>
-      <td>30.437656</td>
-      <td>23.987754</td>
-      <td>-22.234646</td>
-      <td>-2.775511</td>
-      <td>...</td>
-      <td>22 days</td>
-      <td>188</td>
-      <td>76.063830</td>
-      <td>6.011931</td>
-      <td>208 days</td>
-      <td>70 days</td>
-      <td>7</td>
-      <td>8</td>
-      <td>0.200000</td>
-      <td>-0.136667</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>LARTOU</td>
-      <td>98.031865</td>
-      <td>299988.18840</td>
-      <td>312953.40700</td>
-      <td>199.988188</td>
-      <td>172.808989</td>
-      <td>29.622575</td>
-      <td>24.571985</td>
-      <td>-26.193525</td>
-      <td>-2.759887</td>
-      <td>...</td>
-      <td>22 days</td>
-      <td>145</td>
-      <td>75.862069</td>
-      <td>7.882396</td>
-      <td>266 days</td>
-      <td>99 days</td>
-      <td>3</td>
-      <td>8</td>
-      <td>0.200000</td>
-      <td>-0.178889</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>BHAAIR</td>
-      <td>97.656982</td>
-      <td>282660.72380</td>
-      <td>285317.62380</td>
-      <td>182.660724</td>
-      <td>192.846987</td>
-      <td>27.813922</td>
-      <td>22.147636</td>
-      <td>-15.876013</td>
-      <td>-2.111294</td>
-      <td>...</td>
-      <td>21 days</td>
-      <td>106</td>
-      <td>71.698113</td>
-      <td>7.666849</td>
-      <td>329 days</td>
-      <td>116 days</td>
-      <td>6</td>
-      <td>10</td>
-      <td>0.200000</td>
-      <td>-0.178889</td>
-    </tr>
-    <tr>
-      <th>45</th>
-      <td>TITIND</td>
-      <td>96.525822</td>
-      <td>280219.09810</td>
-      <td>298096.23370</td>
-      <td>180.219098</td>
-      <td>208.547969</td>
-      <td>27.610611</td>
-      <td>25.048953</td>
-      <td>-27.994236</td>
-      <td>-3.072359</td>
-      <td>...</td>
-      <td>28 days</td>
-      <td>142</td>
-      <td>61.267606</td>
-      <td>4.123258</td>
-      <td>288 days</td>
-      <td>86 days</td>
+      <th>MAHMAH</th>
+      <td>84.810127</td>
+      <td>115527.3556</td>
+      <td>116708.3956</td>
+      <td>15.527356</td>
+      <td>22.934783</td>
+      <td>58.473511</td>
+      <td>22.405811</td>
+      <td>-3.397785</td>
+      <td>-1.632742</td>
+      <td>27 days</td>
+      <td>10 days</td>
       <td>11</td>
-      <td>12</td>
-      <td>0.200000</td>
-      <td>-0.200000</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>ICIBAN</td>
-      <td>92.877226</td>
-      <td>268066.92250</td>
-      <td>271057.02130</td>
-      <td>168.066923</td>
-      <td>105.912882</td>
-      <td>26.223685</td>
-      <td>18.579117</td>
-      <td>-11.229906</td>
-      <td>-1.849857</td>
-      <td>...</td>
-      <td>22 days</td>
-      <td>134</td>
-      <td>67.910448</td>
-      <td>4.632727</td>
-      <td>227 days</td>
-      <td>53 days</td>
-      <td>6</td>
-      <td>8</td>
-      <td>0.157778</td>
-      <td>-0.136667</td>
-    </tr>
-    <tr>
-      <th>47</th>
-      <td>UNIP</td>
-      <td>95.774648</td>
-      <td>262513.67690</td>
-      <td>277416.79690</td>
-      <td>162.513677</td>
-      <td>-13.274488</td>
-      <td>25.654953</td>
-      <td>27.747521</td>
-      <td>-23.893161</td>
-      <td>-4.083335</td>
-      <td>...</td>
+      <td>63.636364</td>
+      <td>7.591269</td>
+      <td>66 days</td>
       <td>33 days</td>
-      <td>177</td>
-      <td>65.536723</td>
-      <td>4.520337</td>
-      <td>345 days</td>
-      <td>93 days</td>
-      <td>7</td>
-      <td>8</td>
-      <td>0.200000</td>
-      <td>-0.200000</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>APOHOS</td>
-      <td>86.610487</td>
-      <td>261319.15770</td>
-      <td>265279.15770</td>
-      <td>161.319158</td>
-      <td>329.120842</td>
-      <td>25.439313</td>
-      <td>20.557584</td>
-      <td>-15.489302</td>
-      <td>-2.432210</td>
-      <td>...</td>
-      <td>26 days</td>
-      <td>125</td>
-      <td>67.200000</td>
-      <td>4.595588</td>
-      <td>246 days</td>
-      <td>45 days</td>
-      <td>10</td>
-      <td>12</td>
-      <td>0.200000</td>
-      <td>-0.052222</td>
-    </tr>
-    <tr>
-      <th>39</th>
-      <td>SUNPHA</td>
-      <td>94.189316</td>
-      <td>260884.89220</td>
-      <td>261312.89220</td>
-      <td>160.884892</td>
-      <td>241.935484</td>
-      <td>25.416687</td>
-      <td>19.746788</td>
-      <td>-14.517353</td>
-      <td>-2.005412</td>
-      <td>...</td>
-      <td>20 days</td>
-      <td>74</td>
-      <td>74.324324</td>
-      <td>7.903041</td>
-      <td>237 days</td>
-      <td>95 days</td>
-      <td>8</td>
-      <td>14</td>
-      <td>0.178889</td>
-      <td>-0.200000</td>
-    </tr>
-    <tr>
-      <th>37</th>
-      <td>SBILIF</td>
-      <td>94.189316</td>
-      <td>255562.77420</td>
-      <td>268109.22410</td>
-      <td>155.562774</td>
-      <td>48.129165</td>
-      <td>24.807657</td>
-      <td>21.301487</td>
-      <td>-13.436207</td>
-      <td>-2.726640</td>
-      <td>...</td>
+      <th>EICMOT</th>
+      <td>70.886076</td>
+      <td>114719.3717</td>
+      <td>114719.3717</td>
+      <td>14.719372</td>
+      <td>13.794300</td>
+      <td>54.965034</td>
+      <td>25.831475</td>
+      <td>-5.034846</td>
+      <td>-1.601627</td>
       <td>24 days</td>
-      <td>173</td>
-      <td>64.739884</td>
-      <td>3.628985</td>
-      <td>167 days</td>
-      <td>56 days</td>
-      <td>13</td>
-      <td>14</td>
-      <td>0.115556</td>
-      <td>-0.115556</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>AXIBAN</td>
-      <td>94.564199</td>
-      <td>245206.01330</td>
-      <td>252159.22120</td>
-      <td>145.206013</td>
-      <td>51.886792</td>
-      <td>23.594168</td>
-      <td>23.624807</td>
-      <td>-21.395871</td>
-      <td>-2.859322</td>
-      <td>...</td>
-      <td>29 days</td>
-      <td>120</td>
-      <td>65.000000</td>
-      <td>4.876916</td>
-      <td>440 days</td>
-      <td>113 days</td>
-      <td>7</td>
-      <td>10</td>
-      <td>0.200000</td>
-      <td>-0.200000</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>BAAUTO</td>
-      <td>89.971884</td>
-      <td>242183.28610</td>
-      <td>254688.95090</td>
-      <td>142.183286</td>
-      <td>184.777502</td>
-      <td>23.232627</td>
-      <td>18.034354</td>
-      <td>-9.031458</td>
-      <td>-1.984479</td>
-      <td>...</td>
-      <td>20 days</td>
-      <td>126</td>
-      <td>69.047619</td>
-      <td>4.134790</td>
-      <td>155 days</td>
-      <td>47 days</td>
-      <td>10</td>
+      <td>9 days</td>
       <td>12</td>
-      <td>0.115556</td>
-      <td>-0.136667</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>BAFINS</td>
-      <td>89.493433</td>
-      <td>238107.81370</td>
-      <td>257147.90140</td>
-      <td>138.107814</td>
-      <td>-82.313944</td>
-      <td>22.763268</td>
-      <td>27.520569</td>
-      <td>-41.839350</td>
-      <td>-3.030714</td>
-      <td>...</td>
+      <td>50.000000</td>
+      <td>6.133797</td>
+      <td>63 days</td>
       <td>32 days</td>
-      <td>92</td>
-      <td>52.173913</td>
-      <td>3.027165</td>
-      <td>267 days</td>
-      <td>61 days</td>
-      <td>9</td>
-      <td>12</td>
-      <td>0.200000</td>
-      <td>-0.178889</td>
     </tr>
     <tr>
-      <th>17</th>
-      <td>HCLTEC</td>
-      <td>81.911903</td>
-      <td>236425.79040</td>
-      <td>238666.39040</td>
-      <td>136.425790</td>
-      <td>158.058419</td>
-      <td>22.534343</td>
-      <td>14.589914</td>
-      <td>-8.469600</td>
-      <td>-1.721796</td>
-      <td>...</td>
-      <td>22 days</td>
-      <td>37</td>
-      <td>75.675676</td>
-      <td>9.822959</td>
-      <td>253 days</td>
-      <td>89 days</td>
-      <td>11</td>
-      <td>24</td>
-      <td>0.200000</td>
-      <td>-0.073333</td>
-    </tr>
-    <tr>
-      <th>32</th>
-      <td>NESIND</td>
-      <td>75.257732</td>
-      <td>236174.46310</td>
-      <td>241625.46310</td>
-      <td>136.174463</td>
-      <td>-82.421398</td>
-      <td>22.503567</td>
-      <td>46.993858</td>
-      <td>-12.498695</td>
-      <td>-1.720416</td>
-      <td>...</td>
-      <td>27 days</td>
-      <td>53</td>
-      <td>67.924528</td>
-      <td>5.384383</td>
-      <td>165 days</td>
-      <td>56 days</td>
-      <td>3</td>
-      <td>28</td>
-      <td>0.073333</td>
-      <td>-0.200000</td>
-    </tr>
-    <tr>
-      <th>36</th>
-      <td>RELIND</td>
-      <td>97.844424</td>
-      <td>235785.36910</td>
-      <td>241693.20590</td>
-      <td>135.785369</td>
-      <td>89.954427</td>
-      <td>22.455871</td>
-      <td>25.350155</td>
-      <td>-20.045909</td>
-      <td>-3.001828</td>
-      <td>...</td>
-      <td>32 days</td>
-      <td>143</td>
-      <td>64.335664</td>
-      <td>5.797886</td>
-      <td>573 days</td>
-      <td>192 days</td>
-      <td>5</td>
-      <td>8</td>
-      <td>0.200000</td>
-      <td>-0.200000</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>EICMOT</td>
-      <td>98.031865</td>
-      <td>226209.12714</td>
-      <td>226209.12714</td>
-      <td>126.209127</td>
-      <td>116.482791</td>
-      <td>21.262593</td>
-      <td>27.536745</td>
-      <td>-21.452816</td>
-      <td>-4.005791</td>
-      <td>...</td>
-      <td>39 days</td>
-      <td>171</td>
-      <td>57.894737</td>
-      <td>4.270459</td>
-      <td>227 days</td>
-      <td>80 days</td>
-      <td>9</td>
-      <td>10</td>
-      <td>0.200000</td>
-      <td>-0.178889</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>INDBA</td>
-      <td>90.440487</td>
-      <td>223964.64830</td>
-      <td>247615.92590</td>
-      <td>123.964648</td>
-      <td>-2.102681</td>
-      <td>20.977347</td>
-      <td>29.431081</td>
-      <td>-25.329718</td>
-      <td>-3.578711</td>
-      <td>...</td>
-      <td>39 days</td>
-      <td>122</td>
-      <td>68.032787</td>
-      <td>4.957899</td>
-      <td>234 days</td>
-      <td>81 days</td>
-      <td>12</td>
-      <td>14</td>
-      <td>0.200000</td>
-      <td>-0.200000</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>HINLEV</td>
-      <td>96.626054</td>
-      <td>217354.23220</td>
-      <td>220282.82370</td>
-      <td>117.354232</td>
-      <td>15.662526</td>
-      <td>20.124358</td>
-      <td>18.006847</td>
-      <td>-12.187184</td>
-      <td>-2.366151</td>
-      <td>...</td>
-      <td>27 days</td>
-      <td>120</td>
-      <td>78.333333</td>
-      <td>5.615658</td>
-      <td>531 days</td>
-      <td>135 days</td>
-      <td>7</td>
-      <td>10</td>
-      <td>0.136667</td>
-      <td>-0.157778</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>HERHON</td>
-      <td>92.970947</td>
-      <td>217256.59230</td>
-      <td>224286.59230</td>
-      <td>117.256592</td>
-      <td>84.706969</td>
-      <td>20.111611</td>
-      <td>18.579236</td>
-      <td>-19.045757</td>
-      <td>-3.190069</td>
-      <td>...</td>
-      <td>31 days</td>
-      <td>117</td>
-      <td>66.666667</td>
-      <td>3.602247</td>
-      <td>356 days</td>
-      <td>80 days</td>
-      <td>9</td>
-      <td>12</td>
-      <td>0.136667</td>
-      <td>-0.200000</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>ADAENT</td>
-      <td>57.958801</td>
-      <td>207132.71440</td>
-      <td>213282.34430</td>
-      <td>107.132714</td>
-      <td>1394.168467</td>
-      <td>18.746407</td>
-      <td>15.421113</td>
-      <td>-12.727030</td>
-      <td>-2.288406</td>
-      <td>...</td>
-      <td>36 days</td>
-      <td>101</td>
-      <td>53.465347</td>
-      <td>1.887846</td>
-      <td>58 days</td>
-      <td>12 days</td>
-      <td>3</td>
-      <td>10</td>
-      <td>0.073333</td>
-      <td>-0.031111</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>JSWSTE</td>
-      <td>89.409560</td>
-      <td>205990.12270</td>
-      <td>206454.01890</td>
-      <td>105.990123</td>
-      <td>231.778104</td>
-      <td>18.610476</td>
-      <td>25.579286</td>
-      <td>-24.139118</td>
-      <td>-3.528290</td>
-      <td>...</td>
-      <td>34 days</td>
-      <td>133</td>
-      <td>66.165414</td>
-      <td>4.307701</td>
-      <td>340 days</td>
-      <td>97 days</td>
-      <td>6</td>
-      <td>8</td>
-      <td>0.200000</td>
-      <td>-0.157778</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>BRIIND</td>
-      <td>95.590994</td>
-      <td>202254.05790</td>
-      <td>207767.15790</td>
-      <td>102.254058</td>
-      <td>58.899698</td>
-      <td>18.117275</td>
-      <td>16.125926</td>
-      <td>-14.850612</td>
-      <td>-1.699188</td>
-      <td>...</td>
-      <td>27 days</td>
-      <td>121</td>
-      <td>55.371901</td>
-      <td>3.254459</td>
-      <td>296 days</td>
-      <td>68 days</td>
-      <td>12</td>
-      <td>14</td>
-      <td>0.157778</td>
-      <td>-0.115556</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>LTINFO</td>
-      <td>71.696345</td>
-      <td>196334.48050</td>
-      <td>196785.58050</td>
-      <td>96.334481</td>
-      <td>155.475056</td>
-      <td>17.273211</td>
-      <td>15.457956</td>
-      <td>-11.741587</td>
-      <td>-2.172566</td>
-      <td>...</td>
-      <td>30 days</td>
-      <td>44</td>
-      <td>65.909091</td>
-      <td>5.450763</td>
-      <td>235 days</td>
-      <td>57 days</td>
-      <td>10</td>
-      <td>22</td>
-      <td>0.200000</td>
-      <td>-0.073333</td>
-    </tr>
-    <tr>
-      <th>43</th>
-      <td>TCS</td>
-      <td>96.719775</td>
-      <td>195855.33930</td>
-      <td>254555.92240</td>
-      <td>95.855339</td>
-      <td>74.965925</td>
-      <td>17.205555</td>
-      <td>21.331478</td>
-      <td>-30.212225</td>
-      <td>-2.664446</td>
-      <td>...</td>
-      <td>27 days</td>
-      <td>117</td>
-      <td>72.649573</td>
-      <td>3.842022</td>
-      <td>552 days</td>
-      <td>129 days</td>
-      <td>9</td>
-      <td>10</td>
-      <td>0.178889</td>
-      <td>-0.178889</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>ADAPOR</td>
-      <td>82.022472</td>
-      <td>195768.71920</td>
-      <td>206118.56920</td>
-      <td>95.768719</td>
-      <td>248.638743</td>
-      <td>17.175902</td>
-      <td>23.935222</td>
-      <td>-29.087898</td>
-      <td>-2.913807</td>
-      <td>...</td>
-      <td>39 days</td>
-      <td>143</td>
-      <td>59.440559</td>
-      <td>3.377024</td>
-      <td>182 days</td>
-      <td>41 days</td>
-      <td>11</td>
-      <td>12</td>
-      <td>0.200000</td>
-      <td>-0.073333</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>INFTEC</td>
-      <td>88.566073</td>
-      <td>192934.05020</td>
-      <td>198029.75020</td>
-      <td>92.934050</td>
-      <td>92.982692</td>
-      <td>16.790303</td>
-      <td>16.473148</td>
-      <td>-12.407667</td>
-      <td>-2.423084</td>
-      <td>...</td>
+      <th>STABAN</th>
+      <td>70.886076</td>
+      <td>113040.4492</td>
+      <td>115360.0831</td>
+      <td>13.040449</td>
+      <td>27.212909</td>
+      <td>47.845912</td>
+      <td>16.730849</td>
+      <td>-3.064166</td>
+      <td>-0.835828</td>
       <td>37 days</td>
-      <td>90</td>
-      <td>60.000000</td>
-      <td>4.517500</td>
-      <td>207 days</td>
-      <td>51 days</td>
-      <td>13</td>
-      <td>16</td>
-      <td>0.200000</td>
-      <td>-0.073333</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>CIPLA</td>
-      <td>89.222118</td>
-      <td>187706.28650</td>
-      <td>211897.75650</td>
-      <td>87.706286</td>
-      <td>197.673430</td>
-      <td>16.035048</td>
-      <td>16.243865</td>
-      <td>-13.033934</td>
-      <td>-1.831738</td>
-      <td>...</td>
-      <td>25 days</td>
-      <td>61</td>
-      <td>65.573770</td>
-      <td>4.003106</td>
-      <td>290 days</td>
-      <td>88 days</td>
-      <td>13</td>
-      <td>18</td>
-      <td>0.157778</td>
-      <td>-0.136667</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>ASIPAI</td>
-      <td>92.509363</td>
-      <td>185387.51050</td>
-      <td>190829.12550</td>
-      <td>85.387511</td>
-      <td>63.362857</td>
-      <td>15.679111</td>
-      <td>16.476164</td>
-      <td>-19.402911</td>
-      <td>-2.245322</td>
-      <td>...</td>
-      <td>31 days</td>
-      <td>109</td>
-      <td>52.293578</td>
-      <td>2.056429</td>
-      <td>141 days</td>
-      <td>44 days</td>
-      <td>5</td>
-      <td>10</td>
-      <td>0.094444</td>
-      <td>-0.200000</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>TATGLO</td>
-      <td>85.473290</td>
-      <td>184756.21050</td>
-      <td>190126.92650</td>
-      <td>84.756210</td>
-      <td>247.218730</td>
-      <td>15.601734</td>
-      <td>12.629439</td>
-      <td>-8.728511</td>
-      <td>-1.989707</td>
-      <td>...</td>
-      <td>30 days</td>
-      <td>112</td>
-      <td>52.678571</td>
-      <td>3.101622</td>
-      <td>124 days</td>
-      <td>30 days</td>
-      <td>12</td>
-      <td>14</td>
-      <td>0.200000</td>
-      <td>-0.031111</td>
-    </tr>
-    <tr>
-      <th>38</th>
-      <td>STABAN</td>
-      <td>89.315839</td>
-      <td>184641.78670</td>
-      <td>186384.78060</td>
-      <td>84.641787</td>
-      <td>143.113772</td>
-      <td>15.584821</td>
-      <td>16.112946</td>
-      <td>-13.511125</td>
-      <td>-2.575684</td>
-      <td>...</td>
-      <td>38 days</td>
-      <td>116</td>
-      <td>66.379310</td>
-      <td>4.935850</td>
-      <td>297 days</td>
-      <td>76 days</td>
-      <td>13</td>
-      <td>14</td>
-      <td>0.178889</td>
-      <td>-0.178889</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>KOTMAH</td>
-      <td>92.783505</td>
-      <td>183898.99840</td>
-      <td>183898.99840</td>
-      <td>83.898998</td>
-      <td>-0.799035</td>
-      <td>15.474834</td>
-      <td>20.522651</td>
-      <td>-14.883240</td>
-      <td>-2.720861</td>
-      <td>...</td>
-      <td>33 days</td>
-      <td>188</td>
-      <td>60.638298</td>
-      <td>1.135271</td>
-      <td>218 days</td>
-      <td>67 days</td>
-      <td>9</td>
-      <td>10</td>
-      <td>0.073333</td>
-      <td>-0.178889</td>
-    </tr>
-    <tr>
-      <th>44</th>
-      <td>TECMAH</td>
-      <td>89.971884</td>
-      <td>177300.59010</td>
-      <td>206802.66130</td>
-      <td>77.300590</td>
-      <td>53.645161</td>
-      <td>14.482584</td>
-      <td>21.644697</td>
-      <td>-17.264379</td>
-      <td>-2.792066</td>
-      <td>...</td>
-      <td>34 days</td>
-      <td>207</td>
-      <td>56.521739</td>
-      <td>2.909263</td>
-      <td>278 days</td>
-      <td>56 days</td>
-      <td>7</td>
+      <td>10 days</td>
       <td>8</td>
-      <td>0.178889</td>
-      <td>-0.052222</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>DRREDD</td>
-      <td>51.265230</td>
-      <td>171083.98890</td>
-      <td>171083.98890</td>
-      <td>71.083989</td>
-      <td>116.487703</td>
-      <td>13.521599</td>
-      <td>9.763677</td>
-      <td>-7.803166</td>
-      <td>-1.141735</td>
-      <td>...</td>
-      <td>29 days</td>
-      <td>75</td>
-      <td>61.333333</td>
-      <td>1.524948</td>
-      <td>74 days</td>
+      <td>75.000000</td>
+      <td>5.014722</td>
+      <td>44 days</td>
       <td>19 days</td>
-      <td>3</td>
-      <td>22</td>
-      <td>0.031111</td>
-      <td>-0.115556</td>
     </tr>
     <tr>
-      <th>20</th>
-      <td>HINDAL</td>
-      <td>73.102156</td>
-      <td>161623.97960</td>
-      <td>168560.12960</td>
-      <td>61.623980</td>
-      <td>197.758262</td>
-      <td>12.006727</td>
-      <td>12.479442</td>
-      <td>-12.352436</td>
-      <td>-1.940760</td>
-      <td>...</td>
-      <td>32 days</td>
-      <td>95</td>
-      <td>49.473684</td>
-      <td>2.885144</td>
-      <td>69 days</td>
+      <th>INFTEC</th>
+      <td>53.164557</td>
+      <td>110780.7321</td>
+      <td>111708.9821</td>
+      <td>10.780732</td>
+      <td>-7.101566</td>
+      <td>38.622992</td>
+      <td>13.676503</td>
+      <td>-2.294403</td>
+      <td>-0.909899</td>
+      <td>9 days</td>
+      <td>6 days</td>
+      <td>7</td>
+      <td>71.428571</td>
+      <td>5.707243</td>
+      <td>59 days</td>
+      <td>28 days</td>
+    </tr>
+    <tr>
+      <th>GRASIM</th>
+      <td>87.341772</td>
+      <td>107775.2325</td>
+      <td>108606.6285</td>
+      <td>7.775233</td>
+      <td>12.215909</td>
+      <td>26.978851</td>
+      <td>20.703736</td>
+      <td>-3.996664</td>
+      <td>-1.919547</td>
+      <td>27 days</td>
+      <td>13 days</td>
+      <td>15</td>
+      <td>86.666667</td>
+      <td>4.596471</td>
+      <td>86 days</td>
+      <td>43 days</td>
+    </tr>
+    <tr>
+      <th>HCLTEC</th>
+      <td>69.620253</td>
+      <td>106829.3721</td>
+      <td>108509.8221</td>
+      <td>6.829372</td>
+      <td>1.383826</td>
+      <td>23.458110</td>
+      <td>13.059866</td>
+      <td>-3.142882</td>
+      <td>-1.132410</td>
+      <td>43 days</td>
+      <td>12 days</td>
+      <td>9</td>
+      <td>66.666667</td>
+      <td>3.181693</td>
+      <td>78 days</td>
+      <td>34 days</td>
+    </tr>
+    <tr>
+      <th>ICIBAN</th>
+      <td>88.607595</td>
+      <td>106220.7078</td>
+      <td>107775.1910</td>
+      <td>6.220708</td>
+      <td>11.648241</td>
+      <td>21.228296</td>
+      <td>15.232158</td>
+      <td>-4.378747</td>
+      <td>-1.246147</td>
+      <td>34 days</td>
+      <td>10 days</td>
+      <td>14</td>
+      <td>71.428571</td>
+      <td>3.180920</td>
+      <td>87 days</td>
+      <td>46 days</td>
+    </tr>
+    <tr>
+      <th>JSWSTE</th>
+      <td>84.810127</td>
+      <td>104837.3935</td>
+      <td>104990.3205</td>
+      <td>4.837393</td>
+      <td>3.111263</td>
+      <td>16.263697</td>
+      <td>21.443972</td>
+      <td>-6.012543</td>
+      <td>-3.622313</td>
+      <td>30 days</td>
+      <td>20 days</td>
+      <td>16</td>
+      <td>56.250000</td>
+      <td>2.500421</td>
+      <td>83 days</td>
+      <td>43 days</td>
+    </tr>
+    <tr>
+      <th>MARUTI</th>
+      <td>82.278481</td>
+      <td>104389.8212</td>
+      <td>111745.8318</td>
+      <td>4.389821</td>
+      <td>25.553016</td>
+      <td>14.687781</td>
+      <td>13.775799</td>
+      <td>-6.608757</td>
+      <td>-1.317546</td>
+      <td>42 days</td>
+      <td>10 days</td>
+      <td>15</td>
+      <td>53.333333</td>
+      <td>-0.675991</td>
+      <td>40 days</td>
+      <td>17 days</td>
+    </tr>
+    <tr>
+      <th>DRREDD</th>
+      <td>40.506329</td>
+      <td>104240.5600</td>
+      <td>104240.5600</td>
+      <td>4.240560</td>
+      <td>7.480653</td>
+      <td>14.165506</td>
+      <td>7.746460</td>
+      <td>-1.436507</td>
+      <td>-0.990301</td>
+      <td>19 days</td>
+      <td>12 days</td>
+      <td>2</td>
+      <td>100.000000</td>
+      <td>4.429422</td>
+      <td>43 days</td>
+      <td>23 days</td>
+    </tr>
+    <tr>
+      <th>DIVLAB</th>
+      <td>45.569620</td>
+      <td>102883.2948</td>
+      <td>102883.2948</td>
+      <td>2.883295</td>
+      <td>-1.664533</td>
+      <td>9.491033</td>
+      <td>6.531809</td>
+      <td>-2.345425</td>
+      <td>-2.203699</td>
+      <td>52 days</td>
+      <td>34 days</td>
+      <td>5</td>
+      <td>60.000000</td>
+      <td>1.947633</td>
+      <td>36 days</td>
+      <td>18 days</td>
+    </tr>
+    <tr>
+      <th>BHAPET</th>
+      <td>36.708861</td>
+      <td>102569.9256</td>
+      <td>105332.1840</td>
+      <td>2.569926</td>
+      <td>33.458897</td>
+      <td>8.430768</td>
+      <td>9.803584</td>
+      <td>-4.338797</td>
+      <td>-2.504094</td>
+      <td>37 days</td>
       <td>20 days</td>
       <td>4</td>
-      <td>8</td>
-      <td>0.200000</td>
-      <td>-0.073333</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>HDFSTA</td>
-      <td>93.158388</td>
-      <td>160568.60800</td>
-      <td>167015.68300</td>
-      <td>60.568608</td>
-      <td>-5.898654</td>
-      <td>11.833559</td>
-      <td>20.302274</td>
-      <td>-24.678488</td>
-      <td>-2.804721</td>
-      <td>...</td>
-      <td>34 days</td>
-      <td>87</td>
-      <td>63.218391</td>
-      <td>3.752367</td>
-      <td>373 days</td>
-      <td>119 days</td>
-      <td>4</td>
-      <td>12</td>
-      <td>0.200000</td>
-      <td>-0.200000</td>
-    </tr>
-    <tr>
-      <th>41</th>
-      <td>TATMOT</td>
-      <td>68.134958</td>
-      <td>157258.33130</td>
-      <td>166175.96250</td>
-      <td>57.258331</td>
-      <td>424.614177</td>
-      <td>11.284702</td>
-      <td>11.294883</td>
-      <td>-8.545298</td>
-      <td>-2.150887</td>
-      <td>...</td>
-      <td>38 days</td>
-      <td>73</td>
-      <td>53.424658</td>
-      <td>3.329408</td>
-      <td>125 days</td>
-      <td>30 days</td>
-      <td>11</td>
-      <td>14</td>
-      <td>0.200000</td>
-      <td>-0.094444</td>
-    </tr>
-    <tr>
-      <th>48</th>
-      <td>WIPRO</td>
-      <td>53.521127</td>
-      <td>156516.84200</td>
-      <td>157977.07200</td>
-      <td>56.516842</td>
-      <td>83.171264</td>
-      <td>11.182641</td>
-      <td>7.591031</td>
-      <td>-4.745728</td>
-      <td>-1.175906</td>
-      <td>...</td>
-      <td>29 days</td>
-      <td>31</td>
-      <td>54.838710</td>
-      <td>5.381323</td>
-      <td>105 days</td>
-      <td>34 days</td>
-      <td>11</td>
-      <td>26</td>
-      <td>0.200000</td>
-      <td>-0.031111</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>DIVLAB</td>
-      <td>74.390244</td>
-      <td>151457.62900</td>
-      <td>152076.01250</td>
-      <td>51.457629</td>
-      <td>108.820491</td>
-      <td>10.311407</td>
-      <td>13.800020</td>
-      <td>-13.828612</td>
-      <td>-3.157335</td>
-      <td>...</td>
-      <td>78 days</td>
-      <td>103</td>
-      <td>52.427184</td>
-      <td>0.427623</td>
-      <td>119 days</td>
-      <td>26 days</td>
-      <td>9</td>
-      <td>12</td>
-      <td>0.052222</td>
-      <td>-0.094444</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>BHAPET</td>
-      <td>65.698219</td>
-      <td>150491.12900</td>
-      <td>154034.59900</td>
-      <td>50.491129</td>
-      <td>24.829016</td>
-      <td>10.134618</td>
-      <td>10.309844</td>
-      <td>-9.652703</td>
-      <td>-2.088175</td>
-      <td>...</td>
-      <td>49 days</td>
-      <td>40</td>
-      <td>55.000000</td>
-      <td>3.526317</td>
-      <td>134 days</td>
-      <td>45 days</td>
-      <td>10</td>
-      <td>24</td>
-      <td>0.178889</td>
-      <td>-0.178889</td>
-    </tr>
-    <tr>
-      <th>42</th>
-      <td>TATSTE</td>
-      <td>59.418932</td>
-      <td>148868.46400</td>
-      <td>161637.01350</td>
-      <td>48.868464</td>
-      <td>-65.436693</td>
-      <td>9.852991</td>
-      <td>9.477955</td>
-      <td>-10.665193</td>
-      <td>-1.467283</td>
-      <td>...</td>
-      <td>49 days</td>
-      <td>71</td>
-      <td>54.929577</td>
-      <td>1.526573</td>
-      <td>49 days</td>
-      <td>16 days</td>
-      <td>12</td>
-      <td>14</td>
-      <td>0.178889</td>
-      <td>-0.073333</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>ITC</td>
-      <td>74.108818</td>
-      <td>121009.23260</td>
-      <td>124338.08930</td>
-      <td>21.009233</td>
-      <td>83.644370</td>
-      <td>4.611182</td>
-      <td>6.506275</td>
-      <td>-14.064461</td>
-      <td>-1.945073</td>
-      <td>...</td>
-      <td>99 days</td>
-      <td>74</td>
-      <td>45.945946</td>
-      <td>1.932498</td>
-      <td>127 days</td>
-      <td>29 days</td>
-      <td>13</td>
-      <td>16</td>
-      <td>0.200000</td>
-      <td>-0.052222</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>COALIN</td>
-      <td>63.261481</td>
-      <td>119951.38320</td>
-      <td>123116.33120</td>
-      <td>19.951383</td>
-      <td>115.461465</td>
-      <td>4.390063</td>
-      <td>6.164051</td>
-      <td>-5.185983</td>
-      <td>-1.721928</td>
-      <td>...</td>
-      <td>91 days</td>
-      <td>121</td>
-      <td>47.107438</td>
-      <td>0.706254</td>
+      <td>100.000000</td>
+      <td>3.811738</td>
       <td>44 days</td>
-      <td>8 days</td>
-      <td>7</td>
-      <td>8</td>
-      <td>0.200000</td>
-      <td>-0.115556</td>
+      <td>31 days</td>
     </tr>
     <tr>
-      <th>33</th>
-      <td>NTPC</td>
-      <td>44.517338</td>
-      <td>115232.78000</td>
-      <td>116827.78000</td>
-      <td>15.232780</td>
-      <td>201.467505</td>
-      <td>3.405299</td>
-      <td>2.827010</td>
-      <td>-3.238898</td>
-      <td>-0.688407</td>
-      <td>...</td>
-      <td>47 days</td>
-      <td>53</td>
-      <td>37.735849</td>
-      <td>1.681758</td>
-      <td>40 days</td>
+      <th>ONGC</th>
+      <td>18.987342</td>
+      <td>102303.9100</td>
+      <td>102788.9100</td>
+      <td>2.303910</td>
+      <td>37.707317</td>
+      <td>7.536270</td>
+      <td>4.731662</td>
+      <td>-0.895038</td>
+      <td>-0.863595</td>
+      <td>26 days</td>
+      <td>18 days</td>
+      <td>3</td>
+      <td>66.666667</td>
+      <td>2.780748</td>
+      <td>15 days</td>
+      <td>7 days</td>
+    </tr>
+    <tr>
+      <th>WIPRO</th>
+      <td>65.822785</td>
+      <td>102250.2526</td>
+      <td>104395.8526</td>
+      <td>2.250253</td>
+      <td>-2.882997</td>
+      <td>7.356459</td>
+      <td>10.590492</td>
+      <td>-3.894478</td>
+      <td>-2.803630</td>
+      <td>72 days</td>
+      <td>33 days</td>
+      <td>9</td>
+      <td>66.666667</td>
+      <td>2.767783</td>
+      <td>56 days</td>
+      <td>26 days</td>
+    </tr>
+    <tr>
+      <th>ITC</th>
+      <td>83.544304</td>
+      <td>101112.2991</td>
+      <td>106721.0076</td>
+      <td>1.112299</td>
+      <td>-5.989695</td>
+      <td>3.591496</td>
+      <td>13.045577</td>
+      <td>-6.081652</td>
+      <td>-1.343401</td>
+      <td>44 days</td>
       <td>12 days</td>
+      <td>15</td>
+      <td>40.000000</td>
+      <td>0.030402</td>
+      <td>55 days</td>
+      <td>29 days</td>
+    </tr>
+    <tr>
+      <th>HERHON</th>
+      <td>53.164557</td>
+      <td>101056.0693</td>
+      <td>104016.0693</td>
+      <td>1.056069</td>
+      <td>9.199029</td>
+      <td>3.407844</td>
+      <td>10.427002</td>
+      <td>-5.271326</td>
+      <td>-4.058520</td>
+      <td>48 days</td>
+      <td>27 days</td>
       <td>5</td>
-      <td>18</td>
-      <td>0.115556</td>
-      <td>-0.010000</td>
+      <td>60.000000</td>
+      <td>0.671263</td>
+      <td>63 days</td>
+      <td>35 days</td>
     </tr>
     <tr>
-      <th>34</th>
-      <td>ONGC</td>
-      <td>59.887535</td>
-      <td>113503.63000</td>
-      <td>114146.63000</td>
-      <td>13.503630</td>
-      <td>120.374707</td>
-      <td>3.036713</td>
-      <td>3.551963</td>
-      <td>-3.280519</td>
-      <td>-0.660907</td>
-      <td>...</td>
-      <td>50 days</td>
-      <td>47</td>
-      <td>48.936170</td>
-      <td>1.408875</td>
-      <td>73 days</td>
+      <th>SUNPHA</th>
+      <td>27.848101</td>
+      <td>101052.8784</td>
+      <td>101216.8784</td>
+      <td>1.052878</td>
+      <td>20.301587</td>
+      <td>3.397429</td>
+      <td>6.783580</td>
+      <td>-2.218547</td>
+      <td>-1.286756</td>
+      <td>30 days</td>
+      <td>12 days</td>
+      <td>3</td>
+      <td>66.666667</td>
+      <td>0.609417</td>
+      <td>35 days</td>
       <td>19 days</td>
-      <td>14</td>
-      <td>18</td>
-      <td>0.200000</td>
-      <td>-0.052222</td>
     </tr>
     <tr>
-      <th>35</th>
-      <td>POWGRI</td>
-      <td>58.669166</td>
-      <td>110614.06000</td>
-      <td>111040.79000</td>
-      <td>10.614060</td>
-      <td>101.817428</td>
-      <td>2.411083</td>
-      <td>3.692369</td>
-      <td>-5.390339</td>
-      <td>-0.728055</td>
-      <td>...</td>
-      <td>62 days</td>
-      <td>98</td>
-      <td>45.918367</td>
-      <td>0.296214</td>
-      <td>22 days</td>
+      <th>HDFSTA</th>
+      <td>63.291139</td>
+      <td>100450.6000</td>
+      <td>104163.8500</td>
+      <td>0.450600</td>
+      <td>-8.223938</td>
+      <td>1.444461</td>
+      <td>8.283783</td>
+      <td>-3.611618</td>
+      <td>-0.983101</td>
+      <td>17 days</td>
+      <td>8 days</td>
+      <td>4</td>
+      <td>50.000000</td>
+      <td>1.067348</td>
+      <td>73 days</td>
+      <td>50 days</td>
+    </tr>
+    <tr>
+      <th>CIPLA</th>
+      <td>26.582278</td>
+      <td>100232.1400</td>
+      <td>103151.5400</td>
+      <td>0.232140</td>
+      <td>12.035186</td>
+      <td>0.742381</td>
+      <td>6.019245</td>
+      <td>-2.830205</td>
+      <td>-1.628440</td>
+      <td>15 days</td>
       <td>9 days</td>
       <td>3</td>
+      <td>66.666667</td>
+      <td>0.766645</td>
+      <td>34 days</td>
+      <td>21 days</td>
+    </tr>
+    <tr>
+      <th>TITIND</th>
+      <td>70.886076</td>
+      <td>99968.5500</td>
+      <td>101517.3500</td>
+      <td>-0.031450</td>
+      <td>-2.987894</td>
+      <td>-0.100287</td>
+      <td>10.190590</td>
+      <td>-4.748015</td>
+      <td>-3.570256</td>
+      <td>73 days</td>
+      <td>40 days</td>
+      <td>7</td>
+      <td>28.571429</td>
+      <td>-0.815870</td>
+      <td>83 days</td>
+      <td>42 days</td>
+    </tr>
+    <tr>
+      <th>POWGRI</th>
+      <td>43.037975</td>
+      <td>99941.7700</td>
+      <td>100266.6700</td>
+      <td>-0.058230</td>
+      <td>23.175875</td>
+      <td>-0.185628</td>
+      <td>4.911575</td>
+      <td>-1.773840</td>
+      <td>-1.773840</td>
+      <td>99 days</td>
+      <td>99 days</td>
+      <td>10</td>
+      <td>50.000000</td>
+      <td>-0.138836</td>
+      <td>8 days</td>
+      <td>3 days</td>
+    </tr>
+    <tr>
+      <th>INDBA</th>
+      <td>78.481013</td>
+      <td>99850.1622</td>
+      <td>102163.2902</td>
+      <td>-0.149838</td>
+      <td>-6.180075</td>
+      <td>-0.477180</td>
+      <td>12.079413</td>
+      <td>-6.552735</td>
+      <td>-4.195676</td>
+      <td>37 days</td>
+      <td>31 days</td>
+      <td>9</td>
+      <td>33.333333</td>
+      <td>-1.261383</td>
+      <td>70 days</td>
+      <td>38 days</td>
+    </tr>
+    <tr>
+      <th>TATSTE</th>
+      <td>43.037975</td>
+      <td>99549.1700</td>
+      <td>100650.3600</td>
+      <td>-0.450830</td>
+      <td>19.685039</td>
+      <td>-1.431004</td>
+      <td>1.733691</td>
+      <td>-1.431878</td>
+      <td>-0.765705</td>
+      <td>79 days</td>
+      <td>43 days</td>
+      <td>5</td>
+      <td>60.000000</td>
+      <td>-0.583296</td>
+      <td>21 days</td>
+      <td>10 days</td>
+    </tr>
+    <tr>
+      <th>BAFINS</th>
+      <td>74.683544</td>
+      <td>99137.9823</td>
+      <td>103139.9823</td>
+      <td>-0.862018</td>
+      <td>-1.076555</td>
+      <td>-2.723863</td>
+      <td>12.382038</td>
+      <td>-5.914195</td>
+      <td>-3.054315</td>
+      <td>60 days</td>
+      <td>21 days</td>
       <td>8</td>
-      <td>0.052222</td>
-      <td>-0.031111</td>
+      <td>25.000000</td>
+      <td>-1.363945</td>
+      <td>65 days</td>
+      <td>38 days</td>
+    </tr>
+    <tr>
+      <th>NESIND</th>
+      <td>72.151899</td>
+      <td>99025.6109</td>
+      <td>102584.8723</td>
+      <td>-0.974389</td>
+      <td>-90.629842</td>
+      <td>-3.075145</td>
+      <td>10.847454</td>
+      <td>-5.294642</td>
+      <td>-2.454410</td>
+      <td>30 days</td>
+      <td>21 days</td>
+      <td>10</td>
+      <td>50.000000</td>
+      <td>-0.392237</td>
+      <td>70 days</td>
+      <td>39 days</td>
+    </tr>
+    <tr>
+      <th>RELIND</th>
+      <td>79.746835</td>
+      <td>98674.2245</td>
+      <td>101462.7340</td>
+      <td>-1.325776</td>
+      <td>12.719968</td>
+      <td>-4.167988</td>
+      <td>11.492430</td>
+      <td>-6.148685</td>
+      <td>-6.148685</td>
+      <td>93 days</td>
+      <td>93 days</td>
+      <td>10</td>
+      <td>60.000000</td>
+      <td>-1.689393</td>
+      <td>63 days</td>
+      <td>39 days</td>
+    </tr>
+    <tr>
+      <th>LARTOU</th>
+      <td>75.949367</td>
+      <td>98354.8038</td>
+      <td>102403.9366</td>
+      <td>-1.645196</td>
+      <td>3.787296</td>
+      <td>-5.154048</td>
+      <td>12.042791</td>
+      <td>-8.362992</td>
+      <td>-3.738793</td>
+      <td>73 days</td>
+      <td>28 days</td>
+      <td>8</td>
+      <td>25.000000</td>
+      <td>-1.818947</td>
+      <td>83 days</td>
+      <td>45 days</td>
+    </tr>
+    <tr>
+      <th>APOHOS</th>
+      <td>45.569620</td>
+      <td>98238.6260</td>
+      <td>100843.6800</td>
+      <td>-1.761374</td>
+      <td>10.917335</td>
+      <td>-5.510957</td>
+      <td>5.540849</td>
+      <td>-2.687526</td>
+      <td>-1.116041</td>
+      <td>41 days</td>
+      <td>14 days</td>
+      <td>3</td>
+      <td>0.000000</td>
+      <td>-2.025846</td>
+      <td>55 days</td>
+      <td>27 days</td>
+    </tr>
+    <tr>
+      <th>TATGLO</th>
+      <td>51.898734</td>
+      <td>97244.5900</td>
+      <td>100099.7840</td>
+      <td>-2.755410</td>
+      <td>1.824801</td>
+      <td>-8.527127</td>
+      <td>6.040263</td>
+      <td>-2.907293</td>
+      <td>-2.141454</td>
+      <td>73 days</td>
+      <td>42 days</td>
+      <td>8</td>
+      <td>25.000000</td>
+      <td>-1.768267</td>
+      <td>33 days</td>
+      <td>14 days</td>
+    </tr>
+    <tr>
+      <th>SBILIF</th>
+      <td>81.012658</td>
+      <td>96834.3426</td>
+      <td>101241.0748</td>
+      <td>-3.165657</td>
+      <td>1.204651</td>
+      <td>-9.752417</td>
+      <td>14.061833</td>
+      <td>-8.339618</td>
+      <td>-8.339618</td>
+      <td>93 days</td>
+      <td>93 days</td>
+      <td>20</td>
+      <td>40.000000</td>
+      <td>-2.247325</td>
+      <td>86 days</td>
+      <td>41 days</td>
+    </tr>
+    <tr>
+      <th>ASIPAI</th>
+      <td>51.898734</td>
+      <td>96771.6120</td>
+      <td>100000.0000</td>
+      <td>-3.228388</td>
+      <td>-15.668142</td>
+      <td>-9.938776</td>
+      <td>5.694977</td>
+      <td>-4.946588</td>
+      <td>-4.946588</td>
+      <td>63 days</td>
+      <td>63 days</td>
+      <td>3</td>
+      <td>0.000000</td>
+      <td>-4.365903</td>
+      <td>59 days</td>
+      <td>29 days</td>
+    </tr>
+    <tr>
+      <th>AXIBAN</th>
+      <td>84.810127</td>
+      <td>96487.9240</td>
+      <td>104012.8060</td>
+      <td>-3.512076</td>
+      <td>2.828467</td>
+      <td>-10.778254</td>
+      <td>12.482289</td>
+      <td>-7.234573</td>
+      <td>-3.440986</td>
+      <td>55 days</td>
+      <td>20 days</td>
+      <td>9</td>
+      <td>22.222222</td>
+      <td>-3.027524</td>
+      <td>72 days</td>
+      <td>39 days</td>
+    </tr>
+    <tr>
+      <th>ADAPOR</th>
+      <td>75.949367</td>
+      <td>96294.2152</td>
+      <td>101052.9652</td>
+      <td>-3.705785</td>
+      <td>27.922390</td>
+      <td>-11.348374</td>
+      <td>10.060602</td>
+      <td>-5.907051</td>
+      <td>-5.308141</td>
+      <td>68 days</td>
+      <td>46 days</td>
+      <td>7</td>
+      <td>57.142857</td>
+      <td>-1.216608</td>
+      <td>74 days</td>
+      <td>37 days</td>
+    </tr>
+    <tr>
+      <th>BAJFI</th>
+      <td>77.215190</td>
+      <td>96111.8602</td>
+      <td>105859.6922</td>
+      <td>-3.888140</td>
+      <td>-0.014403</td>
+      <td>-11.882786</td>
+      <td>11.484907</td>
+      <td>-9.208257</td>
+      <td>-1.854056</td>
+      <td>50 days</td>
+      <td>12 days</td>
+      <td>6</td>
+      <td>33.333333</td>
+      <td>-3.255959</td>
+      <td>57 days</td>
+      <td>35 days</td>
+    </tr>
+    <tr>
+      <th>BRIIND</th>
+      <td>79.746835</td>
+      <td>95768.6273</td>
+      <td>100000.0000</td>
+      <td>-4.231373</td>
+      <td>-8.905929</td>
+      <td>-12.882664</td>
+      <td>7.662963</td>
+      <td>-6.339323</td>
+      <td>-6.339323</td>
+      <td>96 days</td>
+      <td>96 days</td>
+      <td>8</td>
+      <td>0.000000</td>
+      <td>-3.216870</td>
+      <td>69 days</td>
+      <td>36 days</td>
+    </tr>
+    <tr>
+      <th>COALIN</th>
+      <td>54.430380</td>
+      <td>95660.8586</td>
+      <td>100000.0000</td>
+      <td>-4.339141</td>
+      <td>18.560209</td>
+      <td>-13.194993</td>
+      <td>7.160734</td>
+      <td>-4.617441</td>
+      <td>-4.617441</td>
+      <td>96 days</td>
+      <td>96 days</td>
+      <td>6</td>
+      <td>50.000000</td>
+      <td>-1.641233</td>
+      <td>62 days</td>
+      <td>22 days</td>
+    </tr>
+    <tr>
+      <th>KOTMAH</th>
+      <td>67.088608</td>
+      <td>95601.0086</td>
+      <td>104676.4586</td>
+      <td>-4.398991</td>
+      <td>-13.284133</td>
+      <td>-13.368115</td>
+      <td>16.691684</td>
+      <td>-8.670001</td>
+      <td>-2.094601</td>
+      <td>28 days</td>
+      <td>15 days</td>
+      <td>13</td>
+      <td>23.076923</td>
+      <td>-2.400379</td>
+      <td>72 days</td>
+      <td>34 days</td>
+    </tr>
+    <tr>
+      <th>BAAUTO</th>
+      <td>74.683544</td>
+      <td>95420.4052</td>
+      <td>100000.0000</td>
+      <td>-4.579595</td>
+      <td>30.322484</td>
+      <td>-13.889089</td>
+      <td>7.357111</td>
+      <td>-6.848449</td>
+      <td>-6.848449</td>
+      <td>87 days</td>
+      <td>87 days</td>
+      <td>7</td>
+      <td>28.571429</td>
+      <td>-4.566047</td>
+      <td>37 days</td>
+      <td>17 days</td>
+    </tr>
+    <tr>
+      <th>ULTCEM</th>
+      <td>81.012658</td>
+      <td>95365.5879</td>
+      <td>100000.0000</td>
+      <td>-4.634412</td>
+      <td>-7.222143</td>
+      <td>-14.046790</td>
+      <td>9.185857</td>
+      <td>-6.543222</td>
+      <td>-6.543222</td>
+      <td>97 days</td>
+      <td>97 days</td>
+      <td>18</td>
+      <td>0.000000</td>
+      <td>-2.437794</td>
+      <td>62 days</td>
+      <td>31 days</td>
+    </tr>
+    <tr>
+      <th>UNIP</th>
+      <td>82.278481</td>
+      <td>94863.2968</td>
+      <td>100407.3320</td>
+      <td>-5.136703</td>
+      <td>-14.527027</td>
+      <td>-15.482586</td>
+      <td>16.958592</td>
+      <td>-12.261928</td>
+      <td>-12.261928</td>
+      <td>96 days</td>
+      <td>96 days</td>
+      <td>14</td>
+      <td>42.857143</td>
+      <td>-4.366248</td>
+      <td>73 days</td>
+      <td>39 days</td>
+    </tr>
+    <tr>
+      <th>TATMOT</th>
+      <td>39.240506</td>
+      <td>94685.5814</td>
+      <td>100000.0000</td>
+      <td>-5.314419</td>
+      <td>26.672140</td>
+      <td>-15.986615</td>
+      <td>3.825195</td>
+      <td>-5.438599</td>
+      <td>-5.438599</td>
+      <td>63 days</td>
+      <td>63 days</td>
+      <td>5</td>
+      <td>0.000000</td>
+      <td>-4.285138</td>
+      <td>34 days</td>
+      <td>13 days</td>
+    </tr>
+    <tr>
+      <th>NTPC</th>
+      <td>77.215190</td>
+      <td>94238.5400</td>
+      <td>100208.2400</td>
+      <td>-5.761460</td>
+      <td>16.192631</td>
+      <td>-17.245364</td>
+      <td>7.027166</td>
+      <td>-6.585387</td>
+      <td>-3.334040</td>
+      <td>51 days</td>
+      <td>33 days</td>
+      <td>9</td>
+      <td>55.555556</td>
+      <td>-1.766384</td>
+      <td>29 days</td>
+      <td>17 days</td>
+    </tr>
+    <tr>
+      <th>TCS</th>
+      <td>84.810127</td>
+      <td>93869.7184</td>
+      <td>102473.6224</td>
+      <td>-6.130282</td>
+      <td>1.262161</td>
+      <td>-18.274070</td>
+      <td>9.870220</td>
+      <td>-8.396213</td>
+      <td>-3.946546</td>
+      <td>53 days</td>
+      <td>32 days</td>
+      <td>12</td>
+      <td>8.333333</td>
+      <td>-3.784868</td>
+      <td>64 days</td>
+      <td>37 days</td>
+    </tr>
+    <tr>
+      <th>HINLEV</th>
+      <td>79.746835</td>
+      <td>91993.7484</td>
+      <td>100000.0000</td>
+      <td>-8.006252</td>
+      <td>-15.571928</td>
+      <td>-23.370920</td>
+      <td>7.053038</td>
+      <td>-9.459773</td>
+      <td>-9.459773</td>
+      <td>96 days</td>
+      <td>96 days</td>
+      <td>14</td>
+      <td>0.000000</td>
+      <td>-4.834616</td>
+      <td>80 days</td>
+      <td>40 days</td>
+    </tr>
+    <tr>
+      <th>ADAENT</th>
+      <td>73.417722</td>
+      <td>90814.0929</td>
+      <td>100404.4300</td>
+      <td>-9.185907</td>
+      <td>7.200413</td>
+      <td>-26.461602</td>
+      <td>6.645758</td>
+      <td>-9.639353</td>
+      <td>-5.361211</td>
+      <td>93 days</td>
+      <td>49 days</td>
+      <td>14</td>
+      <td>28.571429</td>
+      <td>-2.191458</td>
+      <td>30 days</td>
+      <td>10 days</td>
+    </tr>
+    <tr>
+      <th>HINDAL</th>
+      <td>51.898734</td>
+      <td>90128.3209</td>
+      <td>102654.3787</td>
+      <td>-9.871679</td>
+      <td>6.041152</td>
+      <td>-28.218390</td>
+      <td>9.159637</td>
+      <td>-12.202166</td>
+      <td>-3.319185</td>
+      <td>77 days</td>
+      <td>22 days</td>
+      <td>7</td>
+      <td>0.000000</td>
+      <td>-5.082076</td>
+      <td>20 days</td>
+      <td>11 days</td>
+    </tr>
+    <tr>
+      <th>TECMAH</th>
+      <td>83.544304</td>
+      <td>90085.8717</td>
+      <td>102558.5400</td>
+      <td>-9.914128</td>
+      <td>-7.890157</td>
+      <td>-28.326178</td>
+      <td>9.266466</td>
+      <td>-12.397718</td>
+      <td>-4.651101</td>
+      <td>92 days</td>
+      <td>35 days</td>
+      <td>22</td>
+      <td>0.000000</td>
+      <td>-4.039754</td>
+      <td>36 days</td>
+      <td>23 days</td>
+    </tr>
+    <tr>
+      <th>LTINFO</th>
+      <td>73.417722</td>
+      <td>89468.4160</td>
+      <td>100109.9200</td>
+      <td>-10.531584</td>
+      <td>-25.867306</td>
+      <td>-29.881500</td>
+      <td>6.068973</td>
+      <td>-11.010551</td>
+      <td>-11.010551</td>
+      <td>93 days</td>
+      <td>93 days</td>
+      <td>8</td>
+      <td>12.500000</td>
+      <td>-6.718140</td>
+      <td>80 days</td>
+      <td>37 days</td>
+    </tr>
+    <tr>
+      <th>BHAAIR</th>
+      <td>63.291139</td>
+      <td>87902.4854</td>
+      <td>100435.7848</td>
+      <td>-12.097515</td>
+      <td>32.287549</td>
+      <td>-33.721790</td>
+      <td>7.863847</td>
+      <td>-12.623488</td>
+      <td>-6.958519</td>
+      <td>59 days</td>
+      <td>37 days</td>
+      <td>6</td>
+      <td>16.666667</td>
+      <td>-12.577889</td>
+      <td>72 days</td>
+      <td>42 days</td>
     </tr>
   </tbody>
 </table>
-<p>49 rows × 21 columns</p>
 </div></div></div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># run_stats = []</span>
-
-<span class="c1"># CASH = 100_000</span>
-<span class="c1"># COMMISSION = .002</span>
-
-<span class="c1"># for stock in stocks:</span>
-
-<span class="c1">#     bt = Backtest(</span>
-<span class="c1">#         get_stock_data(stock),</span>
-<span class="c1">#         SmaCross,</span>
-<span class="c1">#         cash=CASH,</span>
-<span class="c1">#         commission=COMMISSION</span>
-<span class="c1">#     )</span>
-<span class="c1">#     stats = bt.run()</span>
-<span class="c1">#     stats[&#39;stock&#39;] = stock</span>
-<span class="c1">#     stats[&#39;run&#39;] = &#39;pre_opt&#39;</span>
-<span class="c1">#     stats[&#39;fast_ma&#39;] = SmaCross.FAST_MA</span>
-<span class="c1">#     stats[&#39;slow_ma&#39;] = SmaCross.SLOW_MA</span>
-<span class="c1">#     run_stats.append(stats)</span>
-
-<span class="c1">#     opt_stats = bt.optimize(</span>
-<span class="c1">#         FAST_MA=range(3, 15, 1),</span>
-<span class="c1">#         SLOW_MA=range(8, 31, 2),</span>
-<span class="c1">#         PROFIT_THRESHOLD=np.linspace(0.01, 0.2, 10).tolist(),</span>
-<span class="c1">#         LOSS_THRESHOLD=np.linspace(-0.01, -0.2, 10).tolist(),</span>
-<span class="c1">#         constraint=lambda p: p.FAST_MA &lt; p.SLOW_MA,</span>
-<span class="c1">#         return_heatmap=False,</span>
-<span class="c1">#         maximize=&#39;Equity Final [$]&#39;,</span>
-<span class="c1">#     )</span>
-<span class="c1">#     opt_stats[&#39;stock&#39;] = stock</span>
-<span class="c1">#     opt_stats[&#39;run&#39;] = &#39;post_opt&#39;</span>
-<span class="c1">#     opt_stats[&#39;fast_ma&#39;] = opt_stats._strategy.FAST_MA</span>
-<span class="c1">#     opt_stats[&#39;slow_ma&#39;] = opt_stats._strategy.SLOW_MA</span>
-<span class="c1">#     run_stats.append(opt_stats)</span>
-
-<span class="c1"># run_stats_df = pd.DataFrame(run_stats)</span>
-
-<span class="c1"># run_stats_df.sort_values(</span>
-<span class="c1">#     &#39;Return [%]&#39;,</span>
-<span class="c1">#     ascending=False</span>
-<span class="c1"># ).head(20).drop(</span>
-<span class="c1">#     columns=[&#39;_trades&#39;, &#39;_equity_curve&#39;, &#39;_strategy&#39;]</span>
-<span class="c1"># ).T</span>
-</pre></div>
-</div>
-</div>
-</div>
 </section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<p>As we can see, the Simple Strategy can be of great use but does not particularly offer standardised results.</p>
+<p>Best possible Annualized results are <code class="docutils literal notranslate"><span class="pre">~58%</span></code>, but that too is not standardized.</p>
 </section>
 </section>
 
@@ -4695,6 +4166,7 @@ Name: Win Rate [%], dtype: float64
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#backtesting-py">Backtesting.py</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
   </nav></div>
 
