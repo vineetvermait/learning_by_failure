@@ -7,10 +7,11 @@ mplfinance
 numpy
 pandarallel
 pandas
-psycopg2
+psycopg2-binary
 requests
 retry
 seaborn
 tensorflow
+ta-lib
 tqdm
-tqdm
+backtesting
