@@ -1740,17 +1740,22 @@ PnL calculation for each trade and close the trade as soon as a certain
 <span class="p">]</span>
 
 <span class="n">filters</span> <span class="o">=</span> <span class="o">~</span><span class="n">daily_run_stats_df</span><span class="o">.</span><span class="n">stock</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">stocks_to_ignore</span><span class="p">)</span>
-<span class="n">filters</span> <span class="o">&amp;=</span> <span class="n">daily_run_stats_df</span><span class="p">[</span><span class="s1">&#39;Return [%]&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="c1"># filters &amp;= daily_run_stats_df[&#39;Return [%]&#39;] &gt; 0</span>
 
 <span class="c1"># print(daily_run_stats_df[filters].Duration.unique())</span>
 
-<span class="n">drsdaily_run_stats_df</span><span class="p">[</span><span class="n">filters</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+<span class="n">drs_df</span> <span class="o">=</span> <span class="n">daily_run_stats_df</span><span class="p">[</span><span class="n">filters</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
     <span class="s1">&#39;Return [%]&#39;</span><span class="p">,</span>
     <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;stock&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()[</span><span class="n">metrics_columns</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
     <span class="s1">&#39;Return [%]&#39;</span><span class="p">,</span>
     <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">drs_df</span><span class="p">[</span><span class="s1">&#39;Return [%]&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="mf">.05</span><span class="p">,</span> <span class="mf">.25</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mf">.75</span><span class="p">,</span> <span class="mf">.95</span><span class="p">]))</span>
+
+<span class="n">drs_df</span>
 
 <span class="c1"># .sort_values(</span>
 <span class="c1">#     &#39;Return [%]&#39;,</span>
@@ -1760,6 +1765,14 @@ PnL calculation for each trade and close the trade as soon as a certain
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.05     17.120221
+0.25     71.083989
+0.50    105.990123
+0.75    155.562774
+0.95    213.634404
+Name: Return [%], dtype: float64
+</pre></div>
+</div>
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
