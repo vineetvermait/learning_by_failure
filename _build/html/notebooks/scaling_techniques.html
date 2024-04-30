@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>[Not Started] Scaling Techniques &#8212; Learning By Failure - DS/ML/AI</title>
+    <title>[In Progress] Scaling Techniques &#8212; Learning By Failure - DS/ML/AI</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -57,11 +57,13 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/scaling_techniques';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="[In Progress] Temporal Vectors" href="temporal_vectors.html" />
-    <link rel="prev" title="[Not Started] Exploratory Data Analysis" href="eda.html" />
+    <link rel="prev" title="[Not Started] Feature Engineering" href="feature_engineering.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -181,13 +183,16 @@
 <li class="toctree-l1"><a class="reference internal" href="problem_definition.html">[Not Started] Problem Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="holy_grail.html">[Not Started] Holy grail: Trading Epitome</a></li>
 <li class="toctree-l1"><a class="reference internal" href="eda.html">[Not Started] Exploratory Data Analysis</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">[Not Started] Scaling Techniques</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="feature_engineering.html">[Not Started] Feature Engineering</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">[In Progress] Scaling Techniques</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="temporal_vectors.html">[In Progress] Temporal Vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="statistics.html">[Not Started] Statistics</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Algo Trading</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="algo_trading/sma_crossover.html">[In Progress] Basic SMA Crossover</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algo_trading/sma_crossover.html">Basic SMA Crossover</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algo_trading/20231227_1.html">[Rework] Bollinger Bands Strategy with Threshold Crossover</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algo_trading/20231228.html">Experiment: Bollinger Bands Scaling Strategy (BBSS)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algo_trading/20240101.html">Experiment: BBSS + RSI: Doesn’t work</a></li>
@@ -369,7 +374,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>[Not Started] Scaling Techniques</h1>
+    <h1>[In Progress] Scaling Techniques</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -383,8 +388,164 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="not-started-scaling-techniques">
-<h1>[Not Started] Scaling Techniques<a class="headerlink" href="#not-started-scaling-techniques" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="in-progress-scaling-techniques">
+<h1>[In Progress] Scaling Techniques<a class="headerlink" href="#in-progress-scaling-techniques" title="Link to this heading">#</a></h1>
+<p>Data can be in various shapes and sizes. For understanding the behavior of the
+data, and with respect to each feature, it is important for us to bring the data
+to the similar scale. This is where scaling techniques come into play.</p>
+<p>Lets for a minute take the example of House Prices Predictions. The dataset could
+contain the following features:</p>
+<ul class="simple">
+<li><p>Number of Bedrooms: Range = 1-5</p></li>
+<li><p>Number of Bathrooms: Range = 1-3</p></li>
+<li><p>Area of the House: Range = 1000-5000 sqft</p></li>
+<li><p>Distance from the City Center: Range = 1-10 miles</p></li>
+<li><p>Price of the House: Range = 100,000-500,000 USD</p></li>
+</ul>
+<p>The task is to predict the price of the house.</p>
+<p>If we do not scale the data, try to think about how would you compare the number
+of bedrooms with the price of the house. The range of the number of bedrooms is
+1-5, whereas the price of the house is in the range of 100,000-500,000 USD. The
+difference in the range is huge. Similarly, the area of the house is in the range
+of 1000-5000 sqft, which is again different from the price of the house.</p>
+<p>Even if we tried to evaluate the data by pure numbers, the sheer scale of the
+features would make it difficult for us to understand the data.</p>
+<p>Mathematically think of Machine Learning equation as <span class="math notranslate nohighlight">\(Y = M \times X + C\)</span>, but this is single variable.</p>
+<p>In the case of multiple variables, the equation would be</p>
+<p><span class="math notranslate nohighlight">\(Y = M_1 \times X_1 + M_2 \times X_2 + M_3 \times X_3 + M_4 \times X_4 + C\)</span></p>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(X_1\)</span> is the number of bedrooms</p></li>
+<li><p><span class="math notranslate nohighlight">\(X_2\)</span> is the number of bathrooms</p></li>
+<li><p><span class="math notranslate nohighlight">\(X_3\)</span> is the area of the house</p></li>
+<li><p><span class="math notranslate nohighlight">\(X_4\)</span> is the distance from the city center</p></li>
+<li><p><span class="math notranslate nohighlight">\(Y\)</span> is the price of the house.</p></li>
+</ul>
+<p>Given the above equation, a small change in the value of <span class="math notranslate nohighlight">\(X_1\)</span> would influence
+the value of <span class="math notranslate nohighlight">\(Y\)</span> by a significant amount. However, a small change in the value
+of <span class="math notranslate nohighlight">\(X_4\)</span> may or may not influence the value of <span class="math notranslate nohighlight">\(Y\)</span> by a large amount.
+Though the scale of <span class="math notranslate nohighlight">\(X_4\)</span> is much larger than the scale of <span class="math notranslate nohighlight">\(X_1\)</span>, still its
+domain relevance is quite little, but in terms of equations, the influence would
+be quite the reverse, change in <span class="math notranslate nohighlight">\(X_1\)</span>, mathematically should not influence the
+value of <span class="math notranslate nohighlight">\(Y\)</span> much.</p>
+<p>Scaling the values down and bringing them to a common scale would help us in
+making the data comparable and understandable. Plotting them on graphs become
+easier, and the data becomes more interpretable.</p>
+<p>Data scaling is a technique used to normalize the range of
+independent variables or features of data. In data processing, it is also known
+as data normalization and is generally performed during the data preprocessing
+step.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_stock_data</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="p">):</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s1">&#39;select * from ohlc_data where symbol = </span><span class="se">\&#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">,</span>
+        <span class="n">engine</span><span class="p">,</span>
+        <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;open&#39;</span><span class="p">:</span> <span class="s1">&#39;Open&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;high&#39;</span><span class="p">:</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;low&#39;</span><span class="p">:</span> <span class="s1">&#39;Low&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;close&#39;</span><span class="p">:</span> <span class="s1">&#39;Close&#39;</span><span class="p">,</span>
+    <span class="p">})</span>
+
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span>
+    <span class="s1">&#39;postgresql://postgres:postgres@localhost:6004/postgres&#39;</span>
+<span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">get_stock_data</span><span class="p">(</span><span class="s1">&#39;NIFTY&#39;</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>symbol</th>
+    </tr>
+    <tr>
+      <th>datetime</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2015-01-01 09:14:00</th>
+      <td>8272.80</td>
+      <td>8272.80</td>
+      <td>8272.80</td>
+      <td>8272.80</td>
+      <td>NIFTY</td>
+    </tr>
+    <tr>
+      <th>2015-01-01 09:15:00</th>
+      <td>8272.80</td>
+      <td>8272.80</td>
+      <td>8272.80</td>
+      <td>8272.80</td>
+      <td>NIFTY</td>
+    </tr>
+    <tr>
+      <th>2015-01-01 09:16:00</th>
+      <td>8253.15</td>
+      <td>8253.15</td>
+      <td>8253.15</td>
+      <td>8253.15</td>
+      <td>NIFTY</td>
+    </tr>
+    <tr>
+      <th>2015-01-01 09:17:00</th>
+      <td>8254.15</td>
+      <td>8254.15</td>
+      <td>8254.15</td>
+      <td>8254.15</td>
+      <td>NIFTY</td>
+    </tr>
+    <tr>
+      <th>2015-01-01 09:18:00</th>
+      <td>8261.15</td>
+      <td>8261.15</td>
+      <td>8261.15</td>
+      <td>8261.15</td>
+      <td>NIFTY</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -418,12 +579,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="eda.html"
+       href="feature_engineering.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">[Not Started] Exploratory Data Analysis</p>
+        <p class="prev-next-title">[Not Started] Feature Engineering</p>
       </div>
     </a>
     <a class="right-next"
