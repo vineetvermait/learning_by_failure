@@ -29,7 +29,7 @@ parts:
       - file: notebooks/ml/20240225
   - caption: Deep Learning
     chapters:
-      - file: notebooks/ml/baseliing
+      - file: notebooks/dl/baseliing
   - caption: Reinforcement Learning
     chapters:
       - file: notebooks/rl/finrl
