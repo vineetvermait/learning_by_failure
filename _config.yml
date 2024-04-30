@@ -3,6 +3,7 @@
 
 title: Learning By Failure - DS/ML/AI
 author: Th3Nic3Guy
+copyright: "2023"  # Copyright year to be placed in the footer
 logo: logo.svg
 exclude_patterns:
   [
@@ -14,6 +15,8 @@ exclude_patterns:
     ".git/**",
     ".json",
   ]
+only_build_toc_files: true
+
 
 execute:
   execute_notebooks: "off"
@@ -25,15 +28,19 @@ latex:
 bibtex_bibfiles:
   - references.bib
 
+launch_buttons:
+  notebook_interface: "jupyterlab"
 repository:
   url: https://github.com/vineetvermait/learning_by_failure_ai
   # path_to_book: docs # Optional path to your book, relative to the repository root
   branch: master # Which branch of the repository should be used when creating links (optional)
 
 html:
+  favicon: logo.svg
   use_issues_button: true
   use_repository_button: false
   extra_footer: "Uth! Kaam abhi baaki hai"
+  google_analytics_id: "G-E8J9G0YK61"
 sphinx:
   extentions:
     - bokeh.sphinxext
